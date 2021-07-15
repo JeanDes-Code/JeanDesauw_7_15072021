@@ -4,78 +4,95 @@ import Axios from "axios"
 
 function App() {
 
-  const [movieName, setMovieName] = useState('')
-  const [review, setReview] = useState('')
-  const [movieReviewList, setMovieList] = useState([])
+  const [articleTitle, setArticleTitle] = useState('')
+  const [articleContent, setArticleContent] = useState('')
+  const [articleAuthor, setArticleAuthor] = useState('')
 
-  const [newReview, setNewReview] = useState('')
+  const [articleList, setArticleList] = useState([])
+
+  const [newContent, setNewContent] = useState('')
+  const [newTitle, setNewTitle] = useState('')
 
   useEffect( () => {
     Axios.get('http://localhost:3001/api/get').then((response) =>{
-      setMovieList(response.data)
+      setArticleList(response.data)
     })
   }, [])
 
-  const submitReview = () => {
+  const submitArticle = () => {
 
     Axios.post('http://localhost:3001/api/insert',{ 
-      movieName: movieName, 
-      movieReview: review,
+      articleTitle: articleTitle, 
+      articleContent: articleContent,
+      articleAuthor: articleAuthor,
     });
 
-    setMovieList([
-      ...movieReviewList, 
-      {movieName: movieName, movieReview: review}
+    setArticleList([
+      ...articleList, 
+      {articleTitle: articleTitle, articleContent: articleContent, articleAuthor: articleAuthor}
     ]);
   };
 
-  const deleteReview = (movie) => {
+  const deleteArticle = (id) => {
 
-    Axios.delete(`http://localhost:3001/api/delete/${movie}`);
-
-    /*setMovieList([
-      ...movieReviewList, 
-      {movieName: movieName, movieReview: review}
-    ]);*/
+    Axios.delete(`http://localhost:3001/api/delete/${id}`);
+    //ajouter la mise à jour de la liste d'article
   };
 
-  const updateReview = (movie) => {
+  const updateArticle = (id) => {
     Axios.put('http://localhost:3001/api/update', {
-      movieName: movie,
-      movieReview: newReview,
+      articleId: id,
+      articleTitle: newTitle,
+      articleContent: newContent,
     });
-    setNewReview('')
+
+    //ajouter la mise à jour de l'article automatique
+    setArticleContent('')
   }
 
   return (
     <div className="App">
-      <h1>CRUD APPLICATION</h1>
+      <h1>Réseau social d'entreprise - Groupomania </h1>
       
       <div className='form'>
-        <label> Movie Name</label>
-        <input type="text" name='movieName' onChange={(e) => {
-          setMovieName(e.target.value)
+        <label> Titre de l'article</label>
+        <input type="text" name='articleTitle' onChange={(e) => {
+          setArticleTitle(e.target.value)
         }}
         />
-        <label> Review</label>
-        <input type="text" name='review' onChange={(e) => {
-          setReview(e.target.value)
+        <label> Contenu de l'article </label>
+        <input type="text" name='content' onChange={(e) => {
+          setArticleContent(e.target.value)
         }}
         />
-        <button onClick={submitReview}>Submit</button>
+        <label> Auteur de l'article </label>
+        <input type="text" name='author' onChange={(e) => {
+          setArticleAuthor(e.target.value)
+        }}
+        />
 
-        {movieReviewList.map((val) => {
+        <button onClick={submitArticle}>Submit</button>
+
+        {articleList.map((val) => {
           return (
           <div className='card'>
-            <h1>{val.movieName} </h1> 
-            <p>{val.movieReview}</p>
+            <h2>{val.articleTitle} </h2> 
+            <p>{val.articleContent}</p>
+            <h3>{val.articleAuthor}</h3>
+            <p>Article publié le {val.date_publication}</p>
 
-            <button onClick={ () => {deleteReview (val.movieName)}}> Delete </button>
+            <button onClick={ () => {deleteArticle (val.id)}}> Delete </button>
+            <label> Modifier le titre de l'article : </label>
             <input type="text" id='updateInput' onChange={ (e) => {
-              setNewReview(e.target.value)
+              setNewTitle(e.target.value)
             }}
             />
-            <button onClick={() => {updateReview(val.movieName)}}> Update </button>
+            <label> Modifier le contenu de l'article : </label>
+            <input type="text" id='updateInput' onChange={ (e) => {
+              setNewContent(e.target.value)
+            }}
+            />
+            <button onClick={() => {updateArticle(val.id)}}> Update </button>
           </div>
           )
         })}
