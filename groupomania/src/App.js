@@ -15,7 +15,7 @@ function App() {
 
   useEffect( () => {
     Axios.get('http://localhost:3001/api/get').then((response) =>{
-      setArticleList(response.data)
+      setArticleList([response.data])
     })
   }, [])
 
@@ -74,27 +74,28 @@ function App() {
         <button onClick={submitArticle}>Submit</button>
 
         {articleList.map((val) => {
-          return (
-          <div className='card'>
-            <h2>{val.articleTitle} </h2> 
-            <p>{val.articleContent}</p>
-            <h3>{val.articleAuthor}</h3>
-            <p>Article publié le {val.date_publication}</p>
+          if (val.articleTitle)
+            return (
+            <div className='card'>
+              <h2>{val.articleTitle} </h2> 
+              <p>{val.articleContent}</p>
+              <h3>{val.articleAuthor}</h3>
+              <p>Article publié le {val.date_publication}</p>
 
-            <button onClick={ () => {deleteArticle (val.id)}}> Delete </button>
-            <label> Modifier le titre de l'article : </label>
-            <input type="text" id='updateInput' onChange={ (e) => {
-              setNewTitle(e.target.value)
-            }}
-            />
-            <label> Modifier le contenu de l'article : </label>
-            <input type="text" id='updateInput' onChange={ (e) => {
-              setNewContent(e.target.value)
-            }}
-            />
-            <button onClick={() => {updateArticle(val.id)}}> Update </button>
-          </div>
-          )
+              <button onClick={ () => {deleteArticle (val.id)}}> Delete </button>
+              <label> Modifier le titre de l'article : </label>
+              <input type="text" id='updateInput' onChange={ (e) => {
+                setNewTitle(e.target.value)
+              }}
+              />
+              <label> Modifier le contenu de l'article : </label>
+              <input type="text" id='updateInput' onChange={ (e) => {
+                setNewContent(e.target.value)
+              }}
+              />
+              <button onClick={() => {updateArticle(val.id)}}> Update </button>
+            </div>
+            )
         })}
       </div>
     </div>
