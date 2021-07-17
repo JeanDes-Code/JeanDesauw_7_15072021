@@ -36,7 +36,13 @@ app.post("/api/insert", (req, res) => {
       if (err) {
           console.log(err)
       } else {
-          res.send('Article enregistré !')
+          const newArticle = {
+            id : result.insertId,
+            title : articleTitle,
+            content: articleContent,
+            author : articleAuthor,
+          }
+          res.send(newArticle)
       }
     }
   );
@@ -50,6 +56,8 @@ app.delete("/api/delete/:id", (req, res) => {
     if (err) {
       console.log(err)
     } else {
+      res.status(204).send()
+     
       console.log("Article supprimé !")
     };
   });
@@ -57,7 +65,7 @@ app.delete("/api/delete/:id", (req, res) => {
 
 app.put("/api/update/:id", (req, res) => {
   console.log("PARAMS", req.params, "BODY : ", req.body) //debug
-  const articleId = req.params.articleId;
+  const articleId = req.params.id;
   const articleTitle = req.body.newArticleTitle;
   const articleContent = req.body.newArticleContent;
   const sqlUpdate = "UPDATE articles SET title = ?, content = ? WHERE id = ?";
@@ -66,7 +74,7 @@ app.put("/api/update/:id", (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      res.send(result)
+      res.send(result).end()
       console.log("Article modifié !", result)}
   });
 });

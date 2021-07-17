@@ -13,31 +13,34 @@ function App() {
   const [newTitle, setNewTitle] = useState("");
 
   useEffect(() => {
+   getArticle()
+  }, []);
+
+  const getArticle = () => {
     Axios.get("http://localhost:3001/api/get").then((response) => {
       setArticleList(response.data);
     });
-  }, []);
+  }
 
   const submitArticle = () => {
     Axios.post("http://localhost:3001/api/insert", {
       articleTitle: articleTitle,
       articleContent: articleContent,
       articleAuthor: articleAuthor,
-    }).then(() => {
+    }).then((res) => {
+      console.log(res)
       setArticleList([
-        ...articleList,
-        {
-          articleTitle: articleTitle,
-          articleContent: articleContent,
-          articleAuthor: articleAuthor,
-        },
+        ...articleList,res.data,
       ]);
     })
   };
 
   const deleteArticle = (id) => {
-    Axios.delete(`http://localhost:3001/api/delete/${id}`);
-    //ajouter la mise à jour de la liste d'article
+    Axios.delete(`http://localhost:3001/api/delete/${id}`).then((res) => {
+      if (res.status = '204') {
+        getArticle()
+      }
+    });
   };
 
   const updateArticle = (id) => {
