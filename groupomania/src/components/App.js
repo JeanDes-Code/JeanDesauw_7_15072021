@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import '../styles/App.css';
 
+import getArticle from "../services/get-request"
+
 
 import ArticlePost from './ArticlePost'
 import ArticleList from './ArticleList'
@@ -8,18 +10,11 @@ import ArticleList from './ArticleList'
 function App() {
 
   const [articleList, setArticleList] = useState([]);
-  
+  console.log(articleList)
 
   useEffect(() => {
-   getArticle()
+   getArticle({setArticleList})
   }, []);
-
-  const getArticle = () => {
-    Axios.get("http://localhost:3001/api/get").then((response) => {
-      setArticleList(response.data);
-    });
-  }
-
   
 
   return (
