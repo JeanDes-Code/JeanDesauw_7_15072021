@@ -12,13 +12,14 @@ function ArticleList ( {articleList, setArticleList} ) {
       getArticle({setArticleList});
     }
 
-    const updateArticle = (id, modifiedArticle) => {
+    const updateArticle = (id, modifiedArticle, {setArticleList}) => {
       if (modifiedArticle.title === '' || modifiedArticle.content === ''){
         alert("Veuillez remplir tous les champs pour modifier votre article.")
+      } else {
+        putRequest(id, modifiedArticle);
+        getArticle({setArticleList});
+        setModifiedArticle({title: '', content: ''})
       }
-      putRequest(id, modifiedArticle);
-      getArticle({setArticleList});
-      setModifiedArticle({title: '', content: ''})
     }
 
     
@@ -45,7 +46,7 @@ function ArticleList ( {articleList, setArticleList} ) {
 
                 <label> Nouveau corps de l'article </label>
                 <textarea className="newContent updateInput" type="text" placeholder="Nouveau contenu" onChange={(e) => {setModifiedArticle({...modifiedArticle, content: e.target.value});}}/>
-                <button className="btn" onClick={() => {updateArticle(article.id, modifiedArticle);}}>Modifier l'article</button>
+                <button className="btn" onClick={() => {updateArticle(article.id, modifiedArticle, {setArticleList});}}>Modifier l'article</button>
                 <span className='border'></span>
                 <button className="btn" onClick={() => {deleteArticle(article.id);}}>Supprimer l'article</button>
               </div>
