@@ -1,28 +1,21 @@
 import {useState} from "react"
-import Axios from "axios";
+
+import getArticle from "../services/get-request"
+import deleteRequest from "../services/delete-request";
 
 function ArticleList ( {articleList, setArticleList} ) {
-    const [modifiedArticle, setModifiedArticle] = useState({title: '', content: ''})
-
-    const getArticle = () => {
-        Axios.get("http://localhost:3001/api/get").then((response) => {
-          setArticleList(response.data);
-        });
-      }
-
-    const deleteArticle = (id) => {
-        Axios.delete(`http://localhost:3001/api/delete/${id}`).then((res) => {
-          if (res.status === '204') {
-            getArticle()
-          }
-        });
-    };
+    const [modifiedArticle, setModifiedArticle] = useState({title: '', content: ''});
     
+    const deleteArticle = (id) => {
+      deleteRequest(id);
+      getArticle({setArticleList});
+    }
+
     const updateArticle = (id) => {
         console.log(id, modifiedArticle)
         Axios.put(`http://localhost:3001/api/update/${id}`, { modifiedArticle });
     
-        //ajouter la mise à jour de l'article automatique
+        getArticle({setArticleList})
         setModifiedArticle({title: '', content: ''})
     };
 
