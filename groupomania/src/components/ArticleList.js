@@ -2,6 +2,7 @@ import {useState} from "react"
 
 import getArticle from "../services/get-request"
 import deleteRequest from "../services/delete-request";
+import putRequest from "../services/put-request"
 
 function ArticleList ( {articleList, setArticleList} ) {
     const [modifiedArticle, setModifiedArticle] = useState({title: '', content: ''});
@@ -11,14 +12,13 @@ function ArticleList ( {articleList, setArticleList} ) {
       getArticle({setArticleList});
     }
 
-    const updateArticle = (id) => {
-        console.log(id, modifiedArticle)
-        Axios.put(`http://localhost:3001/api/update/${id}`, { modifiedArticle });
-    
-        getArticle({setArticleList})
-        setModifiedArticle({title: '', content: ''})
-    };
+    const updateArticle = (id, modifiedArticle) => {
+      putRequest(id, modifiedArticle);
+      getArticle({setArticleList});
+      setModifiedArticle({title: '', content: ''})
+    }
 
+    
     return (
     <div className="article-list">
         {articleList.map((article, index) => {
@@ -42,7 +42,7 @@ function ArticleList ( {articleList, setArticleList} ) {
 
                 <label> Nouveau corps de l'article </label>
                 <textarea className="newContent updateInput" type="text" placeholder="Nouveau contenu" onChange={(e) => {setModifiedArticle({...modifiedArticle, content: e.target.value});}}/>
-                <button className="btn" onClick={() => {updateArticle(article.id);}}>Modifier l'article</button>
+                <button className="btn" onClick={() => {updateArticle(article.id, modifiedArticle);}}>Modifier l'article</button>
                 <span className='border'></span>
                 <button className="btn" onClick={() => {deleteArticle(article.id);}}>Supprimer l'article</button>
               </div>
