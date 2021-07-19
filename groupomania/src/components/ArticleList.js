@@ -13,6 +13,9 @@ function ArticleList ( {articleList, setArticleList} ) {
     }
 
     const updateArticle = (id, modifiedArticle) => {
+      if (modifiedArticle.title === '' || modifiedArticle.content === ''){
+        alert("Veuillez remplir tous les champs pour modifier votre article.")
+      }
       putRequest(id, modifiedArticle);
       getArticle({setArticleList});
       setModifiedArticle({title: '', content: ''})

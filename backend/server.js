@@ -26,9 +26,10 @@ app.get("/api/get", (req, res) => {
 });
 
 app.post("/api/insert", (req, res) => {
-  const articleTitle = req.body.newArticle.title;
-  const articleContent = req.body.newArticle.content;
-  const articleAuthor = req.body.newArticle.author;
+  console.log(req.body)
+  const articleTitle = req.body.title;
+  const articleContent = req.body.content;
+  const articleAuthor = req.body.author;
 
   const sqlInsert =
     "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
