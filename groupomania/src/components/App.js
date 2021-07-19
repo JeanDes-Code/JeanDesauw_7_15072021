@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import '../styles/App.css';
 import Axios from "axios";
 
+import ArticlePost from './ArticlePost'
+
 function App() {
-  const [articleTitle, setArticleTitle] = useState("");
-  const [articleContent, setArticleContent] = useState("");
-  const [articleAuthor, setArticleAuthor] = useState("");
-
   const [articleList, setArticleList] = useState([]);
-
   const [newContent, setNewContent] = useState("");
   const [newTitle, setNewTitle] = useState("");
 
@@ -22,22 +19,9 @@ function App() {
     });
   }
 
-  const submitArticle = () => {
-    Axios.post("http://localhost:3001/api/insert", {
-      articleTitle: articleTitle,
-      articleContent: articleContent,
-      articleAuthor: articleAuthor,
-    }).then((res) => {
-      console.log(res)
-      setArticleList([
-        ...articleList,res.data,
-      ]);
-    })
-  };
-
   const deleteArticle = (id) => {
     Axios.delete(`http://localhost:3001/api/delete/${id}`).then((res) => {
-      if (res.status = '204') {
+      if (res.status === '204') {
         getArticle()
       }
     });
@@ -60,23 +44,13 @@ function App() {
     <div className="App">
       <h1>Réseau social d'entreprise - Groupomania </h1>
 
-      <div className="form">
-        <h2>Poster un article : </h2>
-        <label> Titre de l'article</label>
-        <input type="text" name="articleTitle" onChange={(e) => {setArticleTitle(e.target.value);}}/>
-        <label> Contenu de l'article </label>
-        <textarea type="text" name="content" onChange={(e) => {setArticleContent(e.target.value);}}/>
-        <label> Auteur de l'article </label>
-        <input type="text" name="author" onChange={(e) => {setArticleAuthor(e.target.value);}}/>
-
-        <button className="btn" onClick={submitArticle}>
-          Submit
-        </button>
-      </div>
+      <ArticlePost articleList={articleList} setArticleList={setArticleList} />
+      
       <div className="article-list">
         {articleList.map((article, index) => {
           return (
             <div key={`${article}-${index}`} className="card">
+              
               <div className="article-display">
                 <h2 className="article-display-title"> {article.title} </h2>
                 <p> {article.content} </p>
@@ -86,10 +60,12 @@ function App() {
               <div className="article-modification">
                 <span className='border'></span>
                 <h3> Modifier l'article : </h3>
+
                 <div className='article-modification-title'>
                   <label> Nouveau titre :</label>
                   <input className="newTitle updateInput" type="text" placeholder="Nouveau titre" onChange={(e) => {setNewTitle(e.target.value);}}/>
                 </div>
+
                 <label> Nouveau corps de l'article </label>
                 <textarea className="newContent updateInput" type="text" placeholder="Nouveau contenu" onChange={(e) => {setNewContent(e.target.value);}}/>
                 <button className="btn" onClick={() => {updateArticle(article.id);}}>Modifier l'article</button>
@@ -97,8 +73,6 @@ function App() {
                 <button className="btn" onClick={() => {deleteArticle(article.id);}}>Supprimer l'article</button>
               </div>
                 
-
-            
             </div>
           );
         })}
