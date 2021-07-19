@@ -5,9 +5,9 @@ import Axios from "axios";
 import ArticlePost from './ArticlePost'
 
 function App() {
+  
   const [articleList, setArticleList] = useState([]);
-  const [newContent, setNewContent] = useState("");
-  const [newTitle, setNewTitle] = useState("");
+  const [modifiedArticle, setModifiedArticle] = useState({title: '', content: ''})
 
   useEffect(() => {
    getArticle()
@@ -28,16 +28,11 @@ function App() {
   };
 
   const updateArticle = (id) => {
-    console.log(id, newTitle, newContent)
-    Axios.put(`http://localhost:3001/api/update/${id}`, {
-      articleId: id,
-      newArticleTitle: newTitle,
-      newArticleContent: newContent,
-    });
+    console.log(id, modifiedArticle)
+    Axios.put(`http://localhost:3001/api/update/${id}`, { modifiedArticle });
 
     //ajouter la mise à jour de l'article automatique
-    setNewContent("");
-    setNewTitle("");
+    setModifiedArticle({title: '', content: ''})
   };
 
   return (
@@ -63,11 +58,11 @@ function App() {
 
                 <div className='article-modification-title'>
                   <label> Nouveau titre :</label>
-                  <input className="newTitle updateInput" type="text" placeholder="Nouveau titre" onChange={(e) => {setNewTitle(e.target.value);}}/>
+                  <input className="newTitle updateInput" type="text" placeholder="Nouveau titre" onChange={(e) => {setModifiedArticle({...modifiedArticle, title: e.target.value});}}/>
                 </div>
 
                 <label> Nouveau corps de l'article </label>
-                <textarea className="newContent updateInput" type="text" placeholder="Nouveau contenu" onChange={(e) => {setNewContent(e.target.value);}}/>
+                <textarea className="newContent updateInput" type="text" placeholder="Nouveau contenu" onChange={(e) => {setModifiedArticle({...modifiedArticle, content: e.target.value});}}/>
                 <button className="btn" onClick={() => {updateArticle(article.id);}}>Modifier l'article</button>
                 <span className='border'></span>
                 <button className="btn" onClick={() => {deleteArticle(article.id);}}>Supprimer l'article</button>

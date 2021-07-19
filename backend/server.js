@@ -26,9 +26,9 @@ app.get("/api/get", (req, res) => {
 });
 
 app.post("/api/insert", (req, res) => {
-  const articleTitle = req.body.articleTitle;
-  const articleContent = req.body.articleContent;
-  const articleAuthor = req.body.articleAuthor;
+  const articleTitle = req.body.newArticle.title;
+  const articleContent = req.body.newArticle.content;
+  const articleAuthor = req.body.newArticle.author;
 
   const sqlInsert =
     "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
@@ -66,8 +66,8 @@ app.delete("/api/delete/:id", (req, res) => {
 app.put("/api/update/:id", (req, res) => {
   console.log("PARAMS", req.params, "BODY : ", req.body) //debug
   const articleId = req.params.id;
-  const articleTitle = req.body.newArticleTitle;
-  const articleContent = req.body.newArticleContent;
+  const articleTitle = req.body.modifiedArticle.title;
+  const articleContent = req.body.modifiedArticle.content;
   const sqlUpdate = "UPDATE articles SET title = ?, content = ? WHERE id = ?";
 
   db.query(sqlUpdate, [articleTitle, articleContent, articleId], (err, result) => {
