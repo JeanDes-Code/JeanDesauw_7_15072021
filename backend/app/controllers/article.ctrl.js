@@ -9,6 +9,7 @@ exports.create = (req, res) => {
   
     const sqlInsert =
       "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
+    
     db.query(sqlInsert,[articleTitle, articleContent, articleAuthor],(err, result) => {
         if (err) {
             console.log(err)
@@ -20,19 +21,32 @@ exports.create = (req, res) => {
               author : articleAuthor,
             }
             res.send(newArticle)
-        }
-      }
+            id = newArticle.id;
+        } 
+        let sqlCreateCom =
+        `CREATE TABLE IF NOT EXISTS Commentaires_${id} (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaires TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))`;
+        
+        db.query(sqlCreateCom, (err, result) => {
+          if(err) {
+            console.log(err)
+          } else {
+            console.log(`Table Commentaires créée ! ${result}`)
+          }
+        })
+      },
+
     );
 };
 
 //READ all Articles
-exports.findAll = (req,res) => {
-    const sqlSelect = "SELECT * FROM articles";
-    db.query(sqlSelect, (err, result) => {
+exports.findAll = (req, res) => {
+    const articleSelect = "SELECT * FROM articles";
+
+    db.query(articleSelect, (err, result) => {
         if (err) {
-              console.log(err)
+          console.log(err)
         } else {
-              res.send(result);
+          res.send(result);
         }
     });
 };
@@ -58,14 +72,22 @@ exports.update = (req, res) => {
 exports.deleteOne = (req, res) => {
     const articleId = req.params.id;
     const sqlDelete = "DELETE FROM articles WHERE id = ?";
-  
-    db.query(sqlDelete, articleId, (err, result) => {
+    const commentaireDrop = `DROP TABLE IF EXISTS commentaires_${articleId}`;
+      
+    db.query(commentaireDrop, (err, result) => {
       if (err) {
         console.log(err)
       } else {
         res.status(204).send()
-       
-        console.log("Article supprimé !")
-      };
-    });
+
+        console.log("Commentaires reliés à l'article supprimés !")
+      }
+      db.query(sqlDelete, articleId, (err, result) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("Article supprimé !")
+        };
+      });
+    })
 };
