@@ -24,7 +24,7 @@ exports.create = (req, res) => {
             id = newArticle.id;
         } 
         let sqlCreateCom =
-        `CREATE TABLE IF NOT EXISTS Commentaires_${id} (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaires TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))`;
+        `CREATE TABLE IF NOT EXISTS commentaires_${id} (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))`;
         
         db.query(sqlCreateCom, (err, result) => {
           if(err) {
@@ -63,8 +63,8 @@ exports.update = (req, res) => {
       if (err) {
         console.log(err)
       } else {
-        res.send(result).end()
         console.log("Article modifié !", result)}
+        res.send(result).end()
     });
 };
 
