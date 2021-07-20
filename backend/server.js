@@ -3,6 +3,8 @@ const cors = require("cors");
 const mysql = require("mysql2");
 const app = express();
 
+
+//Config BDD
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -10,10 +12,19 @@ const db = mysql.createConnection({
     database: 'groupomania',
 });
 
+//Réglages CORS
 app.use(cors());
+
+//Parse les éléments de type application/json
 app.use(express.json());
+
+//Parse les éléments de type application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+
+//Routes CRUD Articles
+
+//On récupère tous les articles de notre base de donnée et on les renvoie vers le Client
 app.get("/api/get", (req, res) => {
   const sqlSelect = "SELECT * FROM articles";
   db.query(sqlSelect, (err, result) => {
@@ -25,6 +36,7 @@ app.get("/api/get", (req, res) => {
   });
 });
 
+//On enregistre le nouvel article dans la BDD et on renvoie cet article dans la réponse de la requête.
 app.post("/api/insert", (req, res) => {
   console.log(req.body)
   const articleTitle = req.body.title;
@@ -49,6 +61,7 @@ app.post("/api/insert", (req, res) => {
   );
 });
 
+//On supprime de la BDD l'article portant l'ID fournit.
 app.delete("/api/delete/:id", (req, res) => {
   const articleId = req.params.id;
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
@@ -64,6 +77,9 @@ app.delete("/api/delete/:id", (req, res) => {
   });
 });
 
+
+//On modifie dans la BDD l'article portant l'ID fournit en utilisant le nouveau titre 
+//et le nouveau contenu fournit dans le corps de la requête
 app.put("/api/update/:id", (req, res) => {
   console.log("PARAMS", req.params, "BODY : ", req.body) //debug
   const articleId = req.params.id;
@@ -80,6 +96,9 @@ app.put("/api/update/:id", (req, res) => {
   });
 });
 
+
+
+// Config du port sur lequel joindre le serveur
 app.listen(3001, () => {
   console.log("running on port 3001");
 });
