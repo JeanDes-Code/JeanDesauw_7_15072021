@@ -11,7 +11,7 @@ app.use(express.json());
 //Parse les éléments de type application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-require('./app/routes/article.route')(app);
+require('./app/routes/article.route','./app/routes/commentaire.route')(app);
 
 // Config du port sur lequel joindre le serveur
 app.listen(3001, () => {
