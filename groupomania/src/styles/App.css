@@ -56,7 +56,7 @@
   padding: 10px;
 }
 
-.article-modification { 
+.article-modification {
   display: flex;
   flex-direction: column;
   justify-content: center;

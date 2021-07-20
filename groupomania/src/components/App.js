@@ -1,21 +1,18 @@
 import { useState, useEffect } from "react";
-import '../styles/App.css';
+import "../styles/App.css";
 
-import getArticle from "../services/get-request"
+import getArticle from "../services/get-request";
 
-
-import ArticlePost from './ArticlePost'
-import ArticleList from './ArticleList'
+import ArticlePost from "./ArticlePost";
+import ArticleList from "./ArticleList";
 
 function App() {
-
   const [articleList, setArticleList] = useState([]);
-  console.log(articleList)
+  console.log(articleList);
 
   useEffect(() => {
-   getArticle({setArticleList})
+    getArticle({ setArticleList });
   }, []);
-  
 
   return (
     <div className="App">
@@ -23,7 +20,6 @@ function App() {
 
       <ArticlePost articleList={articleList} setArticleList={setArticleList} />
       <ArticleList articleList={articleList} setArticleList={setArticleList} />
-      
     </div>
   );
 }
