@@ -1,26 +1,21 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+//Style
 import "../styles/App.css";
 
-import getArticle from "../services/get-request";
 
-import ArticlePost from "./ArticlePost";
-import ArticleList from "./ArticleList";
+//Pages
+import Home from "./Home-page"
 
 function App() {
-  const [articleList, setArticleList] = useState([]);
-  console.log(articleList);
-
-  useEffect(() => {
-    getArticle({ setArticleList });
-  }, []);
-
   return (
-    <div className="App">
-      <h1>Réseau social d'entreprise - Groupomania </h1>
-
-      <ArticlePost articleList={articleList} setArticleList={setArticleList} />
-      <ArticleList articleList={articleList} setArticleList={setArticleList} />
-    </div>
+  <>
+      <Router>
+        <Switch>
+          <Route path="/" component={Home}/>
+        </Switch>
+      </Router>
+  </>
   );
 }
 
