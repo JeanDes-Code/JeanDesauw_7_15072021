@@ -52,6 +52,21 @@ exports.findAll = (req, res) => {
   });
 };
 
+//Read one Article
+exports.findOne = (req, res) => {
+  console.log(req)
+  const id= req.params.id;
+  const articleSelectOne = "SELECT * FROM articles WHERE id= ?";
+
+  db.query(articleSelectOne, [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+};
+
 //UPDATE an Article
 exports.update = (req, res) => {
   console.log("PARAMS", req.params, "BODY : ", req.body); //debug
