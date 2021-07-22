@@ -6,6 +6,7 @@ import getOne from '../services/getOne-request';
 
 //Composant
 import ArticleItem from './ArticleItem';
+import ArticleUpdate from "./ArticleUpdate";
 import CommentList from './CommentList';
 
 function Article() {
@@ -19,10 +20,15 @@ function Article() {
     getOne(id, {setArticle});
   }, [id]);
 
+
   return (
        <> 
-          <button onClick={() => {console.log(article)}} > test </button>
-          <ArticleItem  id={article[0].id} title={article[0].title} content={article[0].content} author={article[0].author} />
+          <div key={id} className="card">
+            <ArticleItem  id={id} title={article[0].title} content={article[0].content} author={article[0].author} />
+            <div className="article-modification">
+            <ArticleUpdate id={id} setArticle={setArticle} />
+            </div>
+          </div>
           <CommentList commentList={commentList} />
        </>
   );

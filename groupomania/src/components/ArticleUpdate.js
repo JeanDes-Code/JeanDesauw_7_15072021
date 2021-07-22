@@ -1,13 +1,14 @@
 import { useState } from "react";
+import {useHistory} from 'react-router-dom'
 
 //Services
-import getArticle from "../services/get-request";
 import deleteRequest from "../services/delete-request";
 import putRequest from "../services/put-request";
+import getOne from "../services/getOne-request";
+import getArticle from "../services/get-request";
 
-
-function ArticleUpdate({ id, setArticleList }) {
-
+function ArticleUpdate({ id, setArticle }) {
+    const history = useHistory()
     const [isOpen, setIsOpen] = useState(false)
 
     const [modifiedArticle, setModifiedArticle] = useState({
@@ -17,7 +18,7 @@ function ArticleUpdate({ id, setArticleList }) {
 
     const deleteArticle = (id) => {
         deleteRequest(id);
-        getArticle({ setArticleList });
+        history.push("/")
     };
     
     //DEBUG : trouver une autre méthode pour rafraichir le composant ArticleList (parfois la requête GET se fait avant la fin de la requête PUT)
@@ -27,7 +28,7 @@ function ArticleUpdate({ id, setArticleList }) {
         } else {
           putRequest(id, modifiedArticle);
           setModifiedArticle({ title: "", content: "" });
-          getArticle({ setArticleList });
+          getOne(id, {setArticle})
         }
     };
     
