@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-
+const article = require("./app/routes/article.route");
+const commentaires = require("./app/routes/commentaire.route")
 //Réglages CORS
 app.use(cors());
 
@@ -11,7 +12,10 @@ app.use(express.json());
 //Parse les éléments de type application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-require("./app/routes/article.route", "./app/routes/commentaire.route")(app);
+app.use('/api', article);
+app.use('/api/commentaires', commentaires);
+//require("./app/routes/article.route", "./app/routes/commentaire.route")(app);
+
 
 // Config du port sur lequel joindre le serveur
 app.listen(3001, () => {

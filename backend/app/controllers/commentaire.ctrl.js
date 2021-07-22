@@ -6,7 +6,7 @@ exports.create = (req, res) => {
   const commentaireAuthor = req.body.author;
   const articleId = req.params.articleId;
 
-  const sqlInsert = `INSERT INTO commentaires_${articleId} (commentaire, author) VALUES (?,?)`;
+  let sqlInsert = `INSERT INTO commentaires_${articleId} (commentaire, author) VALUES (?,?)`;
 
   db.query(
     sqlInsert,
@@ -28,14 +28,15 @@ exports.create = (req, res) => {
 
 //READ all Comments
 exports.findAll = (req, res) => {
-  const articleId = req.params.articleId;
-  const commentSelect = `SELECT * FROM commentaires_${articleId}`;
+  const articleId = req.params.id;
+  let commentSelect = `SELECT * FROM commentaires_${articleId}`;
 
   db.query(commentSelect, (err, result) => {
     if (err) {
       console.log(err);
     } else {
       res.send(result);
+      console.log("Commentaires lu avec succès")
     }
   });
 };
@@ -46,7 +47,7 @@ exports.update = (req, res) => {
   const commentId = req.params.commentId;
   const commentContent = req.body.content;
 
-  const sqlUpdate = `UPDATE commentaires_${articleId} SET commentaire = ? WHERE id = ?"`;
+  let sqlUpdate = `UPDATE commentaires_${articleId} SET commentaire = ? WHERE id = ?"`;
 
   db.query(sqlUpdate, [commentContent, commentId], (err, result) => {
     if (err) {
@@ -62,7 +63,7 @@ exports.update = (req, res) => {
 exports.deleteOne = (req, res) => {
   const articleId = req.params.articleId;
   const commentId = req.params.commentId;
-  const sqlDelete = `DELETE FROM commentaires_${articleId} WHERE id = ?`;
+  let sqlDelete = `DELETE FROM commentaires_${articleId} WHERE id = ?`;
 
   db.query(sqlDelete, commentId, (err, result) => {
     if (err) {

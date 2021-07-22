@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 //Service
 import getOne from '../services/getOne-request';
+import getComs from '../services/getCom-request';
 
 //Composant
 import ArticleItem from './ArticleItem';
@@ -18,6 +19,7 @@ function Article() {
   //route introuvable pour la requête ..
   useEffect(() => {
     getOne(id, {setArticle});
+    getComs(id, {setCommentList})
   }, [id]);
 
 

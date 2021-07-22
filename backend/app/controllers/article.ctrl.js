@@ -1,9 +1,7 @@
-const { createPool } = require("mysql2/promise");
 const db = require("../config/db.config");
 
 //CREATE an Article
 exports.create = (req, res) => {
-  console.log(req.body); //debug
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleAuthor = req.body.author;
@@ -26,6 +24,7 @@ exports.create = (req, res) => {
         };
         res.send(newArticle);
         id = newArticle.id;
+        console.log("Article créé !")
       }
       let sqlCreateCom = `CREATE TABLE IF NOT EXISTS commentaires_${id} (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))`;
 
@@ -56,7 +55,6 @@ exports.findAll = (req, res) => {
 
 //Read one Article
 exports.findOne = (req, res) => {
-  console.log(req)
   const id= req.params.id;
   const selectOne = "SELECT * FROM articles WHERE id= ?";
 
@@ -68,7 +66,6 @@ exports.findOne = (req, res) => {
       res.send(err);
     } else {
       console.log("Article id: ", id, "lu avec succès")
-      console.log(result)
       res.send(result);
     }
   });

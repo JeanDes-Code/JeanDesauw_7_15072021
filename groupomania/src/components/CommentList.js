@@ -1,24 +1,14 @@
-///Affiche la liste des commentaires associée à un article. En affichant plusieurs <CommentItem />
-import { useState, useEffect } from "react";
-//Services
-//import getComs from "../services/getComs-request"
-
-
-
 const CommentList= ({commentList}) => {
 
-    
-    
     return (
         <div className="comment-list">
-          {commentList.map(({ id, content, author }) => (
-              <div key={id} className="comment" >
-                <p> {content} </p>
+          {commentList.map(({ id, commentaire, author }) => (
+              <div key={id} className="comment-card" >
+                <p> {commentaire} </p>
                 <h3 className="article-display-author">
                     Publié par {author}{" "}
                 </h3>
               </div>
-            
           ))}
         </div>
     );
