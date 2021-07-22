@@ -1,7 +1,4 @@
-//Composants
-import ArticleUpdate from "./ArticleUpdate";
-
-function ArticleItem({ id, title, content, author, setArticleList }) {
+function ArticleItem({ id, title, content, author }) {
     return (
         <>
             <div className="article-display"> 
@@ -10,9 +7,6 @@ function ArticleItem({ id, title, content, author, setArticleList }) {
                 <h3 className="article-display-author">
                     Publié par {author}{" "}
                 </h3>
-            </div>
-            <div className="article-modification">
-            <ArticleUpdate id={id} setArticleList={setArticleList} />
             </div>
         </>
     )

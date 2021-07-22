@@ -1,3 +1,4 @@
+const { createPool } = require("mysql2/promise");
 const db = require("../config/db.config");
 
 //CREATE an Article
@@ -48,6 +49,7 @@ exports.findAll = (req, res) => {
       console.log(err);
     } else {
       res.send(result);
+      console.log(result)
     }
   });
 };
@@ -56,12 +58,17 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   console.log(req)
   const id= req.params.id;
-  const articleSelectOne = "SELECT * FROM articles WHERE id= ?";
+  const selectOne = "SELECT * FROM articles WHERE id= ?";
 
-  db.query(articleSelectOne, [id], (err, result) => {
+  db.query(
+    selectOne, 
+    [id], 
+    (err, result) => {
     if (err) {
-      console.log(err);
+      res.send(err);
     } else {
+      console.log("Article id: ", id, "lu avec succès")
+      console.log(result)
       res.send(result);
     }
   });

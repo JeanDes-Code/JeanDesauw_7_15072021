@@ -1,26 +1,29 @@
-import {useHistory, useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import { useState, useEffect } from "react";
+
+//Service
 import getOne from '../services/getOne-request';
 
+//Composant
+import ArticleItem from './ArticleItem';
+import CommentList from './CommentList';
 
 function Article() {
   const {id} = useParams()
-  let articleId = id.replace(':', '');
-  console.log("articleID =", articleId)
-  let history = useHistory()
 
-  const [article, setArticle] = useState({id:'', title:'', content: '', author:''})
+  const [article, setArticle] = useState([{id:'', title:'', content: '', author:''}])
+  const [commentList, setCommentList] = useState([])
   
-  getOne(articleId);
-  /*useEffect(() => {
-    getOne();
-  }, [articleId]);*/
+  //route introuvable pour la requête ..
+  useEffect(() => {
+    getOne(id, {setArticle});
+  }, [id]);
 
-  console.log(article)
-  
   return (
-       <>
-          <button onClick={() => {history.push('/')}}> Go to the Home page</button>
+       <> 
+          <button onClick={() => {console.log(article)}} > test </button>
+          <ArticleItem  id={article[0].id} title={article[0].title} content={article[0].content} author={article[0].author} />
+          <CommentList commentList={commentList} />
        </>
   );
 }

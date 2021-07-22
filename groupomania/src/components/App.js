@@ -13,9 +13,10 @@ function App() {
   return (
     <>
       <Router>
-        <Link to='/'> Home</Link>
-        <Link to='/post'> Article </Link>
-
+        <div className="nav-bar">
+          <Link to='/'> Home</Link>
+          <Link to='/post'> Publier un article </Link>
+        </div>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/post" exact component={ArticlePost} />

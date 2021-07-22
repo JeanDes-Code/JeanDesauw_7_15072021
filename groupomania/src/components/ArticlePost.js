@@ -1,5 +1,4 @@
 import { useState } from "react";
-import getArticle from "../services/get-request";
 
 import postRequest from "../services/post-request";
 
@@ -20,7 +19,6 @@ function ArticlePost({ setArticleList }) {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
       postRequest(newArticle);
-      getArticle({ setArticleList });
     }
   };
 

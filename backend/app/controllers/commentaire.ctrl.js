@@ -4,7 +4,7 @@ const db = require("../config/db.config");
 exports.create = (req, res) => {
   const commentaireContent = req.body.content;
   const commentaireAuthor = req.body.author;
-  const articleId = req.body.articleId;
+  const articleId = req.params.articleId;
 
   const sqlInsert = `INSERT INTO commentaires_${articleId} (commentaire, author) VALUES (?,?)`;
 

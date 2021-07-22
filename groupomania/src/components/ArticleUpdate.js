@@ -83,7 +83,7 @@ function ArticleUpdate({ id, setArticleList }) {
                 </button>
         </>
     ) : (
-        <button onClick={() => setIsOpen(true)}> Modifier Article </button>
+        <button className="btn" onClick={() => setIsOpen(true)}> Modifier ou supprimer l'article </button>
     )
 }
 
