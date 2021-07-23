@@ -9,6 +9,7 @@ import getComs from '../services/getCom-request';
 import ArticleItem from './ArticleItem';
 import ArticleUpdate from "./ArticleUpdate";
 import CommentList from './CommentList';
+import CommentPost from './CommentPost';
 
 function Article() {
   const {id} = useParams()
@@ -31,7 +32,8 @@ function Article() {
             <ArticleUpdate id={id} setArticle={setArticle} />
             </div>
           </div>
-          <CommentList commentList={commentList} />
+          <CommentList commentList={commentList} setCommentList={setCommentList} />
+          <CommentPost id={id} setCommentList={setCommentList} />
        </>
   );
 }

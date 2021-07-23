@@ -32,7 +32,7 @@ exports.create = (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          console.log(`Table Commentaires créée ! ${result}`);
+          console.log(`Table Commentaires créée !`);
         }
       });
     }

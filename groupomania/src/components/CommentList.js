@@ -1,4 +1,6 @@
-const CommentList= ({commentList}) => {
+import CommentUpdate from "./CommentUpdate";
+
+const CommentList= ({commentList, setCommentList}) => {
 
     return (
         <div className="comment-list">
@@ -8,6 +10,7 @@ const CommentList= ({commentList}) => {
                 <h3 className="article-display-author">
                     Publié par {author}{" "}
                 </h3>
+                <CommentUpdate id={id} setCommentList={setCommentList} />
               </div>
           ))}
         </div>

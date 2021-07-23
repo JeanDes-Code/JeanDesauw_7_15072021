@@ -2,9 +2,9 @@ const db = require("../config/db.config");
 
 //CREATE a Comment
 exports.create = (req, res) => {
-  const commentaireContent = req.body.content;
+  const commentaireContent = req.body.commentaire;
   const commentaireAuthor = req.body.author;
-  const articleId = req.params.articleId;
+  const articleId = req.params.id;
 
   let sqlInsert = `INSERT INTO commentaires_${articleId} (commentaire, author) VALUES (?,?)`;
 
@@ -21,6 +21,7 @@ exports.create = (req, res) => {
           author: commentaireAuthor,
         };
         res.send(newComment);
+        console.log("Le nouveau commentaire : ", newComment, " a été publié ")
       }
     }
   );
@@ -44,16 +45,16 @@ exports.findAll = (req, res) => {
 //UPDATE a Comment
 exports.update = (req, res) => {
   const articleId = req.params.articleId;
-  const commentId = req.params.commentId;
-  const commentContent = req.body.content;
+  const commentId = req.params.id;
+  const commentContent = req.body.data.commentaire;
 
-  let sqlUpdate = `UPDATE commentaires_${articleId} SET commentaire = ? WHERE id = ?"`;
+  let sqlUpdate = `UPDATE commentaires_${articleId} SET commentaire = ? WHERE id = ?`;
 
   db.query(sqlUpdate, [commentContent, commentId], (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Commentaire modifié !", result);
+      console.log("Commentaire modifié !");
     }
     res.send(result).end();
   });
@@ -61,13 +62,14 @@ exports.update = (req, res) => {
 
 //DELETE a Comment
 exports.deleteOne = (req, res) => {
+  console.log(req.params)
   const articleId = req.params.articleId;
-  const commentId = req.params.commentId;
+  const commentId = req.params.id;
   let sqlDelete = `DELETE FROM commentaires_${articleId} WHERE id = ?`;
 
   db.query(sqlDelete, commentId, (err, result) => {
     if (err) {
-      console.log(err);
+      console.log("ERREUR");
     } else {
       console.log("Commentaire supprimé !");
     }

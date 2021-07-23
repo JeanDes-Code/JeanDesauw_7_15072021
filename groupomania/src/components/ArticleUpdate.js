@@ -5,7 +5,6 @@ import {useHistory} from 'react-router-dom'
 import deleteRequest from "../services/delete-request";
 import putRequest from "../services/put-request";
 import getOne from "../services/getOne-request";
-import getArticle from "../services/get-request";
 
 function ArticleUpdate({ id, setArticle }) {
     const history = useHistory()
