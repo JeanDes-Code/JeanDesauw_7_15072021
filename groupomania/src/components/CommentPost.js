@@ -5,6 +5,7 @@ import { useParams} from 'react-router-dom'
 import postRequest from "../services/post-request";
 
 function CommentPost () {
+    const [isOpen, setIsOpen] = useState(false)
     const {id} = useParams()
 
     const [newCom, setNewCom] = useState({
@@ -25,27 +26,31 @@ function CommentPost () {
     };
     
 
-    return(
-        <div className="form">
+    return isOpen ? (
+    <>  
+        <span className="border"></span>   
+        <button className="btn" onClick={() => setIsOpen(false)}> Fermer l'onglet </button>
+        <div className="form-comment">
             <h2>Publier un commentaire : </h2>
-            <label> Contenu du commentaire </label>
             <textarea
                 type="text"
                 name="content"
+                placeholder="Commentaire"
                 onChange={(e) => {
                 setNewCom({ ...newCom, commentaire: e.target.value });
                 }}
             />
-            <label> Auteur du commentaire </label>
+            <label className="form-comment-author"> Auteur du commentaire : </label>
             <input
                 type="text"
                 name="author"
+                placeholder="Auteur"
                 onChange={(e) => {
                 setNewCom({ ...newCom, author: e.target.value });
                 }}
             />
             <button
-                className="btn"
+                className="btn submit-comment"
                 onClick={() => {
                 submitComment(newCom);
                 }}
@@ -54,6 +59,9 @@ function CommentPost () {
                 Publier{" "}
             </button>
         </div>
+    </>
+    ) :( 
+        <button className="btn" onClick={() => setIsOpen(true)}> Publier un commentaire </button>
     );
 }
 

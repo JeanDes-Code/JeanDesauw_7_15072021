@@ -25,7 +25,7 @@ function Article() {
 
 
   return (
-       <> 
+       <div className='article-page'> 
           <div key={id} className="card">
             <ArticleItem  id={id} title={article[0].title} content={article[0].content} author={article[0].author} />
             <div className="article-modification">
@@ -34,7 +34,7 @@ function Article() {
           </div>
           <CommentList commentList={commentList} setCommentList={setCommentList} />
           <CommentPost id={id} setCommentList={setCommentList} />
-       </>
+       </div>
   );
 }
 

@@ -75,8 +75,8 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   console.log("PARAMS", req.params, "BODY : ", req.body); //debug
   const articleId = req.params.id;
-  const articleTitle = req.body.modifiedArticle.title;
-  const articleContent = req.body.modifiedArticle.content;
+  const articleTitle = req.body.data.title;
+  const articleContent = req.body.data.content;
   const sqlUpdate = "UPDATE articles SET title = ?, content = ? WHERE id = ?";
 
   db.query(

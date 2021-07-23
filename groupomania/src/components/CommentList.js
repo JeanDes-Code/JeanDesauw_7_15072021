@@ -1,3 +1,4 @@
+import CommentItem from "./CommentItem";
 import CommentUpdate from "./CommentUpdate";
 
 const CommentList= ({commentList, setCommentList}) => {
@@ -6,10 +7,7 @@ const CommentList= ({commentList, setCommentList}) => {
         <div className="comment-list">
           {commentList.map(({ id, commentaire, author }) => (
               <div key={id} className="comment-card" >
-                <p> {commentaire} </p>
-                <h3 className="article-display-author">
-                    Publié par {author}{" "}
-                </h3>
+                <CommentItem commentaire={commentaire} author={author} />
                 <CommentUpdate id={id} setCommentList={setCommentList} />
               </div>
           ))}

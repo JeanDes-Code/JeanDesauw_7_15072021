@@ -35,13 +35,13 @@ function CommentUpdate({ id, setCommentList }) {
     
     return isOpen ? (
         <>  
-            <button onClick={() => setIsOpen(false)}> Fermer </button>
-            <span className="border"></span>
+            <span className="border"></span>    
+            <button className='btn btn-hide' onClick={() => setIsOpen(false)}> Refermer l'onglet modification </button>
                 <h3> Modifier le commentaire : </h3>
                 <textarea
                     className="newContent updateInput"
                     type="text"
-                    placeholder="Nouveau contenu"
+                    placeholder="Nouveau commentaire"
                     onChange={(e) => {
                     setModifiedComment({
                         ...modifiedComment,
@@ -68,7 +68,7 @@ function CommentUpdate({ id, setCommentList }) {
                 </button>
         </>
     ) : (
-        <button className="btn" onClick={() => setIsOpen(true)}> Modifier ou supprimer le commentaire </button>
+        <button className="btn btn-comment btn-hide" onClick={() => setIsOpen(true)}> Modifier ou supprimer le commentaire </button>
     )
 }
 

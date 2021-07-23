@@ -32,9 +32,9 @@ function ArticleUpdate({ id, setArticle }) {
     };
     
     return isOpen ? (
-        <>  
-            <button onClick={() => setIsOpen(false)}> Fermer </button>
-            <span className="border"></span>
+        <>      
+                <span className="border"></span>
+                <button className="btn btn-hide-article" onClick={() => setIsOpen(false)}> Refermer </button>
                 <h3> Modifier l'article : </h3>
 
                 <div className="article-modification-title">
@@ -83,7 +83,9 @@ function ArticleUpdate({ id, setArticle }) {
                 </button>
         </>
     ) : (
-        <button className="btn" onClick={() => setIsOpen(true)}> Modifier ou supprimer l'article </button>
+        <>
+            <button className="btn btn-article btn-hide-article" onClick={() => setIsOpen(true)}> Modifier ou supprimer l'article </button>
+        </>
     )
 }
 
