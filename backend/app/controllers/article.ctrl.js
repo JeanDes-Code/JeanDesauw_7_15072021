@@ -26,15 +26,6 @@ exports.create = (req, res) => {
         id = newArticle.id;
         console.log("Article créé !")
       }
-      let sqlCreateCom = `CREATE TABLE IF NOT EXISTS commentaires_${id} (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))`;
-
-      db.query(sqlCreateCom, (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`Table Commentaires créée !`);
-        }
-      });
     }
   );
 };
@@ -97,22 +88,12 @@ exports.update = (req, res) => {
 exports.deleteOne = (req, res) => {
   const articleId = req.params.id;
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
-  const commentaireDrop = `DROP TABLE IF EXISTS commentaires_${articleId}`;
 
-  db.query(commentaireDrop, (err, result) => {
+  db.query(sqlDelete, articleId, (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      res.status(204).send();
-
-      console.log("Commentaires reliés à l'article supprimés !");
+      console.log("Article supprimé !");
     }
-    db.query(sqlDelete, articleId, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Article supprimé !");
-      }
-    });
   });
 };
