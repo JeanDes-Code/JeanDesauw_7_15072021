@@ -1,14 +1,12 @@
-module.exports = (app) => {
-  const commentaires = require("../controllers/commentaire.ctrl.js");
-  let router = require("express").Router();
+const commentaires = require("../controllers/commentaire.ctrl.js");
+let router = require("express").Router();
 
-  router.post("/post/commentaires", commentaires.create);
+router.post("/post/:id", commentaires.create);
 
-  router.get("/get/commentaires", commentaires.findAll);
+router.get("/get/:id", commentaires.findAll);
 
-  router.put("/update/commentaires/:id", commentaires.update);
+router.put("/put/:articleId/:id", commentaires.update);
 
-  router.delete("/delete/commentaires/:id", commentaires.deleteOne);
+router.delete("/delete/:articleId/:id", commentaires.deleteOne);
 
-  app.use("/api", router);
-};
+module.exports = router

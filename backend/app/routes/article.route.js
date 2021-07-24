@@ -1,14 +1,14 @@
-module.exports = (app) => {
-  const articles = require("../controllers/article.ctrl.js");
-  let router = require("express").Router();
+const articles = require("../controllers/article.ctrl.js");
+let router = require("express").Router();
 
-  router.post("/post/article", articles.create);
+router.post("/post/article", articles.create);
 
-  router.get("/get/article", articles.findAll);
+router.get("/get/article", articles.findAll);
 
-  router.put("/update/article/:id", articles.update);
+router.get("/get/article/:id", articles.findOne);
 
-  router.delete("/delete/article/:id", articles.deleteOne);
+router.put("/update/article/:id", articles.update);
 
-  app.use("/api", router);
-};
+router.delete("/delete/article/:id", articles.deleteOne);
+
+module.exports = router

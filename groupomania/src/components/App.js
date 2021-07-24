@@ -1,26 +1,34 @@
-import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+//Style
 import "../styles/App.css";
 
-import getArticle from "../services/get-request";
+//Assets
+import logo from '../assets/icon-left-font-monochrome-black.svg'
 
-import ArticlePost from "./ArticlePost";
-import ArticleList from "./ArticleList";
+//Pages
+import Home from "./Home-page"
+import Article from "./Article-page"
+import ArticlePost from "./ArticlePost"
 
 function App() {
-  const [articleList, setArticleList] = useState([]);
-  console.log(articleList);
-
-  useEffect(() => {
-    getArticle({ setArticleList });
-  }, []);
-
   return (
-    <div className="App">
-      <h1>Réseau social d'entreprise - Groupomania </h1>
-
-      <ArticlePost articleList={articleList} setArticleList={setArticleList} />
-      <ArticleList articleList={articleList} setArticleList={setArticleList} />
-    </div>
+    <>
+      <Router>
+        <div className="header">
+          <img className='header-logo' src={logo} alt="Logo Groupomania"></img>
+          <div className="nav-bar">
+            <Link className='nav-item' to='/'> Page d'accueil </Link>
+            <Link className='nav-item' to='/post'> Publier un article </Link>
+          </div>
+        </div>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/post" exact component={ArticlePost} />
+          <Route path="/:id" exact component={Article} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

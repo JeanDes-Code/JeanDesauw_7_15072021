@@ -2,16 +2,19 @@ const db = require("../config/db.config");
 
 //CREATE a Comment
 exports.create = (req, res) => {
-  const commentaireContent = req.body.content;
+  const commentaireContent = req.body.commentaire;
   const commentaireAuthor = req.body.author;
-  const articleId = req.body.articleId;
+  const articleId = req.params.id;
+  let createTable = "CREATE TABLE IF NOT EXISTS Commentaires (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, articleId INT, PRIMARY KEY (id))"
+  let sqlInsert = "INSERT INTO Commentaires (commentaire, author, articleId) VALUES (?,?,?)";
 
-  const sqlInsert = `INSERT INTO commentaires_${articleId} (commentaire, author) VALUES (?,?)`;
-
-  db.query(
-    sqlInsert,
-    [commentaireContent, commentaireAuthor],
-    (err, result) => {
+  db.query(createTable, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Table commentaire créée ou déjà existante !")
+    }
+    db.query(sqlInsert, [commentaireContent, commentaireAuthor, articleId], (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -21,38 +24,39 @@ exports.create = (req, res) => {
           author: commentaireAuthor,
         };
         res.send(newComment);
+        console.log("Le nouveau commentaire : ", newComment, " a été publié ")
       }
-    }
-  );
+    })
+  })
 };
 
 //READ all Comments
 exports.findAll = (req, res) => {
-  const articleId = req.params.articleId;
-  const commentSelect = `SELECT * FROM commentaires_${articleId}`;
+  const articleId = req.params.id;
+  let commentSelect = "SELECT * FROM commentaires WHERE articleID = ?";
 
-  db.query(commentSelect, (err, result) => {
+  db.query(commentSelect, [articleId], (err, result) => {
     if (err) {
       console.log(err);
     } else {
       res.send(result);
+      console.log("Commentaires lu avec succès")
     }
   });
 };
 
 //UPDATE a Comment
 exports.update = (req, res) => {
-  const articleId = req.params.articleId;
-  const commentId = req.params.commentId;
-  const commentContent = req.body.content;
+  const commentId = req.params.id;
+  const commentContent = req.body.data.commentaire;
 
-  const sqlUpdate = `UPDATE commentaires_${articleId} SET commentaire = ? WHERE id = ?"`;
+  let sqlUpdate = "UPDATE commentaires SET commentaire = ? WHERE id = ?";
 
   db.query(sqlUpdate, [commentContent, commentId], (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Commentaire modifié !", result);
+      console.log("Commentaire modifié !");
     }
     res.send(result).end();
   });
@@ -60,13 +64,13 @@ exports.update = (req, res) => {
 
 //DELETE a Comment
 exports.deleteOne = (req, res) => {
-  const articleId = req.params.articleId;
-  const commentId = req.params.commentId;
-  const sqlDelete = `DELETE FROM commentaires_${articleId} WHERE id = ?`;
+  console.log(req.params)
+  const commentId = req.params.id;
+  let sqlDelete = "DELETE FROM commentaires WHERE id = ?";
 
-  db.query(sqlDelete, commentId, (err, result) => {
+  db.query(sqlDelete, [commentId], (err, result) => {
     if (err) {
-      console.log(err);
+      console.log("ERREUR");
     } else {
       console.log("Commentaire supprimé !");
     }

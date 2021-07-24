@@ -2,7 +2,6 @@ const db = require("../config/db.config");
 
 //CREATE an Article
 exports.create = (req, res) => {
-  console.log(req.body); //debug
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleAuthor = req.body.author;
@@ -25,16 +24,8 @@ exports.create = (req, res) => {
         };
         res.send(newArticle);
         id = newArticle.id;
+        console.log("Article créé !")
       }
-      let sqlCreateCom = `CREATE TABLE IF NOT EXISTS commentaires_${id} (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))`;
-
-      db.query(sqlCreateCom, (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`Table Commentaires créée ! ${result}`);
-        }
-      });
     }
   );
 };
@@ -48,6 +39,25 @@ exports.findAll = (req, res) => {
       console.log(err);
     } else {
       res.send(result);
+      console.log(result)
+    }
+  });
+};
+
+//Read one Article
+exports.findOne = (req, res) => {
+  const id= req.params.id;
+  const selectOne = "SELECT * FROM articles WHERE id= ?";
+
+  db.query(
+    selectOne, 
+    [id], 
+    (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log("Article id: ", id, "lu avec succès")
+      res.send(result);
     }
   });
 };
@@ -56,8 +66,8 @@ exports.findAll = (req, res) => {
 exports.update = (req, res) => {
   console.log("PARAMS", req.params, "BODY : ", req.body); //debug
   const articleId = req.params.id;
-  const articleTitle = req.body.modifiedArticle.title;
-  const articleContent = req.body.modifiedArticle.content;
+  const articleTitle = req.body.data.title;
+  const articleContent = req.body.data.content;
   const sqlUpdate = "UPDATE articles SET title = ?, content = ? WHERE id = ?";
 
   db.query(
@@ -78,22 +88,20 @@ exports.update = (req, res) => {
 exports.deleteOne = (req, res) => {
   const articleId = req.params.id;
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
-  const commentaireDrop = `DROP TABLE IF EXISTS commentaires_${articleId}`;
+  const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"
 
-  db.query(commentaireDrop, (err, result) => {
+  db.query(sqlDelete, articleId, (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      res.status(204).send();
-
-      console.log("Commentaires reliés à l'article supprimés !");
+      console.log("Article supprimé !");
     }
-    db.query(sqlDelete, articleId, (err, result) => {
+    db.query(sqlDeleteComs, [articleId], (err,result) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("Article supprimé !");
+        console.log("Commentaires associés à l'article supprimés !")
       }
-    });
+    })
   });
 };
