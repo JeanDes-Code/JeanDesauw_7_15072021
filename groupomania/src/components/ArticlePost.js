@@ -1,8 +1,10 @@
 import { useState } from "react";
+import {useHistory} from 'react-router-dom'
 
 import postRequest from "../services/post-request";
 
-function ArticlePost({ setArticleList }) {
+function ArticlePost() {
+  const history = useHistory()
   const [newArticle, setNewArticle] = useState({
     title: "",
     content: "",
@@ -10,7 +12,7 @@ function ArticlePost({ setArticleList }) {
   });
 
   //voir autre méthode pour mettre à jour la liste d'article
-  const submitArticle = (newArticle) => {
+  const submitArticle = async (newArticle) => {
     if (
       newArticle.title === "" ||
       newArticle.content === "" ||
@@ -18,7 +20,8 @@ function ArticlePost({ setArticleList }) {
     ) {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
-      postRequest(newArticle);
+      await postRequest(newArticle);
+      history.push("/")
     }
   };
 

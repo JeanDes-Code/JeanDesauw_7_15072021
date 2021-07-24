@@ -14,8 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', article);
 app.use('/api/commentaires', commentaires);
-//require("./app/routes/article.route", "./app/routes/commentaire.route")(app);
-
 
 // Config du port sur lequel joindre le serveur
 app.listen(3001, () => {

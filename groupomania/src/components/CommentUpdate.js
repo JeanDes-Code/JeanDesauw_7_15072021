@@ -16,18 +16,18 @@ function CommentUpdate({ id, setCommentList }) {
         commentaire: "",
     });
 
-    const deleteComment = (id) => {
+    const deleteComment = async (id) => {
         const item = "commentaire"
-        deleteRequest(id, articleId, item);
+        await deleteRequest(id, articleId, item);
         getComs(articleId, {setCommentList})
     };
     
     //DEBUG : trouver une autre méthode pour rafraichir le composant ArticleList (parfois la requête GET se fait avant la fin de la requête PUT)
-    const updateComment = (id, modifiedComment) => {
+    const updateComment = async (id, modifiedComment) => {
         if (modifiedComment.commentaire === "") {
             alert("Vous ne pouvez pas publier un article vide.");
         } else {
-            putRequest(id, modifiedComment, articleId);
+            await putRequest(id, modifiedComment, articleId);
             setModifiedComment({ commentaire: "" });
             getComs(id, {setCommentList})
         }

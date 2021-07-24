@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useParams} from 'react-router-dom'
+import getComs from "../services/getCom-request";
 
 //service Post com
 import postRequest from "../services/post-request";
 
-function CommentPost () {
+function CommentPost ({setCommentList}) {
     const [isOpen, setIsOpen] = useState(false)
     const {id} = useParams()
 
@@ -13,7 +14,7 @@ function CommentPost () {
         author: "",
     });
 
-    const submitComment = (newCom) => {
+    const submitComment = async (newCom) => {
         if (
             newCom.content === "" ||
             newCom.author === ""
@@ -21,7 +22,8 @@ function CommentPost () {
             alert("Vous ne pouvez pas publier un commentaire vide !");
           } else {
                 console.log(newCom, "publié !")
-                postRequest(newCom, id)
+                await postRequest(newCom, id)
+                getComs(id, {setCommentList})
           }
     };
     

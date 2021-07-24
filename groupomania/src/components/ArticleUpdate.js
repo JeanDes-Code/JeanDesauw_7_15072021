@@ -15,17 +15,19 @@ function ArticleUpdate({ id, setArticle }) {
         content: "",
     });
 
-    const deleteArticle = (id) => {
-        deleteRequest(id);
-        history.push("/")
+    const deleteArticle = async (id) => {
+        await deleteRequest(id);
+        setTimeout(() => {
+            history.push(`/`);
+          }, 10)
     };
     
     //DEBUG : trouver une autre méthode pour rafraichir le composant ArticleList (parfois la requête GET se fait avant la fin de la requête PUT)
-    const updateArticle = (id, modifiedArticle) => {
+    const updateArticle = async (id, modifiedArticle) => {
         if (modifiedArticle.title === "" || modifiedArticle.content === "") {
           alert("Veuillez remplir tous les champs pour modifier votre article.");
         } else {
-          putRequest(id, modifiedArticle);
+          await putRequest(id, modifiedArticle);
           setModifiedArticle({ title: "", content: "" });
           getOne(id, {setArticle})
         }
