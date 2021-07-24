@@ -17,7 +17,7 @@ function CommentUpdate({ id, setCommentList }) {
     });
 
     const deleteComment = (id) => {
-        const item = "article"
+        const item = "commentaire"
         deleteRequest(id, articleId, item);
         getComs(articleId, {setCommentList})
     };
