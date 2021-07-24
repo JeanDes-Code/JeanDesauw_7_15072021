@@ -23,7 +23,10 @@ function CommentPost ({setCommentList}) {
           } else {
                 console.log(newCom, "publié !")
                 await postRequest(newCom, id)
-                getComs(id, {setCommentList})
+                setTimeout(() => {
+                    getComs(id, {setCommentList})
+                }, 100)
+                setIsOpen(false)
           }
     };
     

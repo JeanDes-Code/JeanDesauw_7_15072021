@@ -88,6 +88,7 @@ exports.update = (req, res) => {
 exports.deleteOne = (req, res) => {
   const articleId = req.params.id;
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
+  const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"
 
   db.query(sqlDelete, articleId, (err, result) => {
     if (err) {
@@ -95,5 +96,12 @@ exports.deleteOne = (req, res) => {
     } else {
       console.log("Article supprimé !");
     }
+    db.query(sqlDeleteComs, [articleId], (err,result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Commentaires associés à l'article supprimés !")
+      }
+    })
   });
 };

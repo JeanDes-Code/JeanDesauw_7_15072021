@@ -29,7 +29,10 @@ function ArticleUpdate({ id, setArticle }) {
         } else {
           await putRequest(id, modifiedArticle);
           setModifiedArticle({ title: "", content: "" });
-          getOne(id, {setArticle})
+          setTimeout(() => {
+            getOne(id, {setArticle})
+          }, 10);
+          setIsOpen(false);
         }
     };
     
