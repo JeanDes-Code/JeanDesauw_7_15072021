@@ -21,7 +21,9 @@ function ArticlePost() {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
       await postRequest(newArticle);
-      history.push("/")
+      setTimeout(() => {
+        history.push(`/`);
+      }, 10)
     }
   };
 

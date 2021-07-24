@@ -6,28 +6,35 @@ exports.create = (req, res) => {
   const articleContent = req.body.content;
   const articleAuthor = req.body.author;
 
+  const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))"
   const sqlInsert =
     "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
 
-  db.query(
-    sqlInsert,
-    [articleTitle, articleContent, articleAuthor],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const newArticle = {
-          id: result.insertId,
-          title: articleTitle,
-          content: articleContent,
-          author: articleAuthor,
-        };
-        res.send(newArticle);
-        id = newArticle.id;
-        console.log("Article créé !")
-      }
+  db.query(sqlCreate, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Table Article créée ou déjà existante !")
     }
-  );
+    db.query(
+      sqlInsert,
+      [articleTitle, articleContent, articleAuthor],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const newArticle = {
+            id: result.insertId,
+            title: articleTitle,
+            content: articleContent,
+            author: articleAuthor,
+          };
+          res.send(newArticle);
+          id = newArticle.id;
+          console.log("Article créé !")
+        }
+      })
+  });
 };
 
 //READ all Articles
@@ -38,8 +45,8 @@ exports.findAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log("Articles récupérés !")
       res.send(result);
-      console.log(result)
     }
   });
 };
@@ -64,7 +71,6 @@ exports.findOne = (req, res) => {
 
 //UPDATE an Article
 exports.update = (req, res) => {
-  console.log("PARAMS", req.params, "BODY : ", req.body); //debug
   const articleId = req.params.id;
   const articleTitle = req.body.data.title;
   const articleContent = req.body.data.content;
@@ -77,7 +83,7 @@ exports.update = (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("Article modifié !", result);
+        console.log("Article modifié !");
       }
       res.send(result).end();
     }
