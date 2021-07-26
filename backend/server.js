@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+
 const article = require("./app/routes/article.route");
 const commentaires = require("./app/routes/commentaire.route")
+const auth = require("./app/routes/user.route")
+
 //Réglages CORS
 app.use(cors());
 
@@ -13,7 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', article);
+app.use('/api/auth', auth)
 app.use('/api/commentaires', commentaires);
+
 
 // Config du port sur lequel joindre le serveur
 app.listen(3001, () => {

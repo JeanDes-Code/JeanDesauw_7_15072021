@@ -11,4 +11,4 @@ router.put("/update/article/:id", articles.update);
 
 router.delete("/delete/article/:id", articles.deleteOne);
 
-module.exports = router
+module.exports = router;
