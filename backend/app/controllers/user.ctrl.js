@@ -1,5 +1,8 @@
 const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const randomToken = "!kfr*kç_"; //Randomiser le token de session
 
 //Sign Up
 exports.signup = async (req, res) => {
@@ -51,7 +54,17 @@ exports.login = async (req, res) => {
                     console.log("Mot de passe incorrect !")
                     res.end();
                 } else {
-                    console.log("Vous êtes connecté !", result)
+                    const auth = {
+                        username: username,
+                        token: jwt.sign(
+                            { username: username},
+                            randomToken,
+                            { expiresIn: "24h" }
+                        )
+                    };
+                    console.log(auth)
+                    res.send(auth)
+                    console.log("Vous êtes connecté !")
                     res.end();
                 }
            });

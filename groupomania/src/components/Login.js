@@ -17,12 +17,10 @@ function Login () {
     })
 
     const connectUser = () => {
-        console.log(user)
         loginRequest(user)
     }
 
     const createUser = () => {
-        console.log(newUser)
         signupRequest(newUser)
     }
 
