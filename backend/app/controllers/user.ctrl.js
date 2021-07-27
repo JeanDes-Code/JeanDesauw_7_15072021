@@ -8,9 +8,18 @@ const randomToken = "!kfr*kç_"; //Randomiser le token de session
 exports.signup = async (req, res) => {
     const email = req.body.email;
     const password = await bcrypt.hash(req.body.password, 10);
-    const moderateurPassword = await bcrypt.hash("moderateur", 10,)
     const username = req.body.username;
     const defaultRole = 0;
+
+    //Compte moderateur :
+    const moderateurPassword = await bcrypt.hash("moderateur", 10,)
+    const moderateur = {
+        id: 1,
+        email: "moderateur@groupomania.fr",
+        password: moderateurPassword,
+        username: "Moderateur",
+        role: 1
+    }
 
     const sqlCreate ="CREATE TABLE IF NOT EXISTS Users (id INT UNSIGNED NOT NULL AUTO_INCREMENT, email VARCHAR(45) NOT NULL UNIQUE, password CHAR(60) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL, username VARCHAR(45) NOT NULL UNIQUE, role INT NOT NULL, PRIMARY KEY (id))"
     const sqlAutoInsertModerateur = "INSERT INTO Users (id, email, password, username, role) VALUES (?,?,?,?,?)"
@@ -24,13 +33,6 @@ exports.signup = async (req, res) => {
           console.log("Table Users créée ou déjà existante !")
         }
         //Création d'un compte modérateur --> 'username: Moderateur, password : moderateur, email: moderateur@groupomania.fr'
-        const moderateur = {
-            id: 1,
-            email: "moderateur@groupomania.fr",
-            password: moderateurPassword,
-            username: "Moderateur",
-            role: 1
-        }
         db.query(sqlAutoInsertModerateur, [moderateur.id, moderateur.email, moderateur.password, moderateur.username, moderateur.role], (err,result) => {
             if (err) {
                 console.log("Modérateur non-créé ", err);
@@ -40,7 +42,7 @@ exports.signup = async (req, res) => {
                 res.end()
             }
         })
-        //Création du compte utilisateur [après cryptage du mdp]
+            //Création du compte utilisateur [après cryptage du mdp]
             db.query(sqlInsert, [email, password, username, defaultRole], (err,result) => {
                 if (err) {
                     console.log(err);
