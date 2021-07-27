@@ -4,8 +4,7 @@ const db = require("../config/db.config");
 exports.create = (req, res) => {
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
-  const articleAuthor = req.body.author;
-  const userId = req.res.locals.userId;
+  const username = req.res.locals.username;
 
   const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))"
   const sqlInsert =
@@ -20,7 +19,7 @@ exports.create = (req, res) => {
     }
     db.query(
       sqlInsert,
-      [articleTitle, articleContent, articleAuthor],
+      [articleTitle, articleContent, username],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -29,10 +28,8 @@ exports.create = (req, res) => {
             id: result.insertId,
             title: articleTitle,
             content: articleContent,
-            author: articleAuthor,
+            author: username,
           };
-          res.send(newArticle);
-          id = newArticle.id;
           console.log("Article créé !")
         }
       })
@@ -42,7 +39,6 @@ exports.create = (req, res) => {
 //READ all Articles
 exports.findAll = (req, res) => {
   const articleSelect = "SELECT * FROM articles";
-
   db.query(articleSelect, (err, result) => {
     if (err) {
       console.log(err);
@@ -73,7 +69,6 @@ exports.findOne = (req, res) => {
 
 //UPDATE an Article
 exports.update = (req, res) => {
-  const userId = req.res.locals.userId;
   const articleId = req.params.id;
   const articleTitle = req.body.data.title;
   const articleContent = req.body.data.content;
@@ -95,7 +90,6 @@ exports.update = (req, res) => {
 
 //DELETE an Article
 exports.deleteOne = (req, res) => {
-  const userId = req.res.locals.userId;
   const articleId = req.params.id;
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
   const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"

@@ -70,7 +70,7 @@ exports.login = async (req, res) => {
         } else {
             const hash = JSON.parse(JSON.stringify(result));
             const userId = hash[0].id
-            const role = hash[0].role
+            const username = hash[0].username
             console.log(hash)
             await bcrypt.compare(password, hash[0].password, function(err, result) {
                 if( result === false ) {
@@ -82,7 +82,7 @@ exports.login = async (req, res) => {
                         id: userId,
                         token: jwt.sign(
                             {   id: userId,
-                                role : role
+                                username : username
                             },
                             randomToken,
                             { expiresIn: "24h" }

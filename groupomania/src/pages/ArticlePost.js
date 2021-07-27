@@ -7,16 +7,14 @@ function ArticlePost() {
   const history = useHistory()
   const [newArticle, setNewArticle] = useState({
     title: "",
-    content: "",
-    author: "",
+    content: ""
   });
 
   //voir autre méthode pour mettre à jour la liste d'article
   const submitArticle = async (newArticle) => {
     if (
       newArticle.title === "" ||
-      newArticle.content === "" ||
-      newArticle.author === ""
+      newArticle.content === ""
     ) {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
@@ -44,14 +42,6 @@ function ArticlePost() {
         name="content"
         onChange={(e) => {
           setNewArticle({ ...newArticle, content: e.target.value });
-        }}
-      />
-      <label> Auteur de l'article </label>
-      <input
-        type="text"
-        name="author"
-        onChange={(e) => {
-          setNewArticle({ ...newArticle, author: e.target.value });
         }}
       />
 

@@ -9,7 +9,11 @@ const deleteRequest = (id, articleId, item) => {
       },
     })
   } else {
-    Axios.delete(`http://localhost:3001/api/delete/article/${id}`);
+    Axios.delete(`http://localhost:3001/api/delete/article/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 };
 

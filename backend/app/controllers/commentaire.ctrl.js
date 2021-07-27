@@ -3,7 +3,7 @@ const db = require("../config/db.config");
 //CREATE a Comment
 exports.create = (req, res) => {
   const commentaireContent = req.body.commentaire;
-  const commentaireAuthor = req.body.author;
+  const username = req.res.locals.username;
   const articleId = req.params.id;
   let createTable = "CREATE TABLE IF NOT EXISTS Commentaires (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, articleId INT, PRIMARY KEY (id))"
   let sqlInsert = "INSERT INTO Commentaires (commentaire, author, articleId) VALUES (?,?,?)";
@@ -14,14 +14,14 @@ exports.create = (req, res) => {
     } else {
       console.log("Table commentaire créée ou déjà existante !")
     }
-    db.query(sqlInsert, [commentaireContent, commentaireAuthor, articleId], (err, result) => {
+    db.query(sqlInsert, [commentaireContent, username, articleId], (err, result) => {
       if (err) {
         console.log(err);
       } else {
         const newComment = {
           id: result.insertId,
           commentaire: commentaireContent,
-          author: commentaireAuthor,
+          author: username,
         };
         res.send(newComment);
         console.log("Le nouveau commentaire : ", newComment, " a été publié ")
