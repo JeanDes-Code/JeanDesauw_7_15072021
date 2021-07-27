@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import getArticle from "../services/get-request";
 
 //Components
-import ArticleList from "./ArticleList";
+import ArticleList from "../components/ArticleList";
 
 
 function Home() {

@@ -2,7 +2,7 @@ const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const randomToken = "!kfr*kç_"; //Randomiser le token de session
+const randomToken = "!kfr*kç_"; //Randomiser le token de session 
 
 //Sign Up
 exports.signup = async (req, res) => {
@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const sqlGetUser = "SELECT password FROM Users WHERE username = ?";
+    const sqlGetUser = "SELECT * FROM Users WHERE username = ?";
     //Récupération du hash du mdp de l'utilsateur portant le pseudo ou l'@mail indiquée
     db.query (sqlGetUser, username, async (err, result) => {
         if (err) {
@@ -49,13 +49,16 @@ exports.login = async (req, res) => {
             res.end();
         } else {
             const hash = JSON.parse(JSON.stringify(result));
+            const userId = hash[0].id
+            console.log(hash)
             await bcrypt.compare(password, hash[0].password, function(err, result) {
                 if( result === false ) {
                     console.log("Mot de passe incorrect !")
                     res.end();
                 } else {
                     const auth = {
-                        username: username,
+                        auth: true,
+                        id: userId,
                         token: jwt.sign(
                             { username: username},
                             randomToken,

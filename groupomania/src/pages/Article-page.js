@@ -6,10 +6,10 @@ import getOne from '../services/getOne-request';
 import getComs from '../services/getCom-request';
 
 //Composant
-import ArticleItem from './ArticleItem';
-import ArticleUpdate from "./ArticleUpdate";
-import CommentList from './CommentList';
-import CommentPost from './CommentPost';
+import ArticleItem from '../components/ArticleItem';
+import ArticleUpdate from "../components/ArticleUpdate";
+import CommentList from '../components/CommentList';
+import CommentPost from '../components/CommentPost';
 
 function Article() {
   const {id} = useParams()

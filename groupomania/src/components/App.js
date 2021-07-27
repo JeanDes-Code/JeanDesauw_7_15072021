@@ -7,10 +7,10 @@ import "../styles/App.css";
 import logo from '../assets/icon-left-font-monochrome-black.svg'
 
 //Pages
-import Home from "./Home-page"
-import Article from "./Article-page"
-import ArticlePost from "./ArticlePost"
-import Login from "./Login";
+import Home from "../pages/Home-page"
+import Article from "../pages/Article-page"
+import ArticlePost from "../pages/ArticlePost"
+import Login from "../pages/Login";
 
 function App() {
   return (

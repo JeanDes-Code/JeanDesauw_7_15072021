@@ -1,7 +1,12 @@
 import Axios from "axios";
 
 const getArticle = ({ setArticleList }) => {
-    Axios.get("http://localhost:3001/api/get/article").then((response) => {
+  const token = JSON.parse(localStorage.getItem("token")).value;
+    Axios.get("http://localhost:3001/api/get/article", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
       setArticleList(response.data);
     });
 
