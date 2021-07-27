@@ -1,23 +1,24 @@
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import loginRequest from "../services/login-request"
 import signupRequest from "../services/signup-request"
 
 function Login () {
+
     const [token, setToken] = useState("");
     const [userId, setUserId] = useState("");
-
     const [isOpen, setIsOpen] = useState(true)
-
     const [user, setUser] = useState({
         username: "",
         password: ""
     })
-
     const [newUser, setNewUser] = useState({
         email: "",
         username: "",
         password: ""
     })
+
+    const history = useHistory()
 
     const setWithExpiry = (key, value, ttl) => {
         const now = new Date();
@@ -35,6 +36,7 @@ function Login () {
             console.log("Votre token authentification est le suivant : ", token, " et votre userId = ", userId);
             setWithExpiry("token", token, 28800000); //8h = 28800000ms
             setWithExpiry("userId", userId, 28800000);
+            history.push('/')
         } else {
             console.log( "Il y a eu une erreur lors de la connection, veuillez réessayez ")
         }

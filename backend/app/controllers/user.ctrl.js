@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
                         auth: true,
                         id: userId,
                         token: jwt.sign(
-                            { username: username},
+                            { id: userId},
                             randomToken,
                             { expiresIn: "24h" }
                         )

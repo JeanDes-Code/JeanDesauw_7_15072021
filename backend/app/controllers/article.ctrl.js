@@ -11,6 +11,7 @@ exports.create = (req, res) => {
     "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
 
   db.query(sqlCreate, (err, result) => {
+    console.log(userId)
     if (err) {
       console.log(err);
     } else {

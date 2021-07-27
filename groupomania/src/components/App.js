@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 
 //Style
 import "../styles/App.css";
@@ -13,6 +13,44 @@ import ArticlePost from "../pages/ArticlePost"
 import Login from "../pages/Login";
 
 function App() {
+  
+  const getWithExpiry = (key) => {
+    const itemStr = localStorage.getItem(key);
+    
+    if (!itemStr) {
+      return null;
+    }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return item.value;
+  };
+
+  const isAuth = () => getWithExpiry("token");
+  getWithExpiry("userId");
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={(props) => {
+        return isAuth() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: props.location },
+            }}
+          />
+        );
+      }}
+    />
+  );
+ 
   return (
     <>
       <Router>
@@ -25,10 +63,10 @@ function App() {
           </div>
         </div>
         <Switch>
-          <Route path="/" exact component={Home} />
+          <PrivateRoute path="/" exact component={Home} />
           <Route path='/login' exact component={Login} />
-          <Route path="/post" exact component={ArticlePost} />
-          <Route path="/:id" exact component={Article} />
+          <PrivateRoute path="/post" exact component={ArticlePost} />
+          <PrivateRoute path="/:id" exact component={Article} />
         </Switch>
       </Router>
     </>
