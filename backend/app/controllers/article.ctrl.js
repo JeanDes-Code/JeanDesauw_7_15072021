@@ -5,13 +5,13 @@ exports.create = (req, res) => {
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleAuthor = req.body.author;
+  const userId = req.res.locals.userId;
 
   const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))"
   const sqlInsert =
     "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
 
   db.query(sqlCreate, (err, result) => {
-    console.log(userId)
     if (err) {
       console.log(err);
     } else {
@@ -73,6 +73,7 @@ exports.findOne = (req, res) => {
 
 //UPDATE an Article
 exports.update = (req, res) => {
+  const userId = req.res.locals.userId;
   const articleId = req.params.id;
   const articleTitle = req.body.data.title;
   const articleContent = req.body.data.content;
@@ -94,6 +95,7 @@ exports.update = (req, res) => {
 
 //DELETE an Article
 exports.deleteOne = (req, res) => {
+  const userId = req.res.locals.userId;
   const articleId = req.params.id;
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
   const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"

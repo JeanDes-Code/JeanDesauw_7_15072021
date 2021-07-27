@@ -4,13 +4,14 @@ const TOKEN = "!kfr*kç_"; //Randomiser le token de session ;
 module.exports = (req, res, next) => { 
   try {
     const token = req.headers.authorization.split(" ")[1];
-    console.log(' Token reçu !');
+    console.log(' Token bien reçu !');
     
     //verify is token is matching with API
     const decodedToken = jwt.verify(token, TOKEN);
-    
+
     //Get userID from token
-    const userId = decodedToken.userId;
+    const userId = decodedToken.id;
+    const userRole = decodedToken.role;
     console.log(" Utilisateur : n°" + userId);
     
     //If is null or != from that one of API : invalid request
@@ -18,6 +19,8 @@ module.exports = (req, res, next) => {
       throw " Utilisateur non authentifié ";
     } else {
       console.log("  Accès autorisé ! ");
+      res.locals.userId = userId;
+      res.locals.userRole = userRole;
       next();
     }
   } catch {
