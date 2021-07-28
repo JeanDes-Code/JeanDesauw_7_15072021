@@ -4,11 +4,14 @@ const db = require("../config/db.config");
 exports.create = (req, res) => {
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
+  const articleFile = req.body.file;
   const username = req.res.locals.username;
 
-  const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))"
+  console.log("Images : " + articleFile)
+
+  const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, file CHAR(120) NULL ,PRIMARY KEY (id))"
   const sqlInsert =
-    "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
+    "INSERT INTO articles (title, content, author, file) VALUES (?,?,?,?)";
 
   db.query(sqlCreate, (err, result) => {
     if (err) {
@@ -19,7 +22,7 @@ exports.create = (req, res) => {
     }
     db.query(
       sqlInsert,
-      [articleTitle, articleContent, username],
+      [articleTitle, articleContent, username, articleFile],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -29,6 +32,7 @@ exports.create = (req, res) => {
             title: articleTitle,
             content: articleContent,
             author: username,
+            articleFile: articleFile
           };
           console.log("Article créé !")
         }
@@ -79,6 +83,7 @@ exports.update = (req, res) => {
   const articleId = req.params.id;
   const articleTitle = req.body.data.title;
   const articleContent = req.body.data.content;
+  const articleFile = req.body.data.file;
   const sqlUpdate = "UPDATE articles SET title = ?, content = ? WHERE id = ?";
 
   db.query(

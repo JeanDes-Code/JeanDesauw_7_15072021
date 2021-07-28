@@ -13,6 +13,7 @@ function ArticleUpdate({ id, setArticle }) {
     const [modifiedArticle, setModifiedArticle] = useState({
         title: "",
         content: "",
+        file: ""
     });
 
     const deleteArticle = async (id) => {
@@ -28,7 +29,7 @@ function ArticleUpdate({ id, setArticle }) {
           alert("Veuillez remplir tous les champs pour modifier votre article.");
         } else {
           await putRequest(id, modifiedArticle);
-          setModifiedArticle({ title: "", content: "" });
+          setModifiedArticle({ title: "", content: "", file: "" });
           setTimeout(() => {
             getOne(id, {setArticle})
           }, 10);
@@ -67,6 +68,15 @@ function ArticleUpdate({ id, setArticle }) {
                         ...modifiedArticle,
                         content: e.target.value,
                     });
+                    }}
+                />
+                <label> Ajouter une image / un gif  </label>
+                <input
+                    className='input-upload'
+                    type="file"
+                    name="image"
+                    onChange={(e) => {
+                    setModifiedArticle({ ...modifiedArticle, file: e.target.value });
                     }}
                 />
                 <button

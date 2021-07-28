@@ -7,7 +7,8 @@ function ArticlePost() {
   const history = useHistory()
   const [newArticle, setNewArticle] = useState({
     title: "",
-    content: ""
+    content: "",
+    file: ""
   });
 
   //voir autre méthode pour mettre à jour la liste d'article
@@ -18,6 +19,7 @@ function ArticlePost() {
     ) {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
+      console.log(newArticle)
       await postRequest(newArticle);
       setTimeout(() => {
         history.push(`/`);
@@ -42,6 +44,15 @@ function ArticlePost() {
         name="content"
         onChange={(e) => {
           setNewArticle({ ...newArticle, content: e.target.value });
+        }}
+      />
+      <label> Ajouter une image / un gif  </label>
+      <input
+        className='input-upload'
+        type="file"
+        name="image"
+        onChange={(e) => {
+          setNewArticle({ ...newArticle, file: e.target.value });
         }}
       />
 

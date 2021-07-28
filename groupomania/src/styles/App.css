@@ -253,3 +253,7 @@ textarea, input {
   flex-direction: column;
   align-items: center;
 }
+
+.input-upload {
+  width: fit-content;
+}
