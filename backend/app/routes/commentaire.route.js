@@ -1,12 +1,13 @@
 const commentaires = require("../controllers/commentaire.ctrl.js");
+const auth = require('../middleware/auth.middleware')
 let router = require("express").Router();
 
-router.post("/post/:id", commentaires.create);
+router.post("/post/:id",auth ,commentaires.create);
 
-router.get("/get/:id", commentaires.findAll);
+router.get("/get/:id",auth ,commentaires.findAll);
 
-router.put("/put/:articleId/:id", commentaires.update);
+router.put("/put/:articleId/:id",auth ,commentaires.update);
 
-router.delete("/delete/:articleId/:id", commentaires.deleteOne);
+router.delete("/delete/:articleId/:id",auth ,commentaires.deleteOne);
 
 module.exports = router

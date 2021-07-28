@@ -4,42 +4,47 @@ const db = require("../config/db.config");
 exports.create = (req, res) => {
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
-  const articleAuthor = req.body.author;
+  const username = req.res.locals.username;
 
+  const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, PRIMARY KEY (id))"
   const sqlInsert =
     "INSERT INTO articles (title, content, author) VALUES (?,?,?)";
 
-  db.query(
-    sqlInsert,
-    [articleTitle, articleContent, articleAuthor],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const newArticle = {
-          id: result.insertId,
-          title: articleTitle,
-          content: articleContent,
-          author: articleAuthor,
-        };
-        res.send(newArticle);
-        id = newArticle.id;
-        console.log("Article créé !")
-      }
+  db.query(sqlCreate, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Table Article créée ou déjà existante !")
+      res.end("An error occured")
     }
-  );
+    db.query(
+      sqlInsert,
+      [articleTitle, articleContent, username],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const newArticle = {
+            id: result.insertId,
+            title: articleTitle,
+            content: articleContent,
+            author: username,
+          };
+          console.log("Article créé !")
+        }
+      })
+  });
 };
 
 //READ all Articles
 exports.findAll = (req, res) => {
   const articleSelect = "SELECT * FROM articles";
-
   db.query(articleSelect, (err, result) => {
     if (err) {
       console.log(err);
     } else {
+      console.log("Articles récupérés !")
       res.send(result);
-      console.log(result)
     }
   });
 };
@@ -47,6 +52,8 @@ exports.findAll = (req, res) => {
 //Read one Article
 exports.findOne = (req, res) => {
   const id= req.params.id;
+  const username = req.res.locals.username;
+  const role = req.res.locals.role
   const selectOne = "SELECT * FROM articles WHERE id= ?";
 
   db.query(
@@ -57,14 +64,18 @@ exports.findOne = (req, res) => {
       res.send(err);
     } else {
       console.log("Article id: ", id, "lu avec succès")
-      res.send(result);
+      const data = {
+        result: result,
+        username: username,
+        role: role
+      }
+      res.send(data);
     }
   });
 };
 
 //UPDATE an Article
 exports.update = (req, res) => {
-  console.log("PARAMS", req.params, "BODY : ", req.body); //debug
   const articleId = req.params.id;
   const articleTitle = req.body.data.title;
   const articleContent = req.body.data.content;
@@ -77,7 +88,7 @@ exports.update = (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log("Article modifié !", result);
+        console.log("Article modifié !");
       }
       res.send(result).end();
     }
