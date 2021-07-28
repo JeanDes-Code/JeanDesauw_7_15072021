@@ -52,6 +52,8 @@ exports.findAll = (req, res) => {
 //Read one Article
 exports.findOne = (req, res) => {
   const id= req.params.id;
+  const username = req.res.locals.username;
+  const role = req.res.locals.role
   const selectOne = "SELECT * FROM articles WHERE id= ?";
 
   db.query(
@@ -62,7 +64,12 @@ exports.findOne = (req, res) => {
       res.send(err);
     } else {
       console.log("Article id: ", id, "lu avec succès")
-      res.send(result);
+      const data = {
+        result: result,
+        username: username,
+        role: role
+      }
+      res.send(data);
     }
   });
 };

@@ -12,6 +12,8 @@ module.exports = (req, res, next) => {
     //Get userID from token
     const userId = decodedToken.id;
     const username = decodedToken.username;
+    const role = decodedToken.role;
+    console.log(role)
     console.log(" Utilisateur : n°" + userId);
 
     //If is null or != from that one of API : invalid request
@@ -21,6 +23,7 @@ module.exports = (req, res, next) => {
       console.log("  Accès autorisé ! ");
       res.locals.userId = userId;
       res.locals.username = username;
+      res.locals.role = role;
       next();
     }
   } catch {
