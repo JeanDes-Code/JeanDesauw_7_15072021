@@ -6,15 +6,13 @@ import deleteRequest from "../services/delete-request";
 import putRequest from "../services/put-request";
 import getOne from "../services/getOne-request";
 
-function ArticleUpdate({ id, setArticle }) {
+function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
     const history = useHistory()
     const [isOpen, setIsOpen] = useState(false)
 
-    const [modifiedArticle, setModifiedArticle] = useState({
-        title: "",
-        content: "",
-        file: ""
-    });
+    const [newTitle,setNewTitle] = useState("");
+    const [newContent, setNewContent] = useState("");
+    const [newFile, setNewFile] = useState(null)
 
     const deleteArticle = async (id) => {
         await deleteRequest(id);
@@ -24,16 +22,26 @@ function ArticleUpdate({ id, setArticle }) {
     };
     
     //DEBUG : trouver une autre méthode pour rafraichir le composant ArticleList (parfois la requête GET se fait avant la fin de la requête PUT)
-    const updateArticle = async (id, modifiedArticle) => {
-        if (modifiedArticle.title === "" || modifiedArticle.content === "") {
+    const updateArticle = async (e) => {
+        e.preventDefault()
+        if (newTitle === "" || newContent === "") {
           alert("Veuillez remplir tous les champs pour modifier votre article.");
         } else {
-          await putRequest(id, modifiedArticle);
-          setModifiedArticle({ title: "", content: "", file: "" });
-          setTimeout(() => {
-            getOne(id, {setArticle})
-          }, 10);
-          setIsOpen(false);
+            //console.log(newTitle, newContent, newFile)
+            const data = new FormData();
+            data.append("title", newTitle);
+            data.append("content", newContent);
+            data.append("file", newFile);
+
+            await putRequest(id, data);
+
+            setNewTitle("");
+            setNewContent("")
+            setNewFile(null)
+            setTimeout(() => {
+                getOne(id, {setArticle, setUsername, setRole})
+            }, 100);
+            setIsOpen(false);
         }
     };
     
@@ -42,51 +50,45 @@ function ArticleUpdate({ id, setArticle }) {
                 <span className="border"></span>
                 <button className="btn btn-hide-article" onClick={() => setIsOpen(false)}> Refermer </button>
                 <h3> Modifier l'article : </h3>
+                <form className="form" encType="multipart/form-data">
+                    <div className="article-modification-title">
+                        <label> Nouveau titre :</label>
+                        <input
+                        className="newTitle updateInput"
+                        type="text"
+                        placeholder="Nouveau titre"
+                        onChange={(e) => {
+                            setNewTitle( e.target.value )}}
+                        />
+                    </div>
 
-                <div className="article-modification-title">
-                    <label> Nouveau titre :</label>
-                    <input
-                    className="newTitle updateInput"
-                    type="text"
-                    placeholder="Nouveau titre"
-                    onChange={(e) => {
-                        setModifiedArticle({
-                        ...modifiedArticle,
-                        title: e.target.value,
-                        });
-                    }}
+                    <label> Nouveau corps de l'article </label>
+                    <textarea
+                        className="newContent updateInput"
+                        type="text"
+                        placeholder="Nouveau contenu"
+                        onChange={(e) => {
+                            setNewContent( e.target.value )}}
                     />
-                </div>
+                    <label> Ajouter une image / un gif  </label>
+                    <input
+                        id="file"
+                        type="file"
+                        className="file-upload"
+                        accept=".jpg, .jpeg, .png, .gif, .bmp"
+                        onChange={(e) => {
+                            setNewFile( e.target.files[0] )}}
+                    />
+                    <button
+                        className="btn"
+                        onClick={
+                            updateArticle
+                        }
+                    >
+                        Modifier l'article
+                    </button>
+                </form>
 
-                <label> Nouveau corps de l'article </label>
-                <textarea
-                    className="newContent updateInput"
-                    type="text"
-                    placeholder="Nouveau contenu"
-                    onChange={(e) => {
-                    setModifiedArticle({
-                        ...modifiedArticle,
-                        content: e.target.value,
-                    });
-                    }}
-                />
-                <label> Ajouter une image / un gif  </label>
-                <input
-                    className='input-upload'
-                    type="file"
-                    name="image"
-                    onChange={(e) => {
-                    setModifiedArticle({ ...modifiedArticle, file: e.target.value });
-                    }}
-                />
-                <button
-                    className="btn"
-                    onClick={() => {
-                    updateArticle(id, modifiedArticle);
-                    }}
-                >
-                    Modifier l'article
-                </button>
                 <span className="border"></span>
                 <button
                     className="btn"

@@ -8,17 +8,10 @@ function ArticlePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null)
-  /*const [newArticle, setNewArticle] = useState({
-    title: "",
-    content: "",
-    file: ""
-  });*/
   
-
   //voir autre méthode pour mettre à jour la liste d'article
   const submitArticle = async (e) => {
     e.preventDefault()
-
     if (
       title === "" ||
       content === ""
@@ -30,9 +23,9 @@ function ArticlePost() {
       data.append("content", content);
       data.append("file", file);
       await postRequest(data);
-     /* setTimeout(() => {
+      setTimeout(() => {
         history.push(`/`);
-      }, 10)*/
+      }, 10)
     }
   };
 

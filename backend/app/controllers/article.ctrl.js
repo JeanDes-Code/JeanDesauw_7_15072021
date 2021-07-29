@@ -2,7 +2,6 @@ const db = require("../config/db.config");
 
 //CREATE an Article
 exports.create = (req, res) => {
-  console.log(req)
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleFile = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
@@ -81,15 +80,16 @@ exports.findOne = (req, res) => {
 
 //UPDATE an Article
 exports.update = (req, res) => {
+  console.log(req)
   const articleId = req.params.id;
-  const articleTitle = req.body.data.title;
-  const articleContent = req.body.data.content;
-  const articleFile = req.body.data.file;
-  const sqlUpdate = "UPDATE articles SET title = ?, content = ? WHERE id = ?";
+  const articleTitle = req.body.title;
+  const articleContent = req.body.content;
+  const articleFile = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
+  const sqlUpdate = "UPDATE articles SET title = ?, content = ?, file = ? WHERE id = ?";
 
   db.query(
     sqlUpdate,
-    [articleTitle, articleContent, articleId],
+    [articleTitle, articleContent, articleFile, articleId],
     (err, result) => {
       if (err) {
         console.log(err);
