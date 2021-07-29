@@ -2,9 +2,10 @@ const db = require("../config/db.config");
 
 //CREATE an Article
 exports.create = (req, res) => {
+  console.log(req)
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
-  const articleFile = req.body.file;
+  const articleFile = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
   const username = req.res.locals.username;
 
   console.log("Images : " + articleFile)
@@ -47,7 +48,7 @@ exports.findAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Articles récupérés !")
+      console.log("Articles récupérés !", result)
       res.send(result);
     }
   });
