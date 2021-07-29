@@ -1,5 +1,6 @@
 const db = require("../config/db.config");
-
+const fs = require('fs');
+const getFileName = require('../utils/getFileName.utils')
 //CREATE an Article
 exports.create = (req, res) => {
   const articleTitle = req.body.title;
@@ -85,40 +86,63 @@ exports.update = (req, res) => {
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleFile = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
+  const sqlSelectOne = "SELECT file FROM articles WHERE id = ?"
   const sqlUpdate = "UPDATE articles SET title = ?, content = ?, file = ? WHERE id = ?";
-
-  db.query(
-    sqlUpdate,
-    [articleTitle, articleContent, articleFile, articleId],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Article modifié !");
+  db.query(sqlSelectOne, articleId, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      if(result) {
+        getFileName(result)
       }
-      res.send(result).end();
-    }
-  );
+      fs.unlink(`./uploads/${filename}`, () => {
+        console.log("image : ", filename, "supprimée !")
+        db.query(
+          sqlUpdate,
+          [articleTitle, articleContent, articleFile, articleId],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("Article modifié !");
+            }
+            res.send(result).end();
+          }
+        );
+  })}})
 };
 
 //DELETE an Article
 exports.deleteOne = (req, res) => {
   const articleId = req.params.id;
+  const sqlSelectOne = "SELECT file FROM articles WHERE id = ?"
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
   const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"
-
-  db.query(sqlDelete, articleId, (err, result) => {
+  db.query(sqlSelectOne, articleId, (err, result) => {
     if (err) {
-      console.log(err);
+      console.log(err)
     } else {
-      console.log("Article supprimé !");
-    }
-    db.query(sqlDeleteComs, [articleId], (err,result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Commentaires associés à l'article supprimés !")
+      if(result) {
+        getFileName(result)
       }
-    })
-  });
+      fs.unlink(`./uploads/${filename}`, () => {
+        console.log("image : ", filename, "supprimée !")
+        db.query(sqlDelete, articleId, (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Article supprimé !");
+          }
+          db.query(sqlDeleteComs, [articleId], (err,result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("Commentaires associés à l'article supprimés !")
+            }
+          })
+        });
+      })
+    }
+    
+  })
 };

@@ -25,7 +25,7 @@ function ArticlePost() {
       await postRequest(data);
       setTimeout(() => {
         history.push(`/`);
-      }, 10)
+      }, 100)
     }
   };
 
