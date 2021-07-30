@@ -4,121 +4,7 @@
     "Lucida Sans", Arial, sans-serif;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.form input {
-  width: 300px;
-  height: 30px;
-  margin: 10px;
-  font-size: 25px;
-}
-
-.form textarea {
-  width: 80%;
-  height: 300px;
-}
-
-.article-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.card {
-  width: 80%;
-  height: auto;
-  border: 2px solid black;
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
-  border-radius: 15px;
-  margin: 10px;
-  font-size: 20px;
-  position: relative;
-}
-
-.updateInput {
-  font-size: 12px;
-  width: auto;
-  height: 12px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.btn {
-  margin: 20px;
-  width: 200px;
-  border-radius: 15px;
-  padding: 10px;
-}
-
-.article-modification {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(128, 128, 128, 0.2);
-  border-radius: 0 0 15px 15px;
-}
-
-.border {
-  background-color: black;
-  height: 2px;
-  width: 100%;
-}
-
-.newTitle {
-  margin-left: 50px;
-}
-
-.newContent {
-  width: 80%;
-  height: 150px;
-  margin-top: 20px;
-}
-
-.titleInput {
-  display: flex;
-  margin: 10px;
-  flex-direction: row;
-}
-
-.article-display {
-  padding: 10px;
-  text-align: justify;
-  display: flex;
-  flex-direction: column;
-  height: auto;
-}
-.article-display-title {
-  text-align: center;
-}
-
-.article-display-img {
-  object-fit: contain;
-  margin: 0;
-  max-height: 500px;
-  width: auto;
-}
-
-.article-display-author {
-  text-align: end;
-  padding-right: 10px;
-}
-
-.article-modification-title {
-  margin: 20px 0px 20px 0px;
-  position: absolute;
-  top:-40px;
-  left: 50px;
-}
+/* Styles composant header */
 
 .nav-bar {
   display: flex;
@@ -150,12 +36,7 @@
   width: 50%;
 }
 
-.article-page {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  align-items: center;
-}
+/* Style composant Commentaire */
 
 .comment-list {
   width: 80%;
@@ -170,6 +51,135 @@
   padding: 20px;
   margin: 20px 0;
   position: relative;
+}
+
+
+/* Styles composant Article */
+
+.article-display {
+  padding: 10px;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.article-display-title {
+  text-align: center;
+}
+
+.article-display-img {
+  object-fit: contain;
+  margin: 0;
+  max-height: 500px;
+  width: auto;
+}
+
+.article-display-author {
+  text-align: end;
+  padding-right: 10px;
+}
+
+.article-modification-title {
+  margin: 20px 0px 20px 0px;
+  position: absolute;
+  top:-40px;
+  left: 50px;
+}
+
+.article-page {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 80%;
+  height: auto;
+  border: 2px solid black;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  margin: 10px;
+  font-size: 20px;
+  position: relative;
+}
+
+.article-modification {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 0 0 15px 15px;
+}
+
+/* Styles composant Login */
+
+.login-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 20px 0px;
+  width: 250px;
+  align-items: center;
+}
+
+.login-card input {
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.login-card button {
+  width: 150px;
+}
+
+.updateInput {
+  font-size: 12px;
+  width: auto;
+  height: 12px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/* Styles formulaires */
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.form input {
+  width: 300px;
+  height: 30px;
+  margin: 10px;
+  font-size: 25px;
+}
+
+.form textarea {
+  width: 80%;
+  height: 300px;
 }
 
 .form-comment {
@@ -195,6 +205,53 @@
 .form-comment-author {
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+.form-update {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: auto
+}
+
+.newTitle {
+  margin-left: 50px;
+}
+
+.newContent {
+  width: 80%;
+  height: 150px;
+  margin-top: 20px;
+}
+
+.titleInput {
+  display: flex;
+  margin: 10px;
+  flex-direction: row;
+}
+
+/* Styles inputs upload fichiers */
+
+.file-upload {
+  width: fit-content;
+}
+
+.file-upload-update {
+  position: absolute;
+  bottom: 70px;
+  right: 100px;
+}
+
+/* Styles boutons */
+
+.btn {
+  margin: 20px;
+  width: 200px;
+  border-radius: 15px;
+  padding: 10px;
 }
 
 textarea, input {
@@ -234,24 +291,8 @@ textarea, input {
   align-self: flex-start;
 }
 
-.login-card {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid black;
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
-  border-radius: 15px;
-  padding: 20px 0px;
-  width: 250px;
-  align-items: center;
-}
-
-.login-card input {
-  margin-bottom: 20px;
-  width: 200px;
-}
-
-.login-card button {
-  width: 150px;
+.btn-update {
+  margin-top: 50px;
 }
 
 .changeToSignup {
@@ -261,32 +302,28 @@ textarea, input {
   align-items: center;
 }
 
-.login-component {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.file-upload {
-  width: fit-content;
-}
+/* Utilitaire */
 
-.form-update {
+.border {
+  background-color: black;
+  height: 2px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: auto
 }
 
-.file-upload-update {
-  position: absolute;
-  bottom: 70px;
-  right: 100px;
-}
 
-.btn-update {
-  margin-top: 50px;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
