@@ -163,6 +163,39 @@
 }
 
 
+/* Styles composant Like */
+
+.like {
+  display: flex;
+  justify-content: space-evenly;
+  position: absolute;
+  right: 50px;
+  bottom: -30px;
+}
+
+.like-btn{
+  color: rgb(0, 119, 255);
+  font-size: 20px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
+  width: auto;
+  min-width: 80px;
+  height: 50px;
+}
+
+.likeComment-btn{
+  color: rgb(0, 119, 255);
+  font-size: 15px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
+  width: auto;
+  min-width: 55px;
+  height: 30px;
+  margin-top: -45px;
+}
+
 /* Styles formulaires */
 
 .form {
