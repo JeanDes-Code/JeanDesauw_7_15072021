@@ -92,24 +92,25 @@ exports.update = (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      if(result) {
-        getFileName(result)
-      }
-      fs.unlink(`./uploads/${filename}`, () => {
+      getFileName(result)
+      if (filename !== "nofile") {
+        fs.unlink(`./uploads/${filename}`, () => {
         console.log("image : ", filename, "supprimée !")
-        db.query(
-          sqlUpdate,
-          [articleTitle, articleContent, articleFile, articleId],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log("Article modifié !");
-            }
-            res.send(result).end();
-          }
-        );
-  })}})
+      })
+  }} 
+    db.query(
+      sqlUpdate,
+      [articleTitle, articleContent, articleFile, articleId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Article modifié !");
+        }
+        res.send(result).end();
+      }
+  );
+  })
 };
 
 //DELETE an Article
