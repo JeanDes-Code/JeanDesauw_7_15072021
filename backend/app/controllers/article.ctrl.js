@@ -118,6 +118,7 @@ exports.deleteOne = (req, res) => {
   const sqlSelectOne = "SELECT file FROM articles WHERE id = ?"
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
   const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"
+  const sqlDeleteLikes ="DELETE FROM Article_Like WHERE articleId = ? "
   db.query(sqlSelectOne, articleId, (err, result) => {
     if (err) {
       console.log(err)
@@ -139,6 +140,13 @@ exports.deleteOne = (req, res) => {
             } else {
               console.log("Commentaires associés à l'article supprimés !")
             }
+            db.query(sqlDeleteLikes, articleId, (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Likes associés à l'article supprimés !")
+              }
+            })
           })
         });
       })
