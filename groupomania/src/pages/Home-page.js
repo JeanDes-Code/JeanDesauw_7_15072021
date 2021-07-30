@@ -14,6 +14,7 @@ function Home() {
     getArticle({ setArticleList });
   }, []);
 
+  console.log(articleList)
   return (
     <div className="App">
       <ArticleList articleList={articleList} setArticleList={setArticleList} />

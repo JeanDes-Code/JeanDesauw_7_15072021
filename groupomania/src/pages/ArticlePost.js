@@ -1,60 +1,71 @@
-import { useState } from "react";
+ import { useState } from "react";
 import {useHistory} from 'react-router-dom'
 
 import postRequest from "../services/post-request";
 
 function ArticlePost() {
   const history = useHistory()
-  const [newArticle, setNewArticle] = useState({
-    title: "",
-    content: ""
-  });
-
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState(null)
+  
   //voir autre méthode pour mettre à jour la liste d'article
-  const submitArticle = async (newArticle) => {
+  const submitArticle = async (e) => {
+    e.preventDefault()
     if (
-      newArticle.title === "" ||
-      newArticle.content === ""
+      title === "" ||
+      content === ""
     ) {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
-      await postRequest(newArticle);
+      const data = new FormData();
+      data.append("title", title);
+      data.append("content", content);
+      data.append("file", file);
+      await postRequest(data);
       setTimeout(() => {
         history.push(`/`);
-      }, 10)
+      }, 100)
     }
   };
 
   return (
-    <div className="form">
+    <form className="form" encType="multipart/form-data">
       <h2>Poster un article : </h2>
       <label> Titre de l'article</label>
       <input
         type="text"
         name="articleTitle"
         onChange={(e) => {
-          setNewArticle({ ...newArticle, title: e.target.value });
-        }}
+          setTitle( e.target.value )}}
       />
       <label> Contenu de l'article </label>
       <textarea
         type="text"
         name="content"
         onChange={(e) => {
-          setNewArticle({ ...newArticle, content: e.target.value });
-        }}
+          setContent( e.target.value )}}
       />
-
+      <label> Ajouter une image / un gif  </label>
+      <input
+        id="file"
+        type="file"
+        className="file-upload"
+        accept=".jpg, .jpeg, .png, .gif, .bmp"
+        onChange={(e) => {
+            setFile( e.target.files[0] )}}
+      />
+ 
       <button
         className="btn"
-        onClick={() => {
-          submitArticle(newArticle);
-        }}
+        onClick={
+          submitArticle
+        }
       >
         {" "}
         Submit{" "}
       </button>
-    </div>
+    </form>
   );
 }
 
