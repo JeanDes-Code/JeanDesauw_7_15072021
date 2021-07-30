@@ -19,7 +19,6 @@ exports.create = (req, res) => {
       console.log(err);
     } else {
       console.log("Table Article créée ou déjà existante !")
-      res.end("An error occured")
     }
     db.query(
       sqlInsert,
