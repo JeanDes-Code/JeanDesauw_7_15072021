@@ -4,6 +4,7 @@
     "Lucida Sans", Arial, sans-serif;
 }
 
+
 /* Styles composant header */
 
 .nav-bar {
@@ -35,6 +36,7 @@
   height: 250px;
   width: 50%;
 }
+
 
 /* Style composant Commentaire */
 
@@ -122,6 +124,7 @@
   border-radius: 0 0 15px 15px;
 }
 
+
 /* Styles composant Login */
 
 .login-component {
@@ -159,8 +162,8 @@
   padding: 5px;
 }
 
-/* Styles formulaires */
 
+/* Styles formulaires */
 
 .form {
   display: flex;
@@ -233,6 +236,7 @@
   flex-direction: row;
 }
 
+
 /* Styles inputs upload fichiers */
 
 .file-upload {
@@ -244,6 +248,7 @@
   bottom: 70px;
   right: 100px;
 }
+
 
 /* Styles boutons */
 
