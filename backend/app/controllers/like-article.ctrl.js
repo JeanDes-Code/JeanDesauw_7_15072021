@@ -30,8 +30,8 @@ exports.get = (req,res) => {
     console.log(req.params)
     const articleId = req.params.articleId;
     const userId = req.res.locals.userId;
-    const sqlSelect ="SELECT COUNT(*) AS count FROM Article_Like WHERE articleId = ?";
     const sqlCheck="SELECT * FROM Article_Like WHERE articleId = ? AND userId = ?"
+    const sqlSelect ="SELECT COUNT(*) AS count FROM Article_Like WHERE articleId = ?";
     let alreadyLiked = false;
 
     /*Vérifier s'il existe déjà une ligne contenant userId et articleId
@@ -41,15 +41,14 @@ exports.get = (req,res) => {
     if -> alreadyLiked = true : un clic sur Like fera une requete delete
     if -> alreadyLiked = false : un clic sur Like fera une requete post
     */
-    db.query(sqlCheck, [articleId, userId]), (err, result) => {
+
+
+    db.query(sqlCheck, [articleId, userId], (err, result) => {
         if (err) {
             console.log(err)
         } else {
-            if (rows[0].count >= 1 ) {
-                alreadyLiked =true
-            }
+            console.log("resultat du check alreadyLiked: " , result)
         }
-    }
         db.query(sqlSelect, articleId, (err, result) => {
             if (err) {
                 console.log(err)
@@ -57,7 +56,7 @@ exports.get = (req,res) => {
                 console.log( "nombre de likes : ", result )
                 res.send({count: result, alreadyLiked: alreadyLiked});
             }
-    })
+    })})
 }
 
 
