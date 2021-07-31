@@ -1,4 +1,4 @@
-import Like from './Like'
+import Like from './LikeArticle'
 
 function ArticleItem({ id, title, content, author, file }) {
     console.log(file)

@@ -13,6 +13,8 @@ function CommentPost ({setCommentList}) {
         commentaire: ""
     });
 
+    const item ="comment"
+
     const submitComment = async (newCom) => {
         if (
             newCom.content === ""
@@ -20,7 +22,7 @@ function CommentPost ({setCommentList}) {
             alert("Vous ne pouvez pas publier un commentaire vide !");
           } else {
                 console.log(newCom, "publié !")
-                await postRequest(newCom, id)
+                await postRequest(newCom, id, item)
                 setTimeout(() => {
                     getComs(id, {setCommentList})
                 }, 100)

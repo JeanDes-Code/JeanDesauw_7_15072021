@@ -5,7 +5,7 @@ const app = express();
 const article = require("./app/routes/article.route");
 const commentaires = require("./app/routes/commentaire.route")
 const auth = require("./app/routes/user.route")
-const like = require("./app/routes/like.route")
+const like = require("./app/routes/like-article.route")
 
 //Réglages CORS
 app.use(cors());

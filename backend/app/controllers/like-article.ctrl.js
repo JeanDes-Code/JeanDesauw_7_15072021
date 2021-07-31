@@ -2,7 +2,8 @@ const db = require("../config/db.config");
 
 //CREATE
 exports.create = (req,res) => {
-    const articleId = req.body.articleId;
+    console.log(req.body)
+    const articleId = req.body.ArticleId;
     const userId = req.res.locals.userId;
     const sqlCreate ="CREATE TABLE IF NOT EXISTS Article_Like (id INT UNSIGNED NOT NULL AUTO_INCREMENT, articleId INT UNSIGNED NOT NULL, userId INT UNSIGNED NOT NULL, PRIMARY KEY (id))"
     const like ="INSERT INTO Article_Like (articleId, userId) VALUES (?,?)"
@@ -26,16 +27,36 @@ exports.create = (req,res) => {
 //READ
 
 exports.get = (req,res) => {
-    const articleId = req.params.articleId
-    const sqlSelect ="SELECT COUNT FROM Article_Like WHERE articleId = ?"
+    console.log(req.params)
+    const articleId = req.params.articleId;
+    const userId = req.res.locals.userId;
+    const sqlSelect ="SELECT COUNT(*) AS count FROM Article_Like WHERE articleId = ?";
+    const sqlCheck="SELECT * FROM Article_Like WHERE articleId = ? AND userId = ?"
+    let alreadyLiked = false;
 
-    db.query(sqlSelect, articleId, (err, result) => {
+    /*Vérifier s'il existe déjà une ligne contenant userId et articleId
+    CAS TRUE : alreadyLiked = true
+    CAS FALSE : alreadyLiked = false 
+    envoyer alreadyLiked au FRONT qui fera : 
+    if -> alreadyLiked = true : un clic sur Like fera une requete delete
+    if -> alreadyLiked = false : un clic sur Like fera une requete post
+    */
+    db.query(sqlCheck, [articleId, userId]), (err, result) => {
         if (err) {
             console.log(err)
         } else {
-            console.log( "nombre de likes : ", result )
-            res.send(result);
+            if (rows[0].count >= 1 ) {
+                alreadyLiked =true
+            }
         }
+    }
+        db.query(sqlSelect, articleId, (err, result) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log( "nombre de likes : ", result )
+                res.send({count: result, alreadyLiked: alreadyLiked});
+            }
     })
 }
 
@@ -43,7 +64,7 @@ exports.get = (req,res) => {
 //DELETE
 
 exports.delete = (req,res) => {
-    const articleId = req.body.articleId;
+    const articleId = req.body.id;
     const userId = req.res.locals.userId;
     const sqlDelete = "DELETE FORM Article_Like WHERE articleId = ? AND userId = ?"
 

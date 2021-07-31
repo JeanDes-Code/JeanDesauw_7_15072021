@@ -1,4 +1,4 @@
-const like = require("../controllers/like.ctrl");
+const like = require("../controllers/like-article.ctrl");
 const auth = require("../middleware/auth.middleware");
 let router = require("express").Router();
 
