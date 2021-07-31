@@ -35,6 +35,7 @@ exports.create = (req, res) => {
             articleFile: articleFile
           };
           console.log("Article créé !")
+          res.status(201).send('item created')
         }
       })
   });
@@ -48,7 +49,7 @@ exports.findAll = (req, res) => {
       console.log(err);
     } else {
       console.log("Articles récupérés !", result)
-      res.send(result);
+      res.status(200).send(result);
     }
   });
 };
@@ -73,7 +74,7 @@ exports.findOne = (req, res) => {
         username: username,
         role: role
       }
-      res.send(data);
+      res.status(200).send(data);
     }
   });
 };
@@ -106,7 +107,7 @@ exports.update = (req, res) => {
         } else {
           console.log("Article modifié !");
         }
-        res.send(result).end();
+        res.status(200).send(result);
       }
   );
   })
@@ -145,6 +146,7 @@ exports.deleteOne = (req, res) => {
                 console.log(err);
               } else {
                 console.log("Likes associés à l'article supprimés !")
+                res.status(200).end()
               }
             })
           })

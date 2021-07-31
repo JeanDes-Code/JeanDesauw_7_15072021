@@ -49,7 +49,7 @@ exports.signup = async (req, res) => {
                     res.end()
                 } else {
                     console.log("Compte utilisateur créé !")
-                    res.end()
+                    res.status(201).send('user created')
                 }
             })
     });
@@ -93,7 +93,7 @@ exports.login = async (req, res) => {
                     console.log(auth)
                     res.send(auth)
                     console.log("Vous êtes connecté !")
-                    res.end();
+                    res.status(200).end();
                 }
            });
         }

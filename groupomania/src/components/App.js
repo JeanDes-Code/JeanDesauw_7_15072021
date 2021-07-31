@@ -14,6 +14,10 @@ import Login from "../pages/Login";
 
 function App() {
   
+  const logout = () => {
+    localStorage.clear()
+    document.location.reload()
+  }
   const getWithExpiry = (key) => {
     const itemStr = localStorage.getItem(key);
     
@@ -60,6 +64,7 @@ function App() {
             <Link className='nav-item' to='/'> Page d'accueil </Link>
             <Link className='nav-item' to='/post'> Publier un article </Link>
             <Link className='nav-item' to='/login'> Se connecter </Link>
+            <button className='nav-item' onClick={logout} > Se déconnecter </button>
           </div>
         </div>
         <Switch>

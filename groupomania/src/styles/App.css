@@ -10,9 +10,14 @@
 .nav-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.nav-bar a{
+.nav-item {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 19px;
+  margin-left: 20px;
   text-decoration: none;
   color: black;
   font-size: 25px;
@@ -20,10 +25,8 @@
   border: 2px solid black;
   border-radius: 15px;
   padding: 5px 14px;
-}
-
-.nav-item {
-  margin-left: 20px;
+  background-color: white;
+  cursor: pointer;
 }
 
 .header {
@@ -34,7 +37,7 @@
 
 .header-logo {
   height: 250px;
-  width: 50%;
+  width: 30%;
 }
 
 

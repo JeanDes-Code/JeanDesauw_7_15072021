@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom'
 import postRequest from "../services/post-request";
 
 function ArticlePost() {
+  const item ='article'
   const history = useHistory()
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -19,10 +20,11 @@ function ArticlePost() {
       alert("votre article est vide ! Veuillez remplir tous les champs !");
     } else {
       const data = new FormData();
+      const id = null;
       data.append("title", title);
       data.append("content", content);
       data.append("file", file);
-      await postRequest(data);
+      await postRequest(data, id, item);
       setTimeout(() => {
         history.push(`/`);
       }, 100)

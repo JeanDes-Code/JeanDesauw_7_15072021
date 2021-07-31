@@ -1,5 +1,3 @@
-import LikeComment from "./LikeComment"
-
 const CommentItem = ({ commentaire, author }) => {
 
     return(
@@ -9,7 +7,6 @@ const CommentItem = ({ commentaire, author }) => {
                 <h3 className="comment-display-author">
                     Publié par {author}{" "}
                 </h3>
-                <LikeComment />
             </div>
         </>
     )

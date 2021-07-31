@@ -3,22 +3,22 @@ const db = require("../config/db.config");
 //CREATE
 exports.create = (req,res) => {
     console.log(req.body)
-    const articleId = req.body.ArticleId;
+    const commentId = req.body.commentId;
     const userId = req.res.locals.userId;
-    const sqlCreate ="CREATE TABLE IF NOT EXISTS Article_Like (id INT UNSIGNED NOT NULL AUTO_INCREMENT, articleId INT UNSIGNED NOT NULL, userId INT UNSIGNED NOT NULL, PRIMARY KEY (id), CONSTRAINT UC_like UNIQUE(articleId, userId))"
-    const like ="INSERT INTO Article_Like (articleId, userId) VALUES (?,?)"
+    const sqlCreate ="CREATE TABLE IF NOT EXISTS Comment_Like (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentId INT UNSIGNED NOT NULL, userId INT UNSIGNED NOT NULL, PRIMARY KEY (id), CONSTRAINT UC_likeCom UNIQUE(commentId, userId))"
+    const like ="INSERT INTO Comment_Like (commentId, userId) VALUES (?,?)"
     
     db.query(sqlCreate, (err, result) => {
         if (err) {
             console.log(err)
         } else {
-            console.log("Table Article_Like créée ou déjà existante !")   
+            console.log("Table Comment_like créée ou déjà existante !")   
         }
-        db.query(like, [articleId, userId], (err,result) => {
+        db.query(like, [commentId, userId], (err,result) => {
             if (err) {
                 console.log(err)
             } else {
-                console.log(`Le j'aime du user n° ${userId} a été enregistré pour l'article n° ${articleId} !` )
+                console.log(`Le j'aime du user n° ${userId} a été enregistré pour le commentaire n° ${commentId} !` )
                 res.status(201).send('item created')
             }
         })
@@ -29,10 +29,10 @@ exports.create = (req,res) => {
 
 exports.get = (req,res) => {
     console.log(req.params)
-    const articleId = req.params.articleId;
+    const commentId = req.params.id;
     const userId = req.res.locals.userId;
-    const sqlCheck="SELECT COUNT(*) AS liked FROM Article_Like WHERE articleId = ? AND userId = ?"
-    const sqlSelect ="SELECT COUNT(*) AS count FROM Article_Like WHERE articleId = ?";
+    const sqlCheck="SELECT COUNT(*) AS liked FROM Comment_Like WHERE commentId = ? AND userId = ?"
+    const sqlSelect ="SELECT COUNT(*) AS count FROM Comment_Like WHERE commentId = ?";
     let alreadyLiked = false;
 
     /*Vérifier s'il existe déjà une ligne contenant userId et articleId
@@ -43,7 +43,7 @@ exports.get = (req,res) => {
     if -> alreadyLiked = false : un clic sur Like fera une requete post
     */
 
-    db.query(sqlCheck, [articleId, userId], (err, result) => {
+    db.query(sqlCheck, [commentId, userId], (err, result) => {
         if (err) {
             console.log(err)
         } else {
@@ -55,7 +55,7 @@ exports.get = (req,res) => {
             }
             console.log("resultat du check alreadyLiked: " , checkResult[0].liked, "already like = ", alreadyLiked)
         }
-        db.query(sqlSelect, articleId, (err, result) => {
+        db.query(sqlSelect, commentId, (err, result) => {
             if (err) {
                 console.log(err)
             } else {
@@ -69,15 +69,15 @@ exports.get = (req,res) => {
 //DELETE
 
 exports.delete = (req,res) => {
-    const articleId = req.params.id;
+    const commentId = req.params.id;
     const userId = req.res.locals.userId;
-    const sqlDelete = "DELETE FROM Article_Like WHERE articleId = ? AND userId = ?"
+    const sqlDelete = "DELETE FROM Comment_Like WHERE commentId = ? AND userId = ?"
 
-    db.query(sqlDelete, [articleId, userId], (err, result) => {
+    db.query(sqlDelete, [commentId, userId], (err, result) => {
         if (err) {
             console.log(err)
         } else {
-            console.log( "L'utilisateur n'aime plus cet article. ")
+            console.log( "L'utilisateur n'aime plus ce commentaire. ")
             res.status(200).end()
         }
     })

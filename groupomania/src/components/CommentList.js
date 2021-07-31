@@ -1,5 +1,6 @@
 import CommentItem from "./CommentItem";
 import CommentUpdate from "./CommentUpdate";
+import LikeComment from "./LikeComment"
 
 const CommentList= ({commentList, setCommentList, username, role}) => {
   console.log("username : ", username, "role : ", role)
@@ -8,6 +9,7 @@ const CommentList= ({commentList, setCommentList, username, role}) => {
           {commentList.map(({ id, commentaire, author }) => username === author || role === 1 ? (
               <div key={id} className="comment-card" >
                 <CommentItem commentaire={commentaire} author={author} />
+                <LikeComment id={id} />
                 <CommentUpdate id={id} setCommentList={setCommentList} />
               </div>
           ) : (

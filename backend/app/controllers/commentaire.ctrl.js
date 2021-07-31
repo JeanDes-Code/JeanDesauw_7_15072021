@@ -23,8 +23,8 @@ exports.create = (req, res) => {
           commentaire: commentaireContent,
           author: username,
         };
-        res.send(newComment);
         console.log("Le nouveau commentaire : ", newComment, " a été publié ")
+        res.status(201).send(newComment);
       }
     })
   })
@@ -39,8 +39,8 @@ exports.findAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
       console.log("Commentaires lu avec succès")
+      res.status(200).send(result);
     }
   });
 };
@@ -58,7 +58,7 @@ exports.update = (req, res) => {
     } else {
       console.log("Commentaire modifié !");
     }
-    res.send(result).end();
+    res.status(200).send(result);
   });
 };
 
@@ -73,6 +73,7 @@ exports.deleteOne = (req, res) => {
       console.log("ERREUR");
     } else {
       console.log("Commentaire supprimé !");
+      res.status(200).end()
     }
   });
 };
