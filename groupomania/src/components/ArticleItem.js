@@ -1,4 +1,4 @@
-import Like from './LikeArticle'
+
 
 function ArticleItem({ id, title, content, author, file }) {
     console.log(file)
@@ -10,7 +10,6 @@ function ArticleItem({ id, title, content, author, file }) {
                 <h3 className="article-display-author">
                     Publié par {author}{" "}
                 </h3>
-                <Like />
             </div>
     )
 }
