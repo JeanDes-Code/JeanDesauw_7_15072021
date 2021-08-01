@@ -298,6 +298,7 @@ HTML {
 /* Styles boutons */
 
 .btn {
+  font-weight: 600;
   margin: 20px;
   width: 200px;
   border-radius: 15px;
@@ -351,6 +352,10 @@ textarea, input {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.btn-alert {
+  color: red;
 }
 
 /* Utilitaire */

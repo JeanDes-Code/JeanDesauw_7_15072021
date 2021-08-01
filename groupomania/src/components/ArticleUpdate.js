@@ -23,6 +23,7 @@ function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
     
     //DEBUG : trouver une autre méthode pour rafraichir le composant ArticleList (parfois la requête GET se fait avant la fin de la requête PUT)
     const updateArticle = async (e) => {
+        const articleId = "article";
         e.preventDefault()
         if (newTitle === "" || newContent === "") {
           alert("Veuillez remplir tous les champs pour modifier votre article.");
