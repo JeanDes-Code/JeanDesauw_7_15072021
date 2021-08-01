@@ -155,7 +155,7 @@ exports.modify = async (req,res) => {
 
 
 
-// Delete One User
+// Delete One Userd
 
 exports.delete = (req,res) => {
     const userId = req.res.locals.userId;
