@@ -19,7 +19,6 @@ exports.create = (req, res) => {
       console.log(err);
     } else {
       console.log("Table Article créée ou déjà existante !")
-      res.end("An error occured")
     }
     db.query(
       sqlInsert,
@@ -36,6 +35,7 @@ exports.create = (req, res) => {
             articleFile: articleFile
           };
           console.log("Article créé !")
+          res.status(201).send('item created')
         }
       })
   });
@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
       console.log(err);
     } else {
       console.log("Articles récupérés !", result)
-      res.send(result);
+      res.status(200).send(result);
     }
   });
 };
@@ -74,7 +74,7 @@ exports.findOne = (req, res) => {
         username: username,
         role: role
       }
-      res.send(data);
+      res.status(200).send(data);
     }
   });
 };
@@ -107,7 +107,7 @@ exports.update = (req, res) => {
         } else {
           console.log("Article modifié !");
         }
-        res.send(result).end();
+        res.status(200).send(result);
       }
   );
   })
@@ -119,6 +119,7 @@ exports.deleteOne = (req, res) => {
   const sqlSelectOne = "SELECT file FROM articles WHERE id = ?"
   const sqlDelete = "DELETE FROM articles WHERE id = ?";
   const sqlDeleteComs = "DELETE FROM commentaires WHERE articleId = ?"
+  const sqlDeleteLikes ="DELETE FROM Article_Like WHERE articleId = ? "
   db.query(sqlSelectOne, articleId, (err, result) => {
     if (err) {
       console.log(err)
@@ -140,6 +141,14 @@ exports.deleteOne = (req, res) => {
             } else {
               console.log("Commentaires associés à l'article supprimés !")
             }
+            db.query(sqlDeleteLikes, articleId, (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Likes associés à l'article supprimés !")
+                res.status(200).end()
+              }
+            })
           })
         });
       })

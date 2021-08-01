@@ -1,11 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const path = require('path');
 const app = express();
 
 const article = require("./app/routes/article.route");
 const commentaires = require("./app/routes/commentaire.route")
 const auth = require("./app/routes/user.route")
+const like = require("./app/routes/like-article.route")
+const likeComment = require("./app/routes/like-comment.route")
 
 //Réglages CORS
 app.use(cors());
@@ -18,8 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/uploads', express.static('uploads'));
 app.use('/api', article);
-app.use('/api/auth', auth)
+app.use('/api/auth', auth);
 app.use('/api/commentaires', commentaires);
+app.use('/api/like', like);
+app.use('/api/like/comment', likeComment);
 
 
 // Config du port sur lequel joindre le serveur

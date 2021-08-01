@@ -1,9 +1,8 @@
-import { useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useState, useEffect } from "react"
 import loginRequest from "../services/login-request"
 import signupRequest from "../services/signup-request"
 
-function Login () {
+function Login (props) {
 
     const [token, setToken] = useState("");
     const [userId, setUserId] = useState("");
@@ -18,7 +17,16 @@ function Login () {
         password: ""
     })
 
-    const history = useHistory()
+    useEffect(()=> {
+        if (token !== "" && token !== undefined) {
+            console.log("Votre token authentification est le suivant : ", token, " et votre userId = ", userId);
+            setWithExpiry("token", token, 28800000); //8h = 28800000ms
+            setWithExpiry("userId", userId, 28800000);
+            props.history.push('/')
+        } else {
+            console.log( "Il y a eu une erreur lors de la connection, veuillez réessayez ")
+        }
+    }, [token])
 
     const setWithExpiry = (key, value, ttl) => {
         const now = new Date();
@@ -31,15 +39,10 @@ function Login () {
 
     const connectUser = async (e) => {
         e.preventDefault();
-        await loginRequest(user, {setToken, setUserId});
-        if (token !== "" && token !== undefined) {
-            console.log("Votre token authentification est le suivant : ", token, " et votre userId = ", userId);
-            setWithExpiry("token", token, 28800000); //8h = 28800000ms
-            setWithExpiry("userId", userId, 28800000);
-            history.push('/')
-        } else {
-            console.log( "Il y a eu une erreur lors de la connection, veuillez réessayez ")
-        }
+        const response = await loginRequest(user);
+        setToken(response.data.token)
+        setUserId(response.data.id)
+
     }
 
     const createUser = async () => {
