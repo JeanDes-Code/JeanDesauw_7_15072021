@@ -18,14 +18,24 @@ function Article() {
   const [role, setRole] = useState("")
   const [article, setArticle] = useState([{id:'', title:'', content: '', author:'', file: null}])
   const [commentList, setCommentList] = useState([])
+
+  const getArticle = async (id) => {
+    const response = await getOne(id);
+    setArticle(response.data.result);
+    setUsername(response.data.username);
+    setRole(response.data.role);
+  } 
+
+  const getComments = async (id) => {
+    const response = await getComs(id)
+    setCommentList(response.data);
+  }
   
   useEffect(() => {
-    getOne(id, {setArticle, setUsername, setRole});
-    getComs(id, {setCommentList})
-  }, [id]);
-
-
-  console.log(article)
+    getArticle(id)
+    getComments(id)
+  }, []);
+  
   return username === article[0].author || role === 1 ? (
        <div className='article-page'> 
           <div key={id} className="card">

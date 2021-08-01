@@ -16,7 +16,8 @@ function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
 
     const deleteArticle = async (id) => {
         await deleteRequest(id);
-        setTimeout(() => {            history.push(`/`);
+        setTimeout(() => {
+            history.push(`/`);
           }, 10)
     };
     

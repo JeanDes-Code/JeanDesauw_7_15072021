@@ -4,8 +4,9 @@ HTML {
     "Lucida Sans", Arial, sans-serif;
 }
 
-.App {
-  text-align: center;
+.article-page, .articlePost, .homePage, .login-component, .monCompte {
+  width: 80%;
+  margin: auto;
 }
 
 
@@ -37,6 +38,8 @@ HTML {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  width: 95%;
+  margin: auto;
 }
 
 .header-logo {
