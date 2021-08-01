@@ -15,6 +15,7 @@ const CommentList= ({commentList, setCommentList, username, role}) => {
           ) : (
             <div key={id} className="comment-card" >
               <CommentItem commentaire={commentaire} author={author} />
+              <LikeComment id={id} />
             </div>
         )) }
         </div>
