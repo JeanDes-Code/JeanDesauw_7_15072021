@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const rateLimit = require("express-rate-limit")
+const helmet = require("helmet");
 const app = express();
 
 const article = require("./app/routes/article.route");
@@ -7,6 +9,16 @@ const commentaires = require("./app/routes/commentaire.route")
 const auth = require("./app/routes/user.route")
 const like = require("./app/routes/like-article.route")
 const likeComment = require("./app/routes/like-comment.route")
+
+//Réglage helmet : masquer l'utilisation d'express
+app.use(helmet());
+
+//Réglage sécurité : limiter le nombre de requêtes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
 
 //Réglages CORS
 app.use(cors());
