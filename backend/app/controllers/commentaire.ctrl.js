@@ -47,6 +47,18 @@ exports.findAll = (req, res) => {
   });
 };
 
+exports.findEverything = (req, res) => {
+  let sqlSelect = "SELECT * FROM commentaires";
+  db.query(sqlSelect, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Tous les commentaires lu avec succès")
+      res.status(200).send(result);
+    }
+  });
+}
+
 //UPDATE a Comment
 exports.update = (req, res) => {
   const commentId = req.params.id;

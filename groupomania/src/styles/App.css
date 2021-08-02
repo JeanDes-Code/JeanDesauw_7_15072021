@@ -9,7 +9,6 @@ HTML {
   margin: auto;
 }
 
-
 /* Styles composant header */
 
 .nav-bar {
@@ -46,7 +45,6 @@ HTML {
   height: 250px;
   width: 30%;
 }
-
 
 /* Style composant Commentaire */
 
@@ -275,6 +273,58 @@ HTML {
   margin-bottom: 10px;
 }
 
+/* Style composant activitybox */
+
+.activityBox {
+  position: fixed;
+  top: 200px;
+  left: -30px;
+  background-color: white;
+  padding: 20px 40px;
+  border-radius: 15px;
+  border: 1px solid black;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.activityBox-header {
+  display: flex;
+  font-size: 12px;
+}
+ 
+.activityBox h2 {
+  font-size: 18px;
+  margin:0;
+}
+
+.activityBox-list {
+  display: flex;
+}
+
+.activityBox-listItem {
+  margin-bottom: 10px;
+  list-style:square;
+  cursor: pointer;
+}
+
+.activityBox-btn {
+  position: fixed;
+  top: 200px;
+  left: -30px;
+  background-color: white;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+}
+
+.activityBox-btn-close {
+  height: fit-content;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+
 /* Styles formulaires */
 
 .form {
@@ -432,7 +482,9 @@ textarea, input {
   width: 100%;
 }
 
-
+.empty {
+  width: 40%;
+}
 
 
 
