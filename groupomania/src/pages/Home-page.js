@@ -5,7 +5,7 @@ import getArticle from "../services/get-request";
 
 //Components
 import ArticleList from "../components/ArticleList";
-
+import ActivityBox from "../components/Activity-box";
 
 function Home() {
   const [articleList, setArticleList] = useState([]);
@@ -21,8 +21,9 @@ function Home() {
 
   console.log(articleList)
   return (
-    <div className="homePage">
+    <div className="homePage page-layout">
       <ArticleList articleList={articleList} setArticleList={setArticleList} />
+      <ActivityBox />
     </div>
   );
 }
