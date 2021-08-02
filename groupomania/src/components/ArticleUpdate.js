@@ -33,8 +33,8 @@ function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
             data.append("title", newTitle);
             data.append("content", newContent);
             data.append("file", newFile);
-
-            await putRequest(id, data);
+            console.log(newTitle, newContent, newFile)
+            await putRequest(id, data, articleId);
 
             setNewTitle("");
             setNewContent("")
