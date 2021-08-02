@@ -10,13 +10,18 @@ import ArticleList from "../components/ArticleList";
 function Home() {
   const [articleList, setArticleList] = useState([]);
 
+  const getElements = async() => {
+    const response = await getArticle()
+    setArticleList(response.data)
+  }
+
   useEffect(() => {
-    getArticle({ setArticleList });
+    getElements();
   }, []);
 
   console.log(articleList)
   return (
-    <div className="App">
+    <div className="homePage">
       <ArticleList articleList={articleList} setArticleList={setArticleList} />
     </div>
   );

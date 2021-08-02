@@ -1,4 +1,4 @@
- import { useState } from "react";
+import { useState } from "react";
 import {useHistory} from 'react-router-dom'
 
 import postRequest from "../services/post-request";
@@ -27,12 +27,12 @@ function ArticlePost() {
       await postRequest(data, id, item);
       setTimeout(() => {
         history.push(`/`);
-      }, 100)
+      }, 200)
     }
   };
 
   return (
-    <form className="form" encType="multipart/form-data">
+    <form className="form articlePost" encType="multipart/form-data">
       <h2>Poster un article : </h2>
       <label> Titre de l'article</label>
       <input

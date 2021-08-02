@@ -4,8 +4,9 @@ HTML {
     "Lucida Sans", Arial, sans-serif;
 }
 
-.App {
-  text-align: center;
+.article-page, .articlePost, .homePage, .login-component, .monCompte {
+  width: 80%;
+  margin: auto;
 }
 
 
@@ -37,6 +38,8 @@ HTML {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  width: 95%;
+  margin: auto;
 }
 
 .header-logo {
@@ -72,6 +75,7 @@ HTML {
   flex-direction: column;
   height: auto;
   background-color: white;
+  padding: 10px 50px;
   border-radius: 15px;
 }
 
@@ -206,6 +210,71 @@ HTML {
   margin-top: -45px;
 }
 
+/* Styles composant Mon Compte */
+
+.monCompte {
+  display: flex;
+  flex-direction: column;
+}
+
+.monCompte h1 {
+  text-align: center;
+}
+
+.monCompte-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  align-self: center;
+  background-color: white;
+  padding: 50px;
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
+}
+
+.monCompte-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.monCompte-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  background-color: white;
+  padding: 50px 50px 30px 50px;
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
+  width: 50%;
+}
+
+.monCompte-input {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.monCompte-label {
+  margin-right: 50px;
+  display: block;
+  width: 200px;
+}
+
+.monCompte-form-btn {
+  font-weight: 600;
+  width: 200px;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: white;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
 /* Styles formulaires */
 
 .form {
@@ -295,6 +364,7 @@ HTML {
 /* Styles boutons */
 
 .btn {
+  font-weight: 600;
   margin: 20px;
   width: 200px;
   border-radius: 15px;
@@ -348,6 +418,10 @@ textarea, input {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.btn-alert {
+  color: red;
 }
 
 /* Utilitaire */

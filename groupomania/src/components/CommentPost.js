@@ -23,8 +23,9 @@ function CommentPost ({setCommentList}) {
           } else {
                 console.log(newCom, "publié !")
                 await postRequest(newCom, id, item)
-                setTimeout(() => {
-                    getComs(id, {setCommentList})
+                setTimeout( async () => {
+                    const response = await getComs(id)
+                    setCommentList(response.data)
                 }, 100)
                 setIsOpen(false)
           }

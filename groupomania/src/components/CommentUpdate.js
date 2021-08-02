@@ -19,8 +19,9 @@ function CommentUpdate({ id, setCommentList }) {
     const deleteComment = async (id) => {
         const item = "commentaire"
         await deleteRequest(id, articleId, item);
-        setTimeout(() => {
-            getComs(articleId, {setCommentList})
+        setTimeout(async() => {
+           const response = await getComs(articleId)
+           setCommentList(response.data)
           }, 10)
     };
     
@@ -30,7 +31,8 @@ function CommentUpdate({ id, setCommentList }) {
         } else {
             await putRequest(id, modifiedComment, articleId);
             setModifiedComment({ commentaire: "" });
-            getComs(articleId, {setCommentList})
+            const response = await getComs(articleId)
+            setCommentList(response.data)
             setIsOpen(false)
         }
     };

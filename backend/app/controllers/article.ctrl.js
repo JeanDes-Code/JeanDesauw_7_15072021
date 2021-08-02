@@ -3,6 +3,7 @@ const fs = require('fs');
 const getFileName = require('../utils/getFileName.utils')
 //CREATE an Article
 exports.create = (req, res) => {
+  const userId = req.res.locals.userId;
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleFile = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
@@ -10,9 +11,9 @@ exports.create = (req, res) => {
 
   console.log("Images : " + articleFile)
 
-  const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, file CHAR(120) NULL ,PRIMARY KEY (id))"
+  const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, userId INT UNSIGNED NOT NULL,  file CHAR(120) NULL ,PRIMARY KEY (id))"
   const sqlInsert =
-    "INSERT INTO articles (title, content, author, file) VALUES (?,?,?,?)";
+    "INSERT INTO articles (title, content, author, userId, file) VALUES (?,?,?,?,?)";
 
   db.query(sqlCreate, (err, result) => {
     if (err) {
@@ -22,7 +23,7 @@ exports.create = (req, res) => {
     }
     db.query(
       sqlInsert,
-      [articleTitle, articleContent, username, articleFile],
+      [articleTitle, articleContent, username, userId, articleFile],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -32,10 +33,11 @@ exports.create = (req, res) => {
             title: articleTitle,
             content: articleContent,
             author: username,
+            author_userId: userId,
             articleFile: articleFile
           };
           console.log("Article créé !")
-          res.status(201).send('item created')
+          res.status(201).send(newArticle)
         }
       })
   });
@@ -106,8 +108,8 @@ exports.update = (req, res) => {
           console.log(err);
         } else {
           console.log("Article modifié !");
+          res.status(200).end();
         }
-        res.status(200).send(result);
       }
   );
   })

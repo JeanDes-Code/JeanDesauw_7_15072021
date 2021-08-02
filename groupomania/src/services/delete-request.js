@@ -8,7 +8,15 @@ const deleteRequest = (id, articleId, item) => {
         Authorization: `Bearer ${token}`,
       },
     })
-  } else {
+  } 
+  if (item === "user") {
+    Axios.delete(`http://localhost:3001/api/auth/delete`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  }
+  else {
     Axios.delete(`http://localhost:3001/api/delete/article/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,

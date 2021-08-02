@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react"
+
+//services
 import loginRequest from "../services/login-request"
 import signupRequest from "../services/signup-request"
 
@@ -69,7 +71,7 @@ function Login (props) {
         <div className="login-component">
 
             <form className="login-card">
-                <input type="email" placeholder="Adresse e-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
+                <input type='email' placeholder="Adresse e-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
                 <input type="text" placeholder="Username" required onChange={(e) => {setNewUser({ ...newUser, username : e.target.value })}} /> 
                 <input type="password" placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
                 <button className='btn' onClick={createUser}> Créer un compte </button>

@@ -11,6 +11,7 @@ import Home from "../pages/Home-page"
 import Article from "../pages/Article-page"
 import ArticlePost from "../pages/ArticlePost"
 import Login from "../pages/Login";
+import MonCompte from "../pages/MonCompte";
 
 function App() {
   
@@ -63,14 +64,15 @@ function App() {
           <div className="nav-bar">
             <Link className='nav-item' to='/'> Page d'accueil </Link>
             <Link className='nav-item' to='/post'> Publier un article </Link>
-            <Link className='nav-item' to='/login'> Se connecter </Link>
-            <button className='nav-item' onClick={logout} > Se déconnecter </button>
+            <Link className='nav-item' to='/myAccount'> Mon Compte </Link>
+            <button className='nav-item' onClick={logout} > Déconnexion  </button>
           </div>
         </div>
         <Switch>
           <PrivateRoute path="/" exact component={Home} />
           <Route path='/login' exact component={Login} />
           <PrivateRoute path="/post" exact component={ArticlePost} />
+          <PrivateRoute path="/myAccount" exact component={MonCompte} />
           <PrivateRoute path="/:id" exact component={Article} />
         </Switch>
       </Router>
