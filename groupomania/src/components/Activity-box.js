@@ -40,7 +40,7 @@ function ActivityBox(props) {
                     <div className="empty"></div>
                     <ul>
                     {lastArticles.map(({ id, title }) => (
-                            <li key={id} className="lastArticle activityBox-listItem" onClick={() => {history.push(`/${id}`)}}> {title} </li>
+                            <li key={id} className="lastArticle activityBox-listItem" onClick={() => {document.location.href=`/${id}`}}> {title} </li>
 
                     ))}
                     </ul>
@@ -52,7 +52,7 @@ function ActivityBox(props) {
                     <div className="empty"></div>
                     <ul>
                     {lastComments.map(({ id, commentaire, articleId }) => (
-                        <li key={id} className="lastComment activityBox-listItem" onClick={() => {history.push(`/${articleId}`)}}> {commentaire} </li>
+                        <li key={id} className="lastComment activityBox-listItem" onClick={() => {document.location.href=`/${articleId}`}}> {commentaire} </li>
                     ))}
                     </ul>
                 </div>
