@@ -1,15 +1,15 @@
 const db = require("../config/db.config");
 const fs = require('fs');
+
 const getFileName = require('../utils/getFileName.utils')
 //CREATE an Article
 exports.create = (req, res) => {
+
   const userId = req.res.locals.userId;
+  const username = req.res.locals.username;
   const articleTitle = req.body.title;
   const articleContent = req.body.content;
   const articleFile = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
-  const username = req.res.locals.username;
-
-  console.log("Images : " + articleFile)
 
   const sqlCreate = "CREATE TABLE IF NOT EXISTS Articles (id INT UNSIGNED NOT NULL AUTO_INCREMENT, title VARCHAR(45) NOT NULL, content TEXT NOT NULL, author VARCHAR(45) NOT NULL, userId INT UNSIGNED NOT NULL,  file CHAR(120) NULL ,PRIMARY KEY (id))"
   const sqlInsert =
@@ -50,7 +50,7 @@ exports.findAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Articles récupérés !", result)
+      console.log("Articles récupérés !")
       res.status(200).send(result);
     }
   });
@@ -83,7 +83,6 @@ exports.findOne = (req, res) => {
 
 //UPDATE an Article
 exports.update = (req, res) => {
-  console.log(req)
   const articleId = req.params.id;
   const articleTitle = req.body.title;
   const articleContent = req.body.content;

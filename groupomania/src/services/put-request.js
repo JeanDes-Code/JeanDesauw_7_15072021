@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const putRequest = (id, data, articleId) => {
+const putRequest = (id, data, articleId, item) => {
   const token = JSON.parse(localStorage.getItem("token")).value;
   if (articleId === "article") {
     Axios.put(`http://localhost:3001/api/update/article/${id}`, data , 
@@ -16,13 +16,16 @@ const putRequest = (id, data, articleId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-  }else {
-    Axios.put(`http://localhost:3001/api/commentaires/put/${articleId}/${id}`, {data} , 
+  }if (item === 'commentaire') {
+    Axios.put(`http://localhost:3001/api/commentaires/put/${articleId}/${id}`, data , 
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+  }else {
+    console.log("Une erreur est survenue lors de la requête.")
+    return
   }
 };
 

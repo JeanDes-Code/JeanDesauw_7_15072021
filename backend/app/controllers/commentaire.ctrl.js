@@ -62,7 +62,7 @@ exports.findEverything = (req, res) => {
 //UPDATE a Comment
 exports.update = (req, res) => {
   const commentId = req.params.id;
-  const commentContent = req.body.data.commentaire;
+  const commentContent = req.body.commentaire;
 
   let sqlUpdate = "UPDATE commentaires SET commentaire = ? WHERE id = ?";
 

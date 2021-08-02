@@ -13,8 +13,6 @@ module.exports = (req, res, next) => {
     const userId = decodedToken.id;
     const username = decodedToken.username;
     const role = decodedToken.role;
-    console.log(role)
-    console.log(" Utilisateur : n°" + userId);
 
     //If is null or != from that one of API : invalid request
     if (req.body.userId && req.body.userId != userId) {

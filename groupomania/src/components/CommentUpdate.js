@@ -7,6 +7,7 @@ import getComs from "../services/getCom-request";
 import putRequest from "../services/put-request";
 
 function CommentUpdate({ id, setCommentList }) {
+    const item = "commentaire"
     const urlParam = useParams()
     let articleId = urlParam.id
 
@@ -17,7 +18,6 @@ function CommentUpdate({ id, setCommentList }) {
     });
 
     const deleteComment = async (id) => {
-        const item = "commentaire"
         await deleteRequest(id, articleId, item);
         setTimeout(async() => {
            const response = await getComs(articleId)
@@ -29,7 +29,7 @@ function CommentUpdate({ id, setCommentList }) {
         if (modifiedComment.commentaire === "") {
             alert("Vous ne pouvez pas publier un article vide.");
         } else {
-            await putRequest(id, modifiedComment, articleId);
+            await putRequest(id, modifiedComment, articleId, item);
             setModifiedComment({ commentaire: "" });
             const response = await getComs(articleId)
             setCommentList(response.data)
