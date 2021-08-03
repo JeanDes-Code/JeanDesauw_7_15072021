@@ -14,11 +14,21 @@ const likeComment = require("./app/routes/like-comment.route")
 app.use(helmet());
 
 //Réglage sécurité : limiter le nombre de requêtes
-const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 60 minutes
-  max: 150 // limit each IP to 100 requests per windowMs
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30 // limit each IP to 15 requests per windowMs
 });
-//app.use(limiter);
+app.use("/api/auth", authLimiter); // On limite à 2 requetes par minutes pour luter contre les attaques de force brute.
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, //15minutes
+  max: 300
+})
+app.use('/api', limiter) //Pour les autres type de requêtes on limite à 20 requêtes par minutes.
+app.use('/uploads', limiter)
+app.use('/api/commentaires', limiter)
+app.use('/api/like', limiter)
+app.use('/api/like/comment', limiter)
 
 //Réglages CORS
 app.use(cors());
