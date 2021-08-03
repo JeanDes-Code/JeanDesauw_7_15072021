@@ -42,27 +42,25 @@ function Login (props) {
     const connectUser = async (e) => {
         e.preventDefault()
         const response = await loginRequest(user);
-        console.log(response)
         if (response) {
             setToken(response.data.token)
             setUserId(response.data.id)
             setErrorMessage("")
         } else {
-            console.log(token)
             setErrorMessage("Mauvaise combinaison username/ mot de passe !")
         }
     }
 
-    const createUser = async () => {
-        const {response, error} = await signupRequest(newUser);
+    const createUser = async (e) => {
+        e.preventDefault()
+        const response= await signupRequest(newUser);
         if (response) {
             setErrorMessage("")
             alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
             setIsOpen(true);
         } else {
-            setErrorMessage(error)
+            setErrorMessage(`Il y a eu une erreur lors de la création du compte. Soit vous utilisez un email invalide. Soit l'email ou le username sont déjà utilisés.`)
         }
-        
     }
 
     return isOpen ? (
@@ -88,7 +86,7 @@ function Login (props) {
             <form className="login-card">
                 <input type='email' placeholder="@mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
                 <input type="text" placeholder="Username" required onChange={(e) => {setNewUser({ ...newUser, username : e.target.value })}} /> 
-                <input type="password" placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
+                <input type="password" pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$' placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
                 {errorMessage ? (
                 <p className="errorMessage">{errorMessage}</p>
                 ) : null}

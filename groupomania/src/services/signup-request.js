@@ -9,7 +9,6 @@ const signupRequest = async(newUser) => {
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
-        return (error.response.data)
       } else if (error.request) {
         const errorReq = "The request was made but no response was received."
         console.log(errorReq);
@@ -19,7 +18,6 @@ const signupRequest = async(newUser) => {
         console.log(errorAlt, error.message);
       }
       console.log(error.config);
-      return (error)
       }))
 }
 

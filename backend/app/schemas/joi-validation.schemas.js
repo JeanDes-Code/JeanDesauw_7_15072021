@@ -12,11 +12,12 @@ const schemas = {
 
     userSignUpSchema: Joi.object().keys({
         email: Joi.string().email().required(),
-        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+        password: Joi.string().required().pattern(new RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$/)),
+        username: Joi.string().alphanum().required()
     }).unknown(true),
 
     userLoginSchema: Joi.object().keys({
-        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+        password: Joi.string().required().pattern(new RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$/))
     }).unknown(true)
 }
 
