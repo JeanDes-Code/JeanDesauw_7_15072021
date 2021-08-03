@@ -10,6 +10,7 @@ exports.signup = async (req, res) => {
     const password = await bcrypt.hash(req.body.password, 10);
     const username = req.body.username;
     const defaultRole = 0;
+    let ERROR;
 
     //Compte moderateur :
     const moderateurPassword = await bcrypt.hash("moderateur", 10,)
@@ -28,6 +29,7 @@ exports.signup = async (req, res) => {
     db.query(sqlCreate, (err, result) => {
         if (err) {
           console.log(err);
+          ERROR = err
         } else {
           console.log("Table Users créée ou déjà existante !")
         }
@@ -35,6 +37,7 @@ exports.signup = async (req, res) => {
         db.query(sqlAutoInsertModerateur, [moderateur.id, moderateur.email, moderateur.password, moderateur.username, moderateur.role], (err,result) => {
             if (err) {
                 console.log("Modérateur non-créé ", err);
+                ERROR = ERROR + '|' + err
             } else {
                 console.log("Compte modérateur créé ou déjà existant !")
             }
@@ -43,7 +46,8 @@ exports.signup = async (req, res) => {
             db.query(sqlInsert, [email, password, username, defaultRole], (err,result) => {
                 if (err) {
                     console.log(err);
-                    res.end()
+                    ERROR = ERROR + '|' + err
+                    res.status(500).send(ERROR)
                 } else {
                     console.log("Compte utilisateur créé !")
                     res.status(201).send('user created')
@@ -63,18 +67,21 @@ exports.login = async (req, res) => {
     db.query (sqlGetUser, username, async (err, result) => {
         if (err) {
             console.log(err)
-            res.send(err);
+            res.status(500).send("Mauvaise combinaison username/ mot de passe !");
         } else {
             console.log(result)
             const hash = JSON.parse(JSON.stringify(result));
+            if (hash[0] === undefined) {
+                res.status(500).send("Mauvaise combinaison username/ mot de passe !")
+            } else {
             const userId = hash[0].id
             const username = hash[0].username
             const role = hash[0].role
             console.log(hash)
             await bcrypt.compare(password, hash[0].password, function(err, result) {
                 if( result === false ) {
-                    console.log("Mot de passe incorrect !")
-                    res.end();
+                    console.log("Mauvaise combinaison username/ mot de passe !")
+                    res.status(500).send("Mot de passe incorrect !");
                 } else {
                     const auth = {
                         auth: true,
@@ -93,7 +100,7 @@ exports.login = async (req, res) => {
                     console.log("Vous êtes connecté !")
                     res.status(200).end();
                 }
-           });
+           })};
         }
     })
 }
@@ -106,7 +113,7 @@ exports.getOne =  (req, res) => {
     db.query(sqlSelect, userId, (err, result) => {
         if (err) {
             console.log(err)
-            res.end();
+            res.status(500).send(err);
         } else {
             res.status(200).send(result)
         }
@@ -125,25 +132,27 @@ exports.modify = async (req,res) => {
     const sqlUpdateUser = "UPDATE Users SET username = ?, email = ?, password = ? WHERE id = ?";
     const sqlUpdateArticles = "UPDATE Articles SET author = ? WHERE userId = ?";
     const sqlUpdateCommentaires ="UPDATE Commentaires SET author = ? WHERE userId = ?";
+    let ERROR;
 
     db.query(sqlUpdateArticles, [username, userId], (err, result) => {
         if (err) {
-            console.log(err);
-            res.end();
+            console.log(err)     
+            ERROR = err
         } else {
             console.log("Auteur des articles créés par l'utilsateur modifié pour correspondre au nouveau Username.")
         }
         db.query(sqlUpdateCommentaires, [username, userId], (err, result) => {
             if (err) {
                 console.log(err);
-                res.end();
+                ERROR = ERROR + '|' + err;
             } else {
                 console.log("Auteur des commentaires créés par l'utilsateur modifié pour correspondre au nouveau Username.")
             }
             db.query(sqlUpdateUser, [username, email, password, userId], (err, result) => {
                 if (err) {
                     console.log(err)
-                    res.end();
+                    ERROR = ERROR + '|' + err
+                    res.status(500).send(ERROR)
                 } else {
                     console.log("Compte User modifié !")
                     res.status(200).end()
@@ -164,39 +173,41 @@ exports.delete = (req,res) => {
     const sqlDeleteCommentaires = "DELETE FROM Commentaires WHERE userId = ?";
     const sqlDeleteArticleLike ="DELETE FROM Article_like WHERE userId = ?";
     const sqlDeleteCommentLike ="DELETE FROM Comment_like WHERE userId = ?";
+    let ERROR;
 
     db.query(sqlDeleteArticles, userId, (err, result) => {
         if (err) {
             console.log(err)
-            res.end()
+            ERROR = err
         } else {
             console.log("Articles créés par l'utilisateur supprimés !")
         }
         db.query(sqlDeleteCommentaires, userId, (err, result) => {
             if (err) {
                 console.log(err)
-                res.end()
+                ERROR = ERROR + '|' + err
             } else {
                 console.log("Commentaires créés par l'utilisateur supprimés !")
             }
             db.query(sqlDeleteArticleLike, userId, (err, result) => {
                 if (err) {
                     console.log(err)
-                    res.end()
+                    ERROR = ERROR + '|' + err
                 } else {
                     console.log("Likes articles par l'utilisateur supprimés !")
                 }
                 db.query(sqlDeleteCommentLike, userId, (err, result) => {
                     if (err) {
                         console.log(err)
-                        res.end()
+                        ERROR = ERROR + '|' + err
                     } else {
                         console.log("Likes Commentaires par l'utilisateur supprimés !")
                     }
                     db.query(sqlDeleteUser, userId, (err, result) => {
                         if (err) {
                             console.log(err)
-                            res.end()
+                            ERROR = ERROR + '|' + err
+                            res.status(500).send(ERROR)
                         } else {
                             console.log("Compte User supprimé !")
                             res.status(200).send("Compte supprimé.")

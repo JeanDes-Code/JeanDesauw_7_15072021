@@ -21,7 +21,7 @@ function CommentPost ({setCommentList}) {
           ) {
             alert("Vous ne pouvez pas publier un commentaire vide !");
           } else {
-                console.log(newCom, "publié !")
+                console.log("Commentaire publié !")
                 await postRequest(newCom, id, item)
                 setTimeout( async () => {
                     const response = await getComs(id)

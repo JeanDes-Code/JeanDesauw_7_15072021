@@ -19,7 +19,6 @@ function Home() {
     getElements();
   }, []);
 
-  console.log(articleList)
   return (
     <div className="homePage page-layout">
       <ArticleList articleList={articleList} setArticleList={setArticleList} />

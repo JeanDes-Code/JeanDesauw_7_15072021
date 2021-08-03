@@ -484,8 +484,12 @@ textarea, input {
   width: 100%;
 }
 
-
-
+.errorMessage {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+}
 
 
 

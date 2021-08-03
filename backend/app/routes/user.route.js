@@ -8,7 +8,7 @@ const schemas = require('../schemas/joi-validation.schemas')
 
 router.post("/post/signup", middleware(schemas.userSignUpSchema), user.signup);
 
-router.post("/post/login",middleware(schemas.userLoginSchema), user.login);
+router.post("/post/login", middleware(schemas.userLoginSchema), user.login);
 
 router.get("/get", auth, user.getOne);
 
