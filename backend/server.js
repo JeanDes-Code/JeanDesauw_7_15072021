@@ -16,9 +16,9 @@ app.use(helmet());
 //Réglage sécurité : limiter le nombre de requêtes
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 30 // limit each IP to 15 requests per windowMs
+  max: 60 // limit each IP to 15 requests per windowMs
 });
-app.use("/api/auth", authLimiter); // On limite à 2 requetes par minutes pour luter contre les attaques de force brute.
+app.use("/api/auth", authLimiter); // On limite à 4 requetes par minutes pour luter contre les attaques de force brute.
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, //15minutes
