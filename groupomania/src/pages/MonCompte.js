@@ -16,7 +16,7 @@ function MonCompte() {
         email : "",
         password : "" 
     })
-
+    const [errorMessage, setErrorMessage] = useState("");
 
     const item = 'user'
     const id = null;
@@ -29,26 +29,32 @@ function MonCompte() {
 
     useEffect(() => {
         getUser()
-    })
+    }, [])
 
     
     const modify= () => {
         setIsOpen(true)
     }
 
-    const submit = () => {
-        putRequest(id, data, item)
-        alert("Modifications enregistrées, merci de vous reconnectez. ")
-        history.push('/')
-        localStorage.clear()
+
+    const submit = async (e) => {
+        e.preventDefault()
+        const response = await putRequest(id, data, item)
+        if(response) {
+            alert("Modifications enregistrées, merci de vous reconnectez. ")
+            localStorage.clear()
+            history.push('/')
+        } else {
+            setErrorMessage("Entrées invalides ! Soit le Username est déjà pris, soit l'adresse mail est invalide.")
+        }
     }
 
     const deleteUser = () => {
-        const resultat = window.confirm("Cette action surpprimera votre compte ainsi que toutes vos pubilications, commentaires et likes. Êtes-vous sur de vouloir continuer ?")
+        const resultat = window.confirm("Cette action supprimera votre compte ainsi que toutes vos pubilications, commentaires et likes. Êtes-vous sur de vouloir continuer ?")
         if (resultat) {
             deleteRequest(id, articleId, item)
-            history.push('/')
             localStorage.clear()
+            history.push('/')
         } else {
             return
         }
@@ -57,20 +63,23 @@ function MonCompte() {
     return isOpen ? (
         <div className="monCompte">
             <h1> Modifier mon compte : </h1> 
-            <form className='monCompte-form'>
+            <form className='monCompte-form' autoComplete="on" onSubmit={submit}>
                 <div className="monCompte-input">
                     <label className='monCompte-label'> Nouveau Username : </label>
                     <input type='text' placeholder="username" required onChange={(e) => {setData({ ...data, username: e.target.value })}}/>
                 </div>
                 <div className="monCompte-input">
                     <label className='monCompte-label'> Nouvelle adresse mail : </label>
-                    <input type='email' placeholder="@mail" required onChange={(e) => {setData({ ...data, email: e.target.value })}}/> 
+                    <input type='email' placeholder="Adresse-mail" required onChange={(e) => {setData({ ...data, email: e.target.value })}}/> 
                 </div> 
                 <div className="monCompte-input">
                     <label className='monCompte-label'> Nouveau mot de passe : </label>
-                    <input type='password' placeholder="********" required onChange={(e) => {setData({ ...data, password: e.target.value })}}/>
-                </div> 
-                <button className='monCompte-form-btn'  onClick={submit}> Enregistrer </button>
+                    <input type='password' pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$" placeholder="********" required onChange={(e) => {setData({ ...data, password: e.target.value })}}/>
+                </div>
+                {errorMessage ? (
+                <p className="errorMessage">{errorMessage}</p>
+                ) : null}  
+                <input type="submit" className='monCompte-form-btn' value="Enregistrer" /> 
             </form>
         </div>
     ) : (

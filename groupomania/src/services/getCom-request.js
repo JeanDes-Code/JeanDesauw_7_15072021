@@ -22,7 +22,7 @@ const getComs = (articleId) => {
       console.log(errorAlt, error.message);
     }
     console.log(error.config);
-    }))
+    }));
 }
 
 export default getComs

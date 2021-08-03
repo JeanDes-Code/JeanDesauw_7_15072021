@@ -16,9 +16,9 @@ app.use(helmet());
 //Réglage sécurité : limiter le nombre de requêtes
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 60 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 150 // limit each IP to 100 requests per windowMs
 });
-app.use(limiter);
+//app.use(limiter);
 
 //Réglages CORS
 app.use(cors());

@@ -41,47 +41,39 @@ function Login (props) {
 
     const connectUser = async (e) => {
         e.preventDefault()
-        if (user.username === "" || user.password === "") {
-            setErrorMessage("Merci de renseigner un username et un mot de passe !")
-            return
+        const response = await loginRequest(user);
+        if (response) {
+            setToken(response.data.token)
+            setUserId(response.data.id)
+            setErrorMessage("")
         } else {
-            const response = await loginRequest(user);
-            if (response) {
-                setToken(response.data.token)
-                setUserId(response.data.id)
-                setErrorMessage("")
-            } else {
-                setErrorMessage("Mauvaise combinaison username/ mot de passe !")
-            }
-        } 
-    }
+            setErrorMessage("Mauvaise combinaison username/ mot de passe !")
+        }
+    } 
+
 
     const createUser = async (e) => {
         e.preventDefault()
-        if (newUser.email === "" || newUser.username === "" || newUser.password === "") {
-            setErrorMessage("Merci de renseigner toutes les informations demandées !")
+        const response= await signupRequest(newUser);
+        if (response) {
+            setErrorMessage("")
+            alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
+            setIsOpen(true);
         } else {
-            const response= await signupRequest(newUser);
-            if (response) {
-                setErrorMessage("")
-                alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
-                setIsOpen(true);
-            } else {
-                setErrorMessage(`Il y a un problème. Soit vous avez renseigné un  email invalide. Soit l'email ou le username renseignés sont déjà utilisés. Vérifiez également que votre mot de passe respecte les règles suivantes : 8 charactères minimum dont au moins une lettre minuscule, une lettre majuscule, un chiffre et un charactère spécial.`)
-            }
+            setErrorMessage(`Il y a un problème. Soit vous avez renseigné un  email invalide. Soit l'email ou le username renseignés sont déjà utilisés.`)
         }
     }
 
     return isOpen ? (
         <div className="login-component">
 
-            <form className="login-card" method='/post'>
+            <form className="login-card" autoComplete="on" onSubmit={connectUser}>
                 <input type="text" placeholder="Username" required onChange={(e) => {setUser({ ...user, username : e.target.value })}} /> 
                 <input type="password" placeholder="Mot de passe" required onChange={(e) => {setUser({ ...user, password : e.target.value })}} />
                 {errorMessage ? (
                 <p className="errorMessage">{errorMessage}</p>
                 ) : null} 
-                <button className='btn' onClick={connectUser}> Se connecter </button>
+                <input type="submit" className='btn' value="Se connecter" />
             </form>
             <div className="changeToSignup">
                 <h2> Vous n'avez pas de compte ?  </h2>
@@ -92,14 +84,14 @@ function Login (props) {
     ) : (
         <div className="login-component">
 
-            <form className="login-card" method='/post'>
-                <input type='email' pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" placeholder="Adresse-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
+            <form className="login-card" autoComplete="on" onSubmit={createUser}>
+                <input type='email' placeholder="Adresse-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
                 <input type="text" placeholder="Username" required onChange={(e) => {setNewUser({ ...newUser, username : e.target.value })}} /> 
-                <input type="password" pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$' placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
+                <input type="password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$" placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
                 {errorMessage ? (
                 <p className="errorMessage">{errorMessage}</p>
                 ) : null}
-                <input type="submit" className='btn' onClick={createUser} value="Créer un compte" />
+                <input type="submit" className='btn' value="Créer un compte" />
             </form>
             <div className="changeToSignup">
                 <h2> Vous avez déjà un compte ? </h2>

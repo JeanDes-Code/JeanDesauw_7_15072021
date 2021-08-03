@@ -11,7 +11,7 @@ const schemas = {
     }).unknown(true),
 
     userSignUpSchema: Joi.object().keys({
-        email: Joi.string().email().required(),
+        email: Joi.string().email({ tlds: { allow: false } }).required(),
         password: Joi.string().required().pattern(new RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$/)),
         username: Joi.string().alphanum().required()
     }).unknown(true),

@@ -12,7 +12,7 @@ router.post("/post/login", middleware(schemas.userLoginSchema), user.login);
 
 router.get("/get", auth, user.getOne);
 
-router.put("/put", auth, user.modify);
+router.put("/put", auth, middleware(schemas.userSignUpSchema), user.modify);
 
 router.delete("/delete", auth, user.delete);
 
