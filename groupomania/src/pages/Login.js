@@ -41,32 +41,41 @@ function Login (props) {
 
     const connectUser = async (e) => {
         e.preventDefault()
-        const response = await loginRequest(user);
-        if (response) {
-            setToken(response.data.token)
-            setUserId(response.data.id)
-            setErrorMessage("")
+        if (user.username === "" || user.password === "") {
+            setErrorMessage("Merci de renseigner un username et un mot de passe !")
+            return
         } else {
-            setErrorMessage("Mauvaise combinaison username/ mot de passe !")
-        }
+            const response = await loginRequest(user);
+            if (response) {
+                setToken(response.data.token)
+                setUserId(response.data.id)
+                setErrorMessage("")
+            } else {
+                setErrorMessage("Mauvaise combinaison username/ mot de passe !")
+            }
+        } 
     }
 
     const createUser = async (e) => {
         e.preventDefault()
-        const response= await signupRequest(newUser);
-        if (response) {
-            setErrorMessage("")
-            alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
-            setIsOpen(true);
+        if (newUser.email === "" || newUser.username === "" || newUser.password === "") {
+            setErrorMessage("Merci de renseigner toutes les informations demandées !")
         } else {
-            setErrorMessage(`Il y a eu une erreur lors de la création du compte. Soit vous utilisez un email invalide. Soit l'email ou le username sont déjà utilisés.`)
+            const response= await signupRequest(newUser);
+            if (response) {
+                setErrorMessage("")
+                alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
+                setIsOpen(true);
+            } else {
+                setErrorMessage(`Il y a un problème. Soit vous avez renseigné un  email invalide. Soit l'email ou le username renseignés sont déjà utilisés. Vérifiez également que votre mot de passe respecte les règles suivantes : 8 charactères minimum dont au moins une lettre minuscule, une lettre majuscule, un chiffre et un charactère spécial.`)
+            }
         }
     }
 
     return isOpen ? (
         <div className="login-component">
 
-            <form className="login-card">
+            <form className="login-card" method='/post'>
                 <input type="text" placeholder="Username" required onChange={(e) => {setUser({ ...user, username : e.target.value })}} /> 
                 <input type="password" placeholder="Mot de passe" required onChange={(e) => {setUser({ ...user, password : e.target.value })}} />
                 {errorMessage ? (
@@ -83,8 +92,8 @@ function Login (props) {
     ) : (
         <div className="login-component">
 
-            <form className="login-card">
-                <input type='email' placeholder="@mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
+            <form className="login-card" method='/post'>
+                <input type='email' pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" placeholder="Adresse-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
                 <input type="text" placeholder="Username" required onChange={(e) => {setNewUser({ ...newUser, username : e.target.value })}} /> 
                 <input type="password" pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$' placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
                 {errorMessage ? (

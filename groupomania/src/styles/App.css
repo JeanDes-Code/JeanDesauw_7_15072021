@@ -150,8 +150,8 @@ HTML {
   border: 2px solid black;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
-  padding: 20px 0px;
-  width: 250px;
+  padding: 40px 10px;
+  width: 500px;
   align-items: center;
   background-color: white;
 }
