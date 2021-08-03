@@ -39,13 +39,16 @@ function MonCompte() {
 
     const submit = async (e) => {
         e.preventDefault()
-        const response = await putRequest(id, data, item)
-        if(response) {
-            alert("Modifications enregistrées, merci de vous reconnectez. ")
-            localStorage.clear()
-            history.push('/')
-        } else {
-            setErrorMessage("Entrées invalides ! Soit le Username est déjà pris, soit l'adresse mail est invalide.")
+        try {
+            const response = await putRequest(id, data, item)
+            if(response) {
+                alert("Modifications enregistrées, merci de vous reconnectez. ")
+                localStorage.clear()
+                history.push('/')
+            }
+        } catch (error) {
+            const {response} = error
+            setErrorMessage(response.data)
         }
     }
 

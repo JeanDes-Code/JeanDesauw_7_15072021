@@ -41,26 +41,26 @@ function Login (props) {
 
     const connectUser = async (e) => {
         e.preventDefault()
-        const response = await loginRequest(user);
-        if (response) {
-            setToken(response.data.token)
-            setUserId(response.data.id)
-            setErrorMessage("")
-        } else {
-            setErrorMessage("Mauvaise combinaison username/ mot de passe !")
+        try{
+            const response = await loginRequest(user);
+            if (response) {
+                setToken(response.data.token)
+                setUserId(response.data.id)
+                setErrorMessage("")
+            }
+        } catch (error) {
+            const {response} = error
+            setErrorMessage(response.data)
         }
-    } 
-
+    }
 
     const createUser = async (e) => {
         e.preventDefault()
-        const response= await signupRequest(newUser);
-        if (response) {
-            setErrorMessage("")
-            alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
-            setIsOpen(true);
-        } else {
-            setErrorMessage(`Il y a un problème. Soit vous avez renseigné un  email invalide. Soit l'email ou le username renseignés sont déjà utilisés.`)
+        try{
+            const response = await signupRequest(newUser);
+        } catch (error) {
+            const {response} = error
+            setErrorMessage(response.data)
         }
     }
 

@@ -37,7 +37,6 @@ exports.signup = async (req, res) => {
         db.query(sqlAutoInsertModerateur, [moderateur.id, moderateur.email, moderateur.password, moderateur.username, moderateur.role], (err,result) => {
             if (err) {
                 console.log("Modérateur non-créé ", err);
-                ERROR = ERROR + '|' + err
             } else {
                 console.log("Compte modérateur créé ou déjà existant !")
             }

@@ -47,6 +47,7 @@ const putRequest = (id, data, articleId, item) => {
         console.log(errorAlt, error.message);
       }
       console.log(error.config);
+      return Promise.reject(error);
       }));
   }if (item === 'commentaire') {
     return (Axios.put(`http://localhost:3001/api/commentaires/put/${articleId}/${id}`, data , 

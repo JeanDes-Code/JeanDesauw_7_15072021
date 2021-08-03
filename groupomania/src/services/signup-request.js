@@ -1,8 +1,7 @@
 import Axios from "axios";
 
 const signupRequest = async(newUser) => {
-    return (
-      await Axios.post("http://localhost:3001/api/auth/post/signup", newUser).catch(function (error) {
+      return ( await Axios.post("http://localhost:3001/api/auth/post/signup", newUser).catch(function (error) {
       if (error.response) {
         const errorRes = "The request was made and the server responded with a status code that falls out of the range of 2xx"
         console.log(errorRes);
@@ -18,6 +17,7 @@ const signupRequest = async(newUser) => {
         console.log(errorAlt, error.message);
       }
       console.log(error.config);
+      return Promise.reject(error);
       }))
 }
 

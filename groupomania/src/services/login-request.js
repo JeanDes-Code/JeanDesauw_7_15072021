@@ -18,6 +18,7 @@ const loginRequest = async (user) => {
             console.log(errorAlt, error.message);
           }
           console.log(error.config);
+          return Promise.reject(error);
           })
     )
 }
