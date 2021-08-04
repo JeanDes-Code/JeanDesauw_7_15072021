@@ -1,12 +1,13 @@
 const db = require("../config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { Base64 } = require('js-base64');
 
 const randomToken = "!kfr*kç_"; //Randomiser le token de session 
 
 //Sign Up
 exports.signup = async (req, res) => {
-    const email = req.body.email;
+    const email = Base64.encode(req.body.email);
     const password = await bcrypt.hash(req.body.password, 10);
     const username = req.body.username;
     const defaultRole = 0;
@@ -14,15 +15,16 @@ exports.signup = async (req, res) => {
 
     //Compte moderateur :
     const moderateurPassword = await bcrypt.hash("moderateur", 10,)
+    const moderateurEmail = Base64.encode("moderateur@groupomania.fr")
     const moderateur = {
         id: 1,
-        email: "moderateur@groupomania.fr",
+        email: moderateurEmail,
         password: moderateurPassword,
-        username: "Moderateur",
+        username: "!Moderateur001",
         role: 1
     }
 
-    const sqlCreate ="CREATE TABLE IF NOT EXISTS Users (id INT UNSIGNED NOT NULL AUTO_INCREMENT, email VARCHAR(45) NOT NULL UNIQUE, password CHAR(60) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL, username VARCHAR(45) NOT NULL UNIQUE, role INT NOT NULL, PRIMARY KEY (id))"
+    const sqlCreate ="CREATE TABLE IF NOT EXISTS Users (id INT UNSIGNED NOT NULL AUTO_INCREMENT, email VARCHAR(64) CHARACTER SET ascii NOT NULL UNIQUE, password CHAR(60) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL, username VARCHAR(45) NOT NULL UNIQUE, role INT NOT NULL, PRIMARY KEY (id))"
     const sqlAutoInsertModerateur = "INSERT INTO Users (id, email, password, username, role) VALUES (?,?,?,?,?)"
     const sqlInsert ="INSERT INTO Users (email, password, username, role) VALUES (?,?,?,?)"
     //Création de la table user

@@ -41,23 +41,27 @@ function Login (props) {
 
     const connectUser = async (e) => {
         e.preventDefault()
+        setErrorMessage("")
+        let response
         try{
-            const response = await loginRequest(user);
-            if (response) {
-                setToken(response.data.token)
-                setUserId(response.data.id)
-                setErrorMessage("")
-            }
+            response = await loginRequest(user);
         } catch (error) {
             const {response} = error
             setErrorMessage(response.data)
+        } finally {
+            console.log("Token is set")
+            setToken(response.data.token)
+            setUserId(response.data.id)
         }
     }
 
     const createUser = async (e) => {
         e.preventDefault()
+        setErrorMessage("")
         try{
             const response = await signupRequest(newUser);
+            alert("Votre compte a été créé, merci de vous connectez !")
+            setIsOpen(true)
         } catch (error) {
             const {response} = error
             setErrorMessage(response.data)
