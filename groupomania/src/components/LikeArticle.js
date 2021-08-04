@@ -20,13 +20,11 @@ function Like () {
         setLikeCount(response.data.count)
         setAlreadyLiked(response.data.alreadyLiked)
     }
-    console.log(likeCount, alreadyLiked)
     useEffect(() => {
        getLikecount(id);
     },[id]); 
 
     const updateLike = () => {
-        console.log(likeCount, alreadyLiked)
         if (alreadyLiked === false) {
             setLikeCount(likeCount+1)
         } else {

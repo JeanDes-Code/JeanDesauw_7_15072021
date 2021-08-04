@@ -15,20 +15,13 @@ function CommentPost ({setCommentList}) {
 
     const item ="comment"
 
-    const submitComment = async (newCom) => {
-        if (
-            newCom.content === ""
-          ) {
-            alert("Vous ne pouvez pas publier un commentaire vide !");
-          } else {
-                console.log(newCom, "publié !")
-                await postRequest(newCom, id, item)
-                setTimeout( async () => {
-                    const response = await getComs(id)
-                    setCommentList(response.data)
-                }, 100)
-                setIsOpen(false)
-          }
+    const submitComment = async () => {
+        const response = await postRequest(newCom, id, item)
+        if (response) {
+            const response = await getComs(id)
+            setCommentList(response.data)
+            setIsOpen(false)
+        } else {return}
     };
     
 
@@ -36,26 +29,23 @@ function CommentPost ({setCommentList}) {
     <>  
         <span className="border"></span>   
         <button className="btn" onClick={() => setIsOpen(false)}> Fermer l'onglet </button>
-        <div className="form-comment">
+        <form className="form-comment" onSubmit={submitComment}>
             <h2>Publier un commentaire : </h2>
             <textarea
                 type="text"
                 name="content"
                 placeholder="Commentaire"
+                required
                 onChange={(e) => {
                 setNewCom({ ...newCom, commentaire: e.target.value });
                 }}
             />
-            <button
+            <input
+                type="submit"
                 className="btn submit-comment"
-                onClick={() => {
-                submitComment(newCom);
-                }}
-            >
-                {" "}
-                Publier{" "}
-            </button>
-        </div>
+                value="Publier un commentaire"
+            />
+        </form>
     </>
     ) :( 
         <button className="btn" onClick={() => setIsOpen(true)}> Publier un commentaire </button>

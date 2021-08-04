@@ -18,15 +18,15 @@ function Login (props) {
         username: "",
         password: ""
     })
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(()=> {
         if (token !== "" && token !== undefined) {
-            console.log("Votre token authentification est le suivant : ", token, " et votre userId = ", userId);
             setWithExpiry("token", token, 28800000); //8h = 28800000ms
             setWithExpiry("userId", userId, 28800000);
             props.history.push('/')
         } else {
-            console.log( "Il y a eu une erreur lors de la connection, veuillez réessayez ")
+            return
         }
     }, [token])
 
@@ -40,26 +40,44 @@ function Login (props) {
       };
 
     const connectUser = async (e) => {
-        e.preventDefault();
-        const response = await loginRequest(user);
-        setToken(response.data.token)
-        setUserId(response.data.id)
-
+        e.preventDefault()
+        setErrorMessage("")
+        let response
+        try{
+            response = await loginRequest(user);
+        } catch (error) {
+            const {response} = error
+            setErrorMessage(response.data)
+        } finally {
+            console.log("Token is set")
+            setToken(response.data.token)
+            setUserId(response.data.id)
+        }
     }
 
-    const createUser = async () => {
-        await signupRequest(newUser)
-        alert('Votre compte a bien été créé. Vous pouvez vous connecter dès à présent.')
-        setIsOpen(true);
+    const createUser = async (e) => {
+        e.preventDefault()
+        setErrorMessage("")
+        try{
+            const response = await signupRequest(newUser);
+            alert("Votre compte a été créé, merci de vous connectez !")
+            setIsOpen(true)
+        } catch (error) {
+            const {response} = error
+            setErrorMessage(response.data)
+        }
     }
 
     return isOpen ? (
         <div className="login-component">
 
-            <form className="login-card">
+            <form className="login-card" autoComplete="on" onSubmit={connectUser}>
                 <input type="text" placeholder="Username" required onChange={(e) => {setUser({ ...user, username : e.target.value })}} /> 
-                <input type="password" placeholder="Mot de passe" required onChange={(e) => {setUser({ ...user, password : e.target.value })}} /> 
-                <button className='btn' onClick={connectUser}> Se connecter </button>
+                <input type="password" placeholder="Mot de passe" required onChange={(e) => {setUser({ ...user, password : e.target.value })}} />
+                {errorMessage ? (
+                <p className="errorMessage">{errorMessage}</p>
+                ) : null} 
+                <input type="submit" className='btn' value="Se connecter" />
             </form>
             <div className="changeToSignup">
                 <h2> Vous n'avez pas de compte ?  </h2>
@@ -70,11 +88,14 @@ function Login (props) {
     ) : (
         <div className="login-component">
 
-            <form className="login-card">
-                <input type='email' placeholder="Adresse e-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
+            <form className="login-card" autoComplete="on" onSubmit={createUser}>
+                <input type='email' placeholder="Adresse-mail" required onChange={(e) => {setNewUser({ ...newUser, email : e.target.value })}} /> 
                 <input type="text" placeholder="Username" required onChange={(e) => {setNewUser({ ...newUser, username : e.target.value })}} /> 
-                <input type="password" placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
-                <button className='btn' onClick={createUser}> Créer un compte </button>
+                <input type="password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$" placeholder="Mot de passe" required onChange={(e) => {setNewUser({ ...newUser, password : e.target.value })}} />
+                {errorMessage ? (
+                <p className="errorMessage">{errorMessage}</p>
+                ) : null}
+                <input type="submit" className='btn' value="Créer un compte" />
             </form>
             <div className="changeToSignup">
                 <h2> Vous avez déjà un compte ? </h2>

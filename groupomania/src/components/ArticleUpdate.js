@@ -21,26 +21,26 @@ function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
           }, 10)
     };
     
-    //DEBUG : trouver une autre méthode pour rafraichir le composant ArticleList (parfois la requête GET se fait avant la fin de la requête PUT)
+
     const updateArticle = async (e) => {
         const articleId = "article";
         e.preventDefault()
         if (newTitle === "" || newContent === "") {
           alert("Veuillez remplir tous les champs pour modifier votre article.");
         } else {
-            //console.log(newTitle, newContent, newFile)
             const data = new FormData();
             data.append("title", newTitle);
             data.append("content", newContent);
             data.append("file", newFile);
-            console.log(newTitle, newContent, newFile)
             await putRequest(id, data, articleId);
-
             setNewTitle("");
             setNewContent("")
             setNewFile(null)
-            setTimeout(() => {
-                getOne(id, {setArticle, setUsername, setRole})
+            setTimeout(async() => {
+                const response = await getOne(id)
+                setArticle(response.data.result)
+                setUsername(response.data.username)
+                setRole(response.data.role)
             }, 100);
             setIsOpen(false);
         }

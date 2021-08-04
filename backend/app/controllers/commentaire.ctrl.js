@@ -8,16 +8,19 @@ exports.create = (req, res) => {
   const articleId = req.params.id;
   let createTable = "CREATE TABLE IF NOT EXISTS Commentaires (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, userId INT UNSIGNED NOT NULL, articleId INT UNSIGNED NOT NULL, PRIMARY KEY (id))"
   let sqlInsert = "INSERT INTO Commentaires (commentaire, author, userId, articleId) VALUES (?,?,?,?)";
-
+  let ERROR;
   db.query(createTable, (err, result) => {
     if (err) {
       console.log(err);
+      ERROR = err
     } else {
       console.log("Table commentaire créée ou déjà existante !")
     }
     db.query(sqlInsert, [commentaireContent, username, userId, articleId], (err, result) => {
       if (err) {
         console.log(err);
+        ERROR = ERROR + '|' + err;
+        res.status(500).send(ERROR)
       } else {
         const newComment = {
           id: result.insertId,
@@ -40,6 +43,7 @@ exports.findAll = (req, res) => {
   db.query(commentSelect, [articleId], (err, result) => {
     if (err) {
       console.log(err);
+      res.status(500).send(err)
     } else {
       console.log("Commentaires lu avec succès")
       res.status(200).send(result);
@@ -52,6 +56,7 @@ exports.findEverything = (req, res) => {
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.log(err);
+      res.status(500).send(err)
     } else {
       console.log("Tous les commentaires lu avec succès")
       res.status(200).send(result);
@@ -62,13 +67,14 @@ exports.findEverything = (req, res) => {
 //UPDATE a Comment
 exports.update = (req, res) => {
   const commentId = req.params.id;
-  const commentContent = req.body.data.commentaire;
+  const commentContent = req.body.commentaire;
 
   let sqlUpdate = "UPDATE commentaires SET commentaire = ? WHERE id = ?";
 
   db.query(sqlUpdate, [commentContent, commentId], (err, result) => {
     if (err) {
       console.log(err);
+      res.status(500).send(err)
     } else {
       console.log("Commentaire modifié !");
     }
@@ -84,7 +90,8 @@ exports.deleteOne = (req, res) => {
 
   db.query(sqlDelete, [commentId], (err, result) => {
     if (err) {
-      console.log("ERREUR");
+      console.log(err);
+      res.status(500).send(err)
     } else {
       console.log("Commentaire supprimé !");
       res.status(200).end()

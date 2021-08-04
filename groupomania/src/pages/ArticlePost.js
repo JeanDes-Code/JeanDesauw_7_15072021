@@ -13,31 +13,25 @@ function ArticlePost() {
   //voir autre méthode pour mettre à jour la liste d'article
   const submitArticle = async (e) => {
     e.preventDefault()
-    if (
-      title === "" ||
-      content === ""
-    ) {
-      alert("votre article est vide ! Veuillez remplir tous les champs !");
-    } else {
-      const data = new FormData();
-      const id = null;
-      data.append("title", title);
-      data.append("content", content);
-      data.append("file", file);
-      await postRequest(data, id, item);
-      setTimeout(() => {
-        history.push(`/`);
-      }, 200)
-    }
+    const data = new FormData();
+    const id = null;
+    data.append("title", title);
+    data.append("content", content);
+    data.append("file", file);
+    await postRequest(data, id, item);
+    setTimeout(() => {
+      history.push(`/`);
+    }, 200)
   };
 
   return (
-    <form className="form articlePost" encType="multipart/form-data">
+    <form className="form articlePost" encType="multipart/form-data" onSubmit={submitArticle}>
       <h2>Poster un article : </h2>
       <label> Titre de l'article</label>
       <input
         type="text"
         name="articleTitle"
+        required
         onChange={(e) => {
           setTitle( e.target.value )}}
       />
@@ -45,6 +39,7 @@ function ArticlePost() {
       <textarea
         type="text"
         name="content"
+        required
         onChange={(e) => {
           setContent( e.target.value )}}
       />
@@ -58,15 +53,11 @@ function ArticlePost() {
             setFile( e.target.files[0] )}}
       />
  
-      <button
+      <input
+        type="submit"
         className="btn"
-        onClick={
-          submitArticle
-        }
-      >
-        {" "}
-        Submit{" "}
-      </button>
+        value="Publier"
+      />
     </form>
   );
 }

@@ -1,4 +1,3 @@
-import {useHistory} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 
 //service 
@@ -6,7 +5,6 @@ import getArticle from "../services/get-request";
 
 
 function ActivityBox(props) {
-    const history = useHistory()
     const [isOpen, setIsOpen] = useState(false)
     const [articleList, setArticleList] = useState([]);
     const [comments, setComments] = useState([]);
