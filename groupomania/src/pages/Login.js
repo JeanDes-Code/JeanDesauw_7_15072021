@@ -49,9 +49,11 @@ function Login (props) {
             const {response} = error
             setErrorMessage(response.data)
         } finally {
+            if (response){
             console.log("Token is set")
             setToken(response.data.token)
             setUserId(response.data.id)
+            }
         }
     }
 

@@ -43,12 +43,12 @@ function CommentPost ({setCommentList}) {
             <input
                 type="submit"
                 className="btn submit-comment"
-                value="Publier un commentaire"
+                value="Commenter"
             />
         </form>
     </>
     ) :( 
-        <button className="btn" onClick={() => setIsOpen(true)}> Publier un commentaire </button>
+        <button className="btn btn-comment-panel" onClick={() => setIsOpen(true)}> Commenter </button>
     );
 }
 

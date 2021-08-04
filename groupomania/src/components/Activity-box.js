@@ -19,7 +19,7 @@ function ActivityBox(props) {
 
     useEffect(() => {
         getElements();
-    }, []);
+    }, [isOpen]);
 
     const lastArticles = articleList.slice(-3)
     lastArticles.sort((a,b) => b.id -a.id)

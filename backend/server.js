@@ -22,9 +22,9 @@ app.use("/api/auth", authLimiter); // On limite à 4 requetes par minutes pour l
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, //15minutes
-  max: 300
+  max: 600
 })
-app.use('/api', limiter) //Pour les autres type de requêtes on limite à 20 requêtes par minutes.
+app.use('/api', limiter) //Pour les autres type de requêtes on limite à 40 requêtes par minutes.
 app.use('/uploads', limiter)
 app.use('/api/commentaires', limiter)
 app.use('/api/like', limiter)

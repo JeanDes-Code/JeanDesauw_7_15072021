@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 HTML {
   background-image: url("../assets/bg.jpeg");
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
+}
+
+h3 {
+  margin-top: 0;
 }
 
 .article-page, .articlePost, .homePage, .login-component, .monCompte {
@@ -18,7 +23,6 @@ HTML {
 }
 
 .nav-item {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-weight: 400;
   font-size: 19px;
   margin-left: 20px;
@@ -31,6 +35,11 @@ HTML {
   padding: 5px 14px;
   background-color: white;
   cursor: pointer;
+  text-align: center;
+}
+
+.nav-item:hover {
+  transform:scale(1.02);
 }
 
 .header {
@@ -39,11 +48,12 @@ HTML {
   justify-content: space-evenly;
   width: 95%;
   margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .header-logo {
-  height: 250px;
-  width: 30%;
+  width: 40%;
 }
 
 /* Style composant Commentaire */
@@ -59,7 +69,7 @@ HTML {
   background-color:whitesmoke;
   border-radius: 15px;
   padding: 20px;
-  margin: 20px 0;
+  margin: 30px 0;
   position: relative;
 }
 
@@ -67,13 +77,12 @@ HTML {
 /* Styles composant Article */
 
 .article-display {
-  padding: 10px;
   text-align: justify;
   display: flex;
   flex-direction: column;
   height: auto;
   background-color: white;
-  padding: 10px 50px;
+  padding: 1% 5%;;
   border-radius: 15px;
 }
 
@@ -86,6 +95,7 @@ HTML {
   margin: 0;
   max-height: 500px;
   width: auto;
+  border-radius: 15px;
 }
 
 .article-display-author {
@@ -94,10 +104,7 @@ HTML {
 }
 
 .article-modification-title {
-  margin: 20px 0px 20px 0px;
-  position: absolute;
-  top:-40px;
-  left: 50px;
+  align-self: flex-start;
 }
 
 .article-page {
@@ -124,6 +131,7 @@ HTML {
   margin: 10px;
   font-size: 20px;
   position: relative;
+  cursor: pointer;
 }
 
 .article-modification {
@@ -166,9 +174,9 @@ HTML {
 }
 
 .updateInput {
-  font-size: 12px;
+  font-size: 20px;
   width: auto;
-  height: 12px;
+  height: auto;
   margin-bottom: 10px;
   border-radius: 5px;
   padding: 5px;
@@ -194,6 +202,11 @@ HTML {
   width: auto;
   min-width: 80px;
   height: 50px;
+  cursor: pointer;
+}
+
+.like-btn:hover {
+  transform:scale(1.03);
 }
 
 .likeComment-btn{
@@ -206,6 +219,11 @@ HTML {
   min-width: 55px;
   height: 30px;
   margin-top: -45px;
+  cursor: pointer;
+}
+
+.likeComment-btn:hover {
+  transform:scale(1.05);
 }
 
 /* Styles composant Mon Compte */
@@ -248,6 +266,7 @@ HTML {
   border-radius: 15px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.2);
   width: 50%;
+  padding: 5%;
 }
 
 .monCompte-input {
@@ -277,7 +296,7 @@ HTML {
 
 .activityBox {
   position: fixed;
-  top: 200px;
+  top: 25%;
   left: -30px;
   background-color: white;
   padding: 20px 40px;
@@ -313,10 +332,15 @@ HTML {
 
 .activityBox-btn {
   position: fixed;
-  top: 200px;
+  top: 20%;
   left: -30px;
+  font-size: 20px;
   background-color: white;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+}
+
+.activityBox-btn:hover {
+  transform:scale(1.02);
 }
 
 .activityBox-btn-close {
@@ -373,22 +397,19 @@ HTML {
 }
 
 .form-update {
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   position: relative;
-  margin: auto
-}
-
-.newTitle {
-  margin-left: 50px;
+  margin: auto;
+  font-size: 30px;
 }
 
 .newContent {
-  width: 80%;
-  height: 150px;
+  width: 100%;
+  margin: auto;
+  min-height: 150px;
   margin-top: 20px;
 }
 
@@ -407,6 +428,7 @@ HTML {
 }
 
 .file-upload-update {
+  align-self: flex-start;
   margin-top: 20px;
   margin-bottom: 0;
 }
@@ -421,6 +443,7 @@ HTML {
   border-radius: 15px;
   padding: 10px;
   background-color: white;
+  cursor: pointer;
 }
 
 textarea, input {
@@ -439,12 +462,21 @@ textarea, input {
 .btn-comment {
   width: 250px;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 25px;
+  right: 50px;
+  box-shadow: 1px 1px 20px 1px rgba(0, 0, 0, 0.3);
+}
+.btn-comment:hover {
+  transform:scale(1.03);
+}
+
+.btn-comment-panel{
+  font-size: 20px;
+  width: fit-content;
 }
 
 .btn-article {
-  width: 250px;
+  width: fit-content;
   position: absolute;
   bottom: 5px;
   left: 0px;
@@ -453,15 +485,60 @@ textarea, input {
 .btn-hide {
   width: fit-content;
   align-self: flex-end;
+  background-color: rgb(0, 119, 255);
+  box-shadow: 1px 1px 20px 1px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0;
+}
+
+.btn-hide:hover {
+  transform:scale(1.03);
 }
 
 .btn-hide-article {
   width: fit-content;
   align-self: flex-start;
+  background-color: rgb(0, 119, 255);
+  box-shadow: 1px 1px 20px 1px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0;
+}
+
+.btn-hide-article:hover{
+  transform:scale(1.03);
+}
+
+.btn-delete-article {
+  width: fit-content;
+  position: absolute;
+  bottom: 5px;
+  left: 50px;
+  background-color : tomato;
+  box-shadow: 1px 1px 20px 1px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0;
+}
+
+.btn-delete-article:hover {
+  transform:scale(1.03);
+}
+
+.btn-delete-comment {
+  width: fit-content;
+  position: absolute;
+  bottom: 25px;
+  right: 0px;
+  background-color : tomato;
+  box-shadow: 1px 1px 20px 1px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0;
+}
+.btn-delete-comment:hover {
+  transform:scale(1.03);
 }
 
 .btn-update {
-  margin-top: 50px;
+  align-self: flex-end;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  font-size: 20px;
+  width: fit-content;
 }
 
 .changeToSignup {

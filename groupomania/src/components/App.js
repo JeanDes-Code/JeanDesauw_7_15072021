@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
-
-//Style
-import "../styles/App.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 //Assets
 import logo from '../assets/icon-left-font-monochrome-black.svg'
@@ -14,7 +16,10 @@ import Login from "../pages/Login";
 import MonCompte from "../pages/MonCompte";
 
 function App() {
-  
+  const home =  <FontAwesomeIcon icon={faHome} alt="Home"/>
+  const publish = <FontAwesomeIcon icon={faEdit} alt="Publier un article" />
+  const user = <FontAwesomeIcon icon={faUser} alt="Mon Compte" />
+  const signout = <FontAwesomeIcon icon={faSignOutAlt} alt="Deconnexion" />
   const logout = () => {
     localStorage.clear()
     document.location.reload()
@@ -62,10 +67,10 @@ function App() {
         <div className="header">
           <img className='header-logo' src={logo} alt="Logo Groupomania"></img>
           <div className="nav-bar">
-            <Link className='nav-item' to='/'> Page d'accueil </Link>
-            <Link className='nav-item' to='/post'> Publier un article </Link>
-            <Link className='nav-item' to='/myAccount'> Mon Compte </Link>
-            <button className='nav-item' onClick={logout} > Déconnexion  </button>
+            <Link className='nav-item' to='/'> <span className="item-hide">Accueil</span> {home} </Link>
+            <Link className='nav-item' to='/post'> <span className="item-hide">Publier</span> {publish} </Link>
+            <Link className='nav-item' to='/myAccount'> <span className="item-hide">Compte</span> {user} </Link>
+            <button className='nav-item' onClick={logout} > <span className="item-hide">Déconnexion</span> {signout} </button>
           </div>
         </div>
         <Switch>

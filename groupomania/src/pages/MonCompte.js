@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 import {useHistory} from 'react-router-dom'
+import {Base64} from "js-base64"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { faUserTimes } from '@fortawesome/free-solid-svg-icons'
+
+
 //services
 import getOne from "../services/getOne-request";
 import putRequest from "../services/put-request";
@@ -7,6 +14,9 @@ import deleteRequest from "../services/delete-request";
 
 
 function MonCompte() {
+    const userDelete = <FontAwesomeIcon icon={faUserTimes} alt="Supprimer utilisateur" />
+    const pen = <FontAwesomeIcon icon={faPen} alt="Modifier utilisateur" />
+    const user = <FontAwesomeIcon icon={faUser} alt="Mon Compte" />
     const history = useHistory()
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
@@ -24,7 +34,7 @@ function MonCompte() {
     const getUser = async () => {
         const response = await getOne(id, item)
         setUsername(response.data[0].username)
-        setEmail(response.data[0].email)
+        setEmail(Base64.decode(response.data[0].email))
     }
 
     useEffect(() => {
@@ -53,7 +63,7 @@ function MonCompte() {
     }
 
     const deleteUser = () => {
-        const resultat = window.confirm("Cette action supprimera votre compte ainsi que toutes vos pubilications, commentaires et likes. Êtes-vous sur de vouloir continuer ?")
+        const resultat = window.confirm("Cette action supprimera votre compte ainsi que toutes vos publications, commentaires et likes. Êtes-vous sûr-e de vouloir continuer ?")
         if (resultat) {
             deleteRequest(id, articleId, item)
             localStorage.clear()
@@ -65,7 +75,7 @@ function MonCompte() {
 
     return isOpen ? (
         <div className="monCompte">
-            <h1> Modifier mon compte : </h1> 
+            <h1> Modifier mon compte {user} </h1> 
             <form className='monCompte-form' autoComplete="on" onSubmit={submit}>
                 <div className="monCompte-input">
                     <label className='monCompte-label'> Nouveau Username : </label>
@@ -87,15 +97,15 @@ function MonCompte() {
         </div>
     ) : (
         <div className='monCompte'>
-            <h1> Mon Compte : </h1>
+            <h1> Mon Compte {user} </h1>
             <div className="monCompte-info">
                 <p> Username : {username} </p>
                 <p> Adresse mail : {email} </p>
                 <p> Mot de passe : ******** </p>
             </div>
             <div className="monCompte-btn">
-                <button className="btn" onClick={modify}> 🖊️ Modifier  </button>
-                <button className="btn btn-alert" onClick={deleteUser}> 🗑️ Supprimer le compte </button>
+                <button className="btn" onClick={modify}> {pen} <span className="item-hide">Modifier </span> </button>
+                <button className="btn btn-alert" onClick={deleteUser}> {userDelete}  <span className="item-hide">Supprimer le compte </span></button>
             </div>
         </div>
     )

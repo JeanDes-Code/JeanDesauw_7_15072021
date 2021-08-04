@@ -1,5 +1,8 @@
 import { useState } from "react";
 import {useHistory} from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 //Services
 import deleteRequest from "../services/delete-request";
@@ -7,6 +10,8 @@ import putRequest from "../services/put-request";
 import getOne from "../services/getOne-request";
 
 function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
+    const publish = <FontAwesomeIcon icon={faEdit} alt="Modifier l'article" />
+    const trash = <FontAwesomeIcon icon={faTrashAlt} alt="Supprimer l'article" />
     const history = useHistory()
     const [isOpen, setIsOpen] = useState(false)
 
@@ -50,7 +55,7 @@ function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
         <>      
                 <span className="border"></span>
                 <button className="btn btn-hide-article" onClick={() => setIsOpen(false)}> Refermer </button>
-                <h3> Modifier l'article : </h3>
+                <h3> Modifier l'article {publish} </h3>
                 <form className="form-update" encType="multipart/form-data">
                     <div className="article-modification-title">
                         <input
@@ -84,23 +89,21 @@ function ArticleUpdate({ id, setArticle, setUsername, setRole }) {
                             updateArticle
                         }
                     >
-                        Modifier l'article
+                        Modifier
                     </button>
                 </form>
-
-                <span className="border"></span>
-                <button
-                    className="btn"
+        </>
+    ) : (
+        <>
+            <button className="btn btn-article btn-hide-article" onClick={() => setIsOpen(true)}> {publish} </button>
+            <button
+                    className="btn btn-delete-article"
                     onClick={() => {
                     deleteArticle(id);
                     }}
                 >
-                    Supprimer l'article
-                </button>
-        </>
-    ) : (
-        <>
-            <button className="btn btn-article btn-hide-article" onClick={() => setIsOpen(true)}> Modifier ou supprimer l'article </button>
+                    {trash}
+            </button>
         </>
     )
 }
