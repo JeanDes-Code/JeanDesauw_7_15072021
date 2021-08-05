@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const TOKEN = "!kfr*kç_"; //Randomiser le token de session ;
+const TOKEN =process.env.TOKEN; //Randomiser le token de session ;
 
 module.exports = (req, res, next) => { 
   try {

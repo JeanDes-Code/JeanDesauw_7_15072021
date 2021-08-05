@@ -42,7 +42,7 @@ h3 {
 
 .nav-item:hover {
   transform:scale(1.02);
-  border: thick solid rgb(235, 115, 38)
+  border: thick solid rgb(30, 124, 231)
 }
 
 .nav-item-logo {
@@ -206,7 +206,7 @@ h3 {
 }
 
 .like-btn{
-  color: rgb(235, 115, 38);
+  color: rgb(30, 124, 231);
   font-size: 20px;
   border-radius: 20px;
   background-image: url(../assets/bg3.jpeg);
@@ -222,7 +222,7 @@ h3 {
 }
 
 .likeComment-btn{
-  color: rgb(235, 115, 38);
+  color: rgb(30, 124, 231);
   font-size: 17px;
   border-radius: 20px;
   background-image: url(../assets/bg3.jpeg);
@@ -306,7 +306,7 @@ h3 {
 
 .monCompte-form-btn:hover{
   transform: scale(1.01);
-  border: 3px solid rgb(235, 115, 38)
+  border: 3px solid rgb(30, 124, 231)
 }
 /* Style composant activitybox */
 
@@ -351,7 +351,7 @@ h3 {
   font-size: 15px;
 }
 .activityBox-listItem:hover{
-  color:rgb(235, 115, 38);
+  color:rgb(30, 124, 231);
   transform: scale(1.05);
 }
 
@@ -368,7 +368,7 @@ h3 {
 
 .activityBox-btn:hover {
   transform:scale(1.02);
-  border:thick solid rgb(235, 115, 38);
+  border:thick solid rgb(30, 124, 231);
 }
 
 .activityBox-btn-close {
@@ -601,7 +601,7 @@ textarea, input {
 
 .alert{
   margin-left: 15px;
-  color: rgb(235, 115, 38);;
+  color: rgb(235, 115, 38);
 }
 
 

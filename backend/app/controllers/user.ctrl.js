@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Base64 } = require('js-base64');
 
-const randomToken = "!kfr*kç_"; //Randomiser le token de session 
+const randomToken = process.env.TOKEN; //Randomiser le token de session 
 
 //Sign Up
 exports.signup = async (req, res) => {
@@ -14,13 +14,14 @@ exports.signup = async (req, res) => {
     let ERROR;
 
     //Compte moderateur :
-    const moderateurPassword = await bcrypt.hash("moderateur", 10,)
-    const moderateurEmail = Base64.encode("moderateur@groupomania.fr")
+    const moderateurUsername = process.env.MOD_USERNAME
+    const moderateurPassword = await bcrypt.hash(process.env.MOD_PASSWORD, 10,)
+    const moderateurEmail = Base64.encode(process.env.MOD_EMAIL)
     const moderateur = {
         id: 1,
         email: moderateurEmail,
         password: moderateurPassword,
-        username: "!Moderateur001",
+        username: moderateurUsername,
         role: 1
     }
 
@@ -128,7 +129,7 @@ exports.modify = async (req,res) => {
     console.log(req.body)
     const userId = req.res.locals.userId;
     const username = req.body.username;
-    const email = req.body.email;
+    const email = Base64.encode(req.body.email);
     const password = await bcrypt.hash(req.body.password, 10);
     const sqlUpdateUser = "UPDATE Users SET username = ?, email = ?, password = ? WHERE id = ?";
     const sqlUpdateArticles = "UPDATE Articles SET author = ? WHERE userId = ?";

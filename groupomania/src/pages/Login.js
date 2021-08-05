@@ -47,7 +47,10 @@ function Login (props) {
             response = await loginRequest(user);
         } catch (error) {
             const {response} = error
-            setErrorMessage(response.data)
+            if ({response}) {
+                setErrorMessage(response.data)
+            }
+            else {return}
         } finally {
             if (response){
             console.log("Token is set")
