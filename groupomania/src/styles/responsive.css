@@ -23,8 +23,40 @@
     .header-logo {
         width: 80%;
     }
+    /*Activity box*/
     .activityBox-btn{
-        display: none;
+        position: unset;
+        width: fit-content;
+        align-self: flex-start;
+        margin-left: 0;
+        height: 100px;
+        width: 100%;
+        font-size: 40px;
+    }
+    #hot{
+        font-size: 30px;
+    }
+    .activityBox{
+        width: 80%;
+        font-size: 20px;
+        position: unset;
+        max-width: unset;
+        margin-bottom: 30px;
+    }
+    .activityBox-header {
+        font-size: 20px;
+        width: 100%;
+    }
+       
+    .activityBox h2 {
+        font-size: 25px;
+    }
+    .activityBox-listItem {
+        font-size: 25px;
+    }
+    .activityBox-btn-close {
+        font-size: 28px;
+        font-weight: bold;
     }
     /*Article List */
     .card {
@@ -80,6 +112,11 @@
     .form-comment input{
         width: auto;
     }
+    .form-comment textarea {
+        width: auto;
+        font-size: 20px;
+    }
+
     /*Mon Compte */
     .monCompte-info{
         margin-top: 20px;
@@ -187,8 +224,35 @@
     .header-logo {
         width: 80%;
     }
+    /*Activity box*/
     .activityBox-btn{
-        display: none;
+        position: unset;
+        width: fit-content;
+        align-self: flex-start;
+        margin-left: 0;
+        height: 100px;
+        width: 400px;
+    }
+    .activityBox{
+        font-size: 30px;
+        position: unset;
+        max-width: unset;
+        margin-bottom: 30px;
+    }
+    .activityBox-header {
+        font-size: 20px;
+        width: 100%;
+    }
+       
+    .activityBox h2 {
+        font-size: 30px;
+    }
+    .activityBox-listItem {
+        font-size: 35px;
+    }
+    .activityBox-btn-close {
+        font-size: 28px;
+        font-weight: bold;
     }
     /*Article List */
     .card {
@@ -240,6 +304,11 @@
         width: auto;
         font-size: 30px;
     }
+    .form-comment textarea {
+        width: auto;
+        font-size: 30px;
+    }
+
     /*Mon Compte */
     .monCompte-info{
         margin-top: 20px;

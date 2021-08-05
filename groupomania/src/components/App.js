@@ -67,10 +67,10 @@ function App() {
         <div className="header">
           <img className='header-logo' src={logo} alt="Logo Groupomania"></img>
           <div className="nav-bar">
-            <Link className='nav-item' to='/'> <span className="item-hide">Accueil</span> {home} </Link>
-            <Link className='nav-item' to='/post'> <span className="item-hide">Publier</span> {publish} </Link>
-            <Link className='nav-item' to='/myAccount'> <span className="item-hide">Compte</span> {user} </Link>
-            <button className='nav-item' onClick={logout} > <span className="item-hide">Déconnexion</span> {signout} </button>
+            <Link className='nav-item' to='/'> <span className="item-hide">Accueil</span> <span className="nav-item-logo">{home}</span> </Link>
+            <Link className='nav-item' to='/post'> <span className="item-hide">Publier</span> <span className="nav-item-logo">{publish}</span> </Link>
+            <Link className='nav-item' to='/myAccount'> <span className="item-hide">Compte</span> <span className="nav-item-logo">{user}</span> </Link>
+            <button className='nav-item' onClick={logout} > <span className="item-hide">Déconnexion</span> <span className="nav-item-logo">{signout}</span> </button>
           </div>
         </div>
         <Switch>

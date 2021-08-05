@@ -15,8 +15,10 @@ function Like ({id}) {
 
     const getLikecount = async(id, item) => {
         const response = await getLikesReq(id, item)
-        setLikeCount(response.data.count)
-        setAlreadyLiked(response.data.alreadyLiked)
+        if (response) {
+            setLikeCount(response.data.count)
+            setAlreadyLiked(response.data.alreadyLiked)
+        }
     }
 
     useEffect(() => {

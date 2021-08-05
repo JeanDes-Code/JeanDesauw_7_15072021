@@ -29,7 +29,9 @@ function Article() {
 
   const getComments = async (id) => {
     const response = await getComs(id)
-    setCommentList(response.data);
+    if (response) {
+      setCommentList(response.data);
+    }
   }
   
   useEffect(() => {
@@ -40,6 +42,7 @@ function Article() {
   return username === article[0].author || role === 1 ? (
       <div className="page-layout">
         <div className='article-page'> 
+          <ActivityBox />
             <div key={id} className="card">
               <ArticleItem  id={id} title={article[0].title} content={article[0].content} author={article[0].author} file={article[0].file} />
               <Like />
@@ -50,10 +53,10 @@ function Article() {
             <CommentList commentList={commentList} setCommentList={setCommentList} username={username} role={role} />
             <CommentPost id={id} setCommentList={setCommentList} />
         </div>
-        <ActivityBox />
       </div>
   ) : (
     <div className="page-layout">
+      <ActivityBox />
       <div className='article-page'> 
             <div key={id} className="card">
               <ArticleItem  id={id} title={article[0].title} content={article[0].content} author={article[0].author} file={article[0].file} />
@@ -62,7 +65,6 @@ function Article() {
             <CommentList commentList={commentList} setCommentList={setCommentList} username={username} role={role} />
             <CommentPost id={id} setCommentList={setCommentList} />
       </div>
-      <ActivityBox />
     </div>
   );
 }
