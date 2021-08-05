@@ -1,9 +1,12 @@
 import { useState } from "react";
 import {useHistory} from 'react-router-dom'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+//Services
 import postRequest from "../services/post-request";
 
 function ArticlePost() {
+  const publish = <FontAwesomeIcon icon={faEdit} alt="Publier un article" />
   const item ='article'
   const history = useHistory()
   const [title, setTitle] = useState("");
@@ -26,7 +29,7 @@ function ArticlePost() {
 
   return (
     <form className="form articlePost" encType="multipart/form-data" onSubmit={submitArticle}>
-      <h2>Poster un article : </h2>
+      <h2>Poster un article {publish} </h2>
       <label> Titre de l'article</label>
       <input
         type="text"

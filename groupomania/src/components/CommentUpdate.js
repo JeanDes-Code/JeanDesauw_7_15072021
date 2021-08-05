@@ -1,5 +1,8 @@
 import { useState } from "react";
 import {useParams} from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
 //Services
 import deleteRequest from "../services/delete-request";
@@ -7,6 +10,8 @@ import getComs from "../services/getCom-request";
 import putRequest from "../services/put-request";
 
 function CommentUpdate({ id, setCommentList }) {
+    const publish = <FontAwesomeIcon icon={faEdit} alt="Modifier l'article" />
+    const trash = <FontAwesomeIcon icon={faTrashAlt} alt="Supprimer l'article" />
     const item = "commentaire"
     const urlParam = useParams()
     let articleId = urlParam.id
@@ -40,39 +45,42 @@ function CommentUpdate({ id, setCommentList }) {
     return isOpen ? (
         <>  
             <span className="border"></span>    
-            <button className='btn btn-hide' onClick={() => setIsOpen(false)}> Refermer l'onglet modification </button>
-                <h3> Modifier le commentaire : </h3>
-                <textarea
-                    className="newContent updateInput"
-                    type="text"
-                    placeholder="Nouveau commentaire"
-                    onChange={(e) => {
-                    setModifiedComment({
-                        ...modifiedComment,
-                        commentaire: e.target.value,
-                    });
-                    }}
-                />
-                <button
-                    className="btn"
-                    onClick={() => {
-                    updateComment(id, modifiedComment);
-                    }}
-                >
-                    Modifier le commentaire
-                </button>
-                <span className="border"></span>
-                <button
-                    className="btn"
-                    onClick={() => {
-                    deleteComment(id);
-                    }}
-                >
-                    Supprimer le commentaire
-                </button>
+            <button className='btn btn-hide' onClick={() => setIsOpen(false)}> Refermer </button>
+                <h3> Modifier commentaire  {publish} </h3>
+                <form className="form-update">
+                    <textarea
+                        className="newContent updateInput"
+                        type="text"
+                        placeholder="Nouveau commentaire"
+                        onChange={(e) => {
+                        setModifiedComment({
+                            ...modifiedComment,
+                            commentaire: e.target.value,
+                        });
+                        }}
+                    />
+                    <button
+                        className="btn btn-update"
+                        onClick={() => {
+                        updateComment(id, modifiedComment);
+                        }}
+                    >
+                        Modifier
+                    </button>
+                </form>
         </>
     ) : (
-        <button className="btn btn-comment btn-hide" onClick={() => setIsOpen(true)}> Modifier ou supprimer le commentaire </button>
+        <>
+            <button className="btn btn-comment btn-hide" onClick={() => setIsOpen(true)}> {publish} </button>
+            <button
+                        className="btn btn-delete-comment"
+                        onClick={() => {
+                        deleteComment(id);
+                        }}
+                    >
+                        {trash}
+            </button>
+        </>
     )
 }
 

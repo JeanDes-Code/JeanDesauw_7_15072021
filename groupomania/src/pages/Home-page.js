@@ -12,7 +12,11 @@ function Home() {
 
   const getElements = async() => {
     const response = await getArticle()
-    setArticleList(response.data)
+    if (response){
+      setArticleList(response.data)
+    } else {
+      return
+    }
   }
 
   useEffect(() => {
@@ -21,8 +25,8 @@ function Home() {
 
   return (
     <div className="homePage page-layout">
-      <ArticleList articleList={articleList} setArticleList={setArticleList} />
       <ActivityBox />
+      <ArticleList articleList={articleList} setArticleList={setArticleList} />
     </div>
   );
 }
