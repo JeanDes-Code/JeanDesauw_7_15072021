@@ -1,21 +1,21 @@
 import { useState } from "react";
-import {useHistory} from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 //Services
 import postRequest from "../services/post-request";
 
 function ArticlePost() {
-  const publish = <FontAwesomeIcon icon={faEdit} alt="Publier un article" />
-  const item ='article'
-  const history = useHistory()
+  const publish = <FontAwesomeIcon icon={faEdit} alt="Publier un article" />;
+  const item = "article";
+  const history = useHistory();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [file, setFile] = useState(null)
-  
+  const [file, setFile] = useState(null);
+
   //voir autre méthode pour mettre à jour la liste d'article
   const submitArticle = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = new FormData();
     const id = null;
     data.append("title", title);
@@ -24,11 +24,15 @@ function ArticlePost() {
     await postRequest(data, id, item);
     setTimeout(() => {
       history.push(`/`);
-    }, 200)
+    }, 200);
   };
 
   return (
-    <form className="form articlePost" encType="multipart/form-data" onSubmit={submitArticle}>
+    <form
+      className="form articlePost"
+      encType="multipart/form-data"
+      onSubmit={submitArticle}
+    >
       <h2>Poster un article {publish} </h2>
       <label> Titre de l'article</label>
       <input
@@ -36,7 +40,8 @@ function ArticlePost() {
         name="articleTitle"
         required
         onChange={(e) => {
-          setTitle( e.target.value )}}
+          setTitle(e.target.value);
+        }}
       />
       <label> Contenu de l'article </label>
       <textarea
@@ -44,23 +49,21 @@ function ArticlePost() {
         name="content"
         required
         onChange={(e) => {
-          setContent( e.target.value )}}
+          setContent(e.target.value);
+        }}
       />
-      <label> Ajouter une image / un gif  </label>
+      <label> Ajouter une image / un gif </label>
       <input
         id="file"
         type="file"
         className="file-upload"
         accept=".jpg, .jpeg, .png, .gif, .bmp"
         onChange={(e) => {
-            setFile( e.target.files[0] )}}
+          setFile(e.target.files[0]);
+        }}
       />
- 
-      <input
-        type="submit"
-        className="btn"
-        value="Publier"
-      />
+
+      <input type="submit" className="btn" value="Publier" />
     </form>
   );
 }

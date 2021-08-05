@@ -4,6 +4,6 @@ import App from "./components/App";
 
 //Style
 import "./styles/styles.css";
-import "./styles/responsive.css"
+import "./styles/responsive.css";
 
 ReactDOM.render(<App />, document.getElementById("root"));

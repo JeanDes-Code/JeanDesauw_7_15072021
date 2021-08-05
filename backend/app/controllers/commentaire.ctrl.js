@@ -6,33 +6,43 @@ exports.create = (req, res) => {
   const commentaireContent = req.body.commentaire;
   const username = req.res.locals.username;
   const articleId = req.params.id;
-  let createTable = "CREATE TABLE IF NOT EXISTS Commentaires (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, userId INT UNSIGNED NOT NULL, articleId INT UNSIGNED NOT NULL, PRIMARY KEY (id))"
-  let sqlInsert = "INSERT INTO Commentaires (commentaire, author, userId, articleId) VALUES (?,?,?,?)";
+  let createTable =
+    "CREATE TABLE IF NOT EXISTS Commentaires (id INT UNSIGNED NOT NULL AUTO_INCREMENT, commentaire TEXT NOT NULL, author VARCHAR(45) NOT NULL, userId INT UNSIGNED NOT NULL, articleId INT UNSIGNED NOT NULL, PRIMARY KEY (id))";
+  let sqlInsert =
+    "INSERT INTO Commentaires (commentaire, author, userId, articleId) VALUES (?,?,?,?)";
   let ERROR;
   db.query(createTable, (err, result) => {
     if (err) {
       console.log(err);
-      ERROR = err
+      ERROR = err;
     } else {
-      console.log("Table commentaire créée ou déjà existante !")
+      console.log("Table commentaire créée ou déjà existante !");
     }
-    db.query(sqlInsert, [commentaireContent, username, userId, articleId], (err, result) => {
-      if (err) {
-        console.log(err);
-        ERROR = ERROR + '|' + err;
-        res.status(500).send(ERROR)
-      } else {
-        const newComment = {
-          id: result.insertId,
-          commentaire: commentaireContent,
-          author: username,
-          author_userId : userId
-        };
-        console.log("Le nouveau commentaire : ", newComment, " a été publié ")
-        res.status(201).send(newComment);
+    db.query(
+      sqlInsert,
+      [commentaireContent, username, userId, articleId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          ERROR = ERROR + "|" + err;
+          res.status(500).send(ERROR);
+        } else {
+          const newComment = {
+            id: result.insertId,
+            commentaire: commentaireContent,
+            author: username,
+            author_userId: userId,
+          };
+          console.log(
+            "Le nouveau commentaire : ",
+            newComment,
+            " a été publié "
+          );
+          res.status(201).send(newComment);
+        }
       }
-    })
-  })
+    );
+  });
 };
 
 //READ all Comments
@@ -43,9 +53,9 @@ exports.findAll = (req, res) => {
   db.query(commentSelect, [articleId], (err, result) => {
     if (err) {
       console.log(err);
-      res.status(500).send(err)
+      res.status(500).send(err);
     } else {
-      console.log("Commentaires lu avec succès")
+      console.log("Commentaires lu avec succès");
       res.status(200).send(result);
     }
   });
@@ -56,13 +66,13 @@ exports.findEverything = (req, res) => {
   db.query(sqlSelect, (err, result) => {
     if (err) {
       console.log(err);
-      res.status(500).send(err)
+      res.status(500).send(err);
     } else {
-      console.log("Tous les commentaires lu avec succès")
+      console.log("Tous les commentaires lu avec succès");
       res.status(200).send(result);
     }
   });
-}
+};
 
 //UPDATE a Comment
 exports.update = (req, res) => {
@@ -74,7 +84,7 @@ exports.update = (req, res) => {
   db.query(sqlUpdate, [commentContent, commentId], (err, result) => {
     if (err) {
       console.log(err);
-      res.status(500).send(err)
+      res.status(500).send(err);
     } else {
       console.log("Commentaire modifié !");
     }
@@ -84,17 +94,17 @@ exports.update = (req, res) => {
 
 //DELETE a Comment
 exports.deleteOne = (req, res) => {
-  console.log(req.params)
+  console.log(req.params);
   const commentId = req.params.id;
   let sqlDelete = "DELETE FROM commentaires WHERE id = ?";
 
   db.query(sqlDelete, [commentId], (err, result) => {
     if (err) {
       console.log(err);
-      res.status(500).send(err)
+      res.status(500).send(err);
     } else {
       console.log("Commentaire supprimé !");
-      res.status(200).end()
+      res.status(200).end();
     }
   });
 };

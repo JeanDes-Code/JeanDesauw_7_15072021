@@ -16,13 +16,14 @@ function ActivityBox() {
   const getElements = async () => {
     const item = "getComments";
     const response = await getArticle();
-    if(response) {
+    if (response) {
       setArticleList(response.data);
       const commentsList = await getArticle(item);
-      if(commentsList) {
-        setComments(commentsList.data);}
-      }else {
-      return
+      if (commentsList) {
+        setComments(commentsList.data);
+      }
+    } else {
+      return;
     }
   };
 
@@ -38,7 +39,10 @@ function ActivityBox() {
   return isOpen ? (
     <div className="activityBox">
       <div className="activityBox-header">
-        <h1> Publications récentes <span className="alert">{hot}</span> </h1>
+        <h1>
+          {" "}
+          Publications récentes <span className="alert">{hot}</span>{" "}
+        </h1>
         <button
           className="activityBox-btn-close btn-alert"
           onClick={(e) => {

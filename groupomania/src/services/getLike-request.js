@@ -4,50 +4,56 @@ const getLikesReq = async (id, item) => {
   const token = JSON.parse(localStorage.getItem("token")).value;
   if (item === "like-comment") {
     const commentId = id;
-    return( await Axios.get(`http://localhost:3001/api/like/comment/${commentId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }).catch(function (error) {
+    return await Axios.get(
+      `http://localhost:3001/api/like/comment/${commentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).catch(function (error) {
       if (error.response) {
-        const errorRes = "The request was made and the server responded with a status code that falls out of the range of 2xx"
+        const errorRes =
+          "The request was made and the server responded with a status code that falls out of the range of 2xx";
         console.log(errorRes);
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
       } else if (error.request) {
-        const errorReq = "The request was made but no response was received."
+        const errorReq = "The request was made but no response was received.";
         console.log(errorReq);
         console.log(error.request);
       } else {
-        const errorAlt = "Something happened in setting up the request that triggered an Error"
+        const errorAlt =
+          "Something happened in setting up the request that triggered an Error";
         console.log(errorAlt, error.message);
       }
       console.log(error.config);
-      })
-    )
+    });
   } else {
-    return( await Axios.get(`http://localhost:3001/api/like/${id}`, {
+    return await Axios.get(`http://localhost:3001/api/like/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }).catch(function (error) {
       if (error.response) {
-        const errorRes = "The request was made and the server responded with a status code that falls out of the range of 2xx"
+        const errorRes =
+          "The request was made and the server responded with a status code that falls out of the range of 2xx";
         console.log(errorRes);
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
       } else if (error.request) {
-        const errorReq = "The request was made but no response was received."
+        const errorReq = "The request was made but no response was received.";
         console.log(errorReq);
         console.log(error.request);
       } else {
-        const errorAlt = "Something happened in setting up the request that triggered an Error"
+        const errorAlt =
+          "Something happened in setting up the request that triggered an Error";
         console.log(errorAlt, error.message);
       }
       console.log(error.config);
-      }))
+    });
   }
 };
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-//Services 
+//Services
 import getArticle from "../services/get-request";
 
 //Components
@@ -10,14 +10,14 @@ import ActivityBox from "../components/Activity-box";
 function Home() {
   const [articleList, setArticleList] = useState([]);
 
-  const getElements = async() => {
-    const response = await getArticle()
-    if (response){
-      setArticleList(response.data)
+  const getElements = async () => {
+    const response = await getArticle();
+    if (response) {
+      setArticleList(response.data);
     } else {
-      return
+      return;
     }
-  }
+  };
 
   useEffect(() => {
     getElements();
