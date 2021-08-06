@@ -39,6 +39,7 @@ function CommentPost({ setCommentList }) {
           type="text"
           name="content"
           placeholder="Commentaire"
+          minLength="1"
           required
           onChange={(e) => {
             setNewCom({ ...newCom, commentaire: e.target.value });

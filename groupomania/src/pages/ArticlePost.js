@@ -12,19 +12,34 @@ function ArticlePost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   //voir autre méthode pour mettre à jour la liste d'article
   const submitArticle = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
     const data = new FormData();
     const id = null;
     data.append("title", title);
     data.append("content", content);
     data.append("file", file);
-    await postRequest(data, id, item);
-    setTimeout(() => {
-      history.push(`/`);
-    }, 200);
+    let response;
+    try {
+       response = await postRequest(data, id, item);
+    } catch (error) {
+      const { response } = error;
+   if({ response }) {
+      setErrorMessage(response.data);
+    }else {
+      setErrorMessage("Une erreur s'est produite.")
+      return;
+    }} finally {
+      if (response) {
+        setTimeout(() => {
+          history.push(`/`);
+        }, 200);
+      }
+    }
   };
 
   return (
@@ -34,10 +49,13 @@ function ArticlePost() {
       onSubmit={submitArticle}
     >
       <h2>Poster un article {publish} </h2>
+      {errorMessage ? <p className="errorMessage">{errorMessage}</p> : null}
       <label> Titre de l'article</label>
       <input
         type="text"
         name="articleTitle"
+        minLength="3"
+        maxLength="45"
         required
         onChange={(e) => {
           setTitle(e.target.value);
@@ -47,6 +65,8 @@ function ArticlePost() {
       <textarea
         type="text"
         name="content"
+        minLength="0"
+        maxLength="65000"
         required
         onChange={(e) => {
           setContent(e.target.value);
