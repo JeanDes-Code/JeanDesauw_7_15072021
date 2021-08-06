@@ -76,6 +76,7 @@ function Login(props) {
   return isOpen ? (
     <div className="login-component">
       <form className="login-card" autoComplete="on" onSubmit={connectUser}>
+        <label> Username : </label>
         <input
           type="text"
           placeholder="Username"
@@ -84,6 +85,7 @@ function Login(props) {
             setUser({ ...user, username: e.target.value });
           }}
         />
+         <label> Mot de passe : </label>
         <input
           type="password"
           placeholder="Mot de passe"
@@ -111,6 +113,7 @@ function Login(props) {
   ) : (
     <div className="login-component">
       <form className="login-card" autoComplete="on" onSubmit={createUser}>
+        <label> Adresse mail : </label>
         <input
           type="email"
           placeholder="Adresse-mail"
@@ -119,6 +122,7 @@ function Login(props) {
             setNewUser({ ...newUser, email: e.target.value });
           }}
         />
+        <label> Username : </label>
         <input
           type="text"
           placeholder="Username"
@@ -127,6 +131,7 @@ function Login(props) {
             setNewUser({ ...newUser, username: e.target.value });
           }}
         />
+        <label> Mot de passe : </label>
         <input
           type="password"
           pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$"
