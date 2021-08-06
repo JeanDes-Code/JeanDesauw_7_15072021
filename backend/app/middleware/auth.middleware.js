@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const TOKEN = "!kfr*kç_"; //Randomiser le token de session ;
+const TOKEN = process.env.TOKEN; //Randomiser le token de session ;
 
-module.exports = (req, res, next) => { 
+module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    console.log(' Token bien reçu !');
-    
+    console.log(" Token bien reçu !");
+
     //verify is token is matching with API
     const decodedToken = jwt.verify(token, TOKEN);
 
@@ -29,5 +29,3 @@ module.exports = (req, res, next) => {
     console.log(" Requête invalide ");
   }
 };
-
-

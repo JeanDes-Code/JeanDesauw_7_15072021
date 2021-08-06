@@ -2,9 +2,8 @@ const user = require("../controllers/user.ctrl.js");
 const auth = require("../middleware/auth.middleware");
 let router = require("express").Router();
 
-const middleware = require('../middleware/joi-validation.middleware')
-const schemas = require('../schemas/joi-validation.schemas')
-
+const middleware = require("../middleware/joi-validation.middleware");
+const schemas = require("../schemas/joi-validation.schemas");
 
 router.post("/post/signup", middleware(schemas.userSignUpSchema), user.signup);
 
