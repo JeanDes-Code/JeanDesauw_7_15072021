@@ -1,0 +1,392 @@
+@media only screen and (max-width: 600px) {
+  /*Mobiles */
+  .article-page,
+  .articlePost,
+  .homePage,
+  .login-component,
+  .monCompte {
+    width: 90vw;
+    margin: auto;
+    justify-content: center;
+  }
+  h3 {
+    margin-top: 10px;
+  }
+  /*Header*/
+  .header {
+    flex-direction: column;
+  }
+  .nav-bar {
+    margin-top: 40px;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .nav-item {
+    font-size: 30px;
+    margin-left: 0;
+  }
+  .header-logo {
+    width: 80%;
+  }
+  /*Activity box*/
+  .activityBox-btn {
+    position: unset;
+    width: fit-content;
+    align-self: flex-start;
+    margin-left: 0;
+    height: 100px;
+    width: 100%;
+    font-size: 40px;
+  }
+  #hot {
+    font-size: 30px;
+  }
+  .activityBox {
+    width: 80%;
+    font-size: 20px;
+    position: unset;
+    max-width: unset;
+    margin-bottom: 30px;
+  }
+  .activityBox-header {
+    font-size: 20px;
+    width: 100%;
+  }
+
+  .activityBox h2 {
+    font-size: 25px;
+  }
+  .activityBox-listItem {
+    font-size: 25px;
+  }
+  .activityBox-btn-close {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  /*Article List */
+  .card {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 40px;
+  }
+  .article-display-author {
+    margin-bottom: 50px;
+  }
+  /*Article Post*/
+  .articlePost {
+    margin-top: -20px;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 25px;
+  }
+  .file-upload {
+    width: 90%;
+  }
+  .articlePost input,
+  .articlePost textarea {
+    font-size: 25px;
+    width: 90%;
+  }
+  /*Article Item */
+  .article-display {
+    font-size: 25px;
+    line-height: 1.5;
+  }
+  .form-update {
+    font-size: 30px;
+  }
+  .updateInput {
+    font-size: 18px;
+    width: 100%;
+  }
+  .file-upload-update {
+    font-size: 20px;
+    width: 80%;
+  }
+  /*Comments */
+  .comment-list {
+    width: 100%;
+  }
+  .comment-card {
+    height: fit-content;
+    padding-bottom: 20px;
+    font-size: 20px;
+  }
+  .form-comment {
+    width: 90%;
+  }
+  .form-comment input {
+    width: auto;
+  }
+  .form-comment textarea {
+    width: auto;
+    font-size: 20px;
+  }
+
+  /*Mon Compte */
+  .monCompte-info {
+    margin-top: 20px;
+    width: 75%;
+    font-size: 20px;
+  }
+  .monCompte-form {
+    width: 100%;
+    font-size: 20px;
+  }
+  .monCompte-input {
+    width: 100%;
+  }
+  .monCompte-input input {
+    width: 40%;
+    font-size: 20px;
+  }
+  .monCompte-form-btn {
+    font-size: 20px;
+  }
+  /*Login*/
+  .login-card {
+    width: 80%;
+  }
+  .login-card input {
+    font-size: 20px;
+  }
+  /* Boutons */
+  .btn {
+    font-size: 20px;
+    padding: 5px;
+  }
+  .btn-hide {
+    align-self: flex-start;
+  }
+  .btn-delete-article {
+    left: 50px;
+    bottom: -20px;
+    height: 40px;
+    width: 40px;
+  }
+  .btn-comment {
+    left: 0px;
+    bottom: -20px;
+    font-size: 18px;
+    height: 40px;
+    width: 40px;
+  }
+  .btn-comment-panel {
+    font-size: 18px;
+  }
+  .btn-article {
+    height: 40px;
+    width: 40px;
+    left: 0px;
+    bottom: -20px;
+  }
+  .btn-delete-comment {
+    font-size: 18px;
+    height: 40px;
+    width: 40px;
+    left: 50px;
+    bottom: -20px;
+  }
+  .like {
+    right: 10px;
+  }
+  .like-btn {
+    font-size: 25px;
+  }
+  .likeComment-btn {
+    font-size: 20px;
+  }
+  .submit-comment {
+    font-size: 18px;
+    width: fit-content;
+  }
+  /* Utility */
+  .item-hide {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  /*Tablettes */
+  .article-page,
+  .articlePost,
+  .homePage,
+  .login-component,
+  .monCompte {
+    width: 90vw;
+    margin: auto;
+  }
+  h2 {
+    font-size: 35px;
+  }
+  /*Header*/
+  .header {
+    flex-direction: column;
+  }
+  .nav-bar {
+    margin-top: 40px;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .nav-item {
+    font-size: 50px;
+    margin-left: 0;
+  }
+  .header-logo {
+    width: 80%;
+  }
+  /*Activity box*/
+  .activityBox-btn {
+    position: unset;
+    width: fit-content;
+    align-self: flex-start;
+    margin-left: 0;
+    height: 100px;
+    width: 400px;
+  }
+  .activityBox {
+    font-size: 30px;
+    position: unset;
+    max-width: unset;
+    margin-bottom: 30px;
+  }
+  .activityBox-header {
+    font-size: 20px;
+    width: 100%;
+  }
+
+  .activityBox h2 {
+    font-size: 30px;
+  }
+  .activityBox-listItem {
+    font-size: 35px;
+  }
+  .activityBox-btn-close {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  /*Article List */
+  .card {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 30px;
+  }
+  /*Article Post*/
+  .articlePost {
+    margin-top: -20px;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 30px;
+  }
+  .file-upload {
+    width: fit-content;
+  }
+  .articlePost input,
+  .articlePost textarea {
+    font-size: 30px;
+  }
+  /*Article Item */
+  .article-display {
+    font-size: 35px;
+    line-height: 1.3;
+  }
+  .form-update {
+    font-size: 30px;
+  }
+  .updateInput {
+    font-size: 30px;
+  }
+  .file-upload-update {
+    font-size: 30px;
+    width: 80%;
+  }
+  /*Comments */
+  .comment-list {
+    width: 100%;
+  }
+  .comment-card {
+    height: fit-content;
+    padding-bottom: 20px;
+    font-size: 35px;
+  }
+  .form-comment {
+    width: 90%;
+  }
+  .form-comment input {
+    width: auto;
+    font-size: 30px;
+  }
+  .form-comment textarea {
+    width: auto;
+    font-size: 30px;
+  }
+
+  /*Mon Compte */
+  .monCompte-info {
+    margin-top: 20px;
+    width: 70%;
+    font-size: 35px;
+  }
+  .monCompte-form {
+    width: fit-content;
+    font-size: 30px;
+  }
+  .monCompte-input {
+    width: 100%;
+  }
+  .monCompte-input input {
+    width: 40%;
+    font-size: 30px;
+  }
+  .monCompte-form-btn {
+    font-size: 30px;
+  }
+  /*Login*/
+  .login-card {
+    width: 90%;
+  }
+  .login-card input {
+    font-size: 35px;
+    width: fit-content;
+  }
+  /* Boutons */
+  .btn {
+    font-size: 30px;
+    padding: 5px;
+  }
+  .btn-delete-article {
+    left: 70px;
+    height: 60px;
+    width: 60px;
+  }
+  .btn-comment {
+    right: 65px;
+    font-size: 30px;
+    height: 60px;
+    width: 60px;
+  }
+  .btn-article {
+    height: 60px;
+    width: 60px;
+  }
+  .btn-delete-comment {
+    font-size: 30px;
+    height: 60px;
+    width: 60px;
+  }
+  .like {
+    right: 10px;
+  }
+  .like-btn {
+    font-size: 30px;
+  }
+  .likeComment-btn {
+    height: fit-content;
+    padding: 10px;
+    font-size: 25px;
+  }
+  /* Utility */
+  .item-hide {
+    display: none;
+  }
+}
