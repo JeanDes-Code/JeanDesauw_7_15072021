@@ -155,10 +155,21 @@ exports.modify = async (req, res) => {
     "UPDATE Commentaires SET author = ? WHERE userId = ?";
   let ERROR;
 
+  db.query(
+    sqlUpdateUser,
+    [username, email, password, userId],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        ERROR =  err;
+        res.status(500).send(ERROR);
+        return
+      } else {
+        console.log("Compte User modifié !");
+      }
   db.query(sqlUpdateArticles, [username, userId], (err, result) => {
     if (err) {
       console.log(err);
-      ERROR = err;
     } else {
       console.log(
         "Auteur des articles créés par l'utilsateur modifié pour correspondre au nouveau Username."
@@ -167,28 +178,15 @@ exports.modify = async (req, res) => {
     db.query(sqlUpdateCommentaires, [username, userId], (err, result) => {
       if (err) {
         console.log(err);
-        ERROR = ERROR + "|" + err;
       } else {
         console.log(
           "Auteur des commentaires créés par l'utilsateur modifié pour correspondre au nouveau Username."
         );
+        res.status(200).end();
       }
-      db.query(
-        sqlUpdateUser,
-        [username, email, password, userId],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-            ERROR = ERROR + "|" + err;
-            res.status(500).send(ERROR);
-          } else {
-            console.log("Compte User modifié !");
-            res.status(200).end();
-          }
-        }
-      );
+      
     });
-  });
+  })})
 };
 
 // Delete One User

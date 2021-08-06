@@ -55,8 +55,12 @@ function MonCompte() {
         history.push("/");
       }
     } catch (error) {
-      const { response } = error;
-      setErrorMessage(response.data);
+        const { response } = error;
+        if ({ response }) {
+          setErrorMessage(response.data.sqlMessage);
+      } else {
+        return;
+      }
     }
   };
 
