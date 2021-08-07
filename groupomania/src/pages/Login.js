@@ -90,6 +90,7 @@ function Login(props) {
           type="password"
           placeholder="Mot de passe"
           required
+          pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,120})$"
           onChange={(e) => {
             setUser({ ...user, password: e.target.value });
           }}
